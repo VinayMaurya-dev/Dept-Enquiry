@@ -1,0 +1,183 @@
+﻿@using CourtCase.Filters
+@{
+    ViewBag.Title = "TotalEnquiryList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .color-box-3 {
+        background-color: white; /* Light Yellow */
+        opacity: unset;
+    }
+
+    .color-box-2 {
+        background-color: #166df6;
+        opacity: unset;
+    }
+
+    .color-box-1 {
+        background-color: #ffd800;
+        opacity: unset;
+    }
+
+    .bg-yellow {
+        background-color: yellow;
+    }
+
+    .bg-blue {
+        background-color: lightblue;
+    }
+
+    .bg-default {
+        background-color: white;
+    }
+</style>
+<div class="app-main__inner">
+    <div class="app-page-title app-page-title-simple">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div>
+                    <div class="page-title-head center-elem">
+                        <span class="d-inline-block pr-2">
+                            <i class="lnr-apartment opacity-6"></i>
+                        </span>
+                        <span class="d-inline-block">Total Enquiry List</span>
+                    </div>
+                    <div class="page-title-subheading opacity-10">
+                        <nav class="" aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <button type="button" onclick="history.back()" value="BACK" class="btn btn-primary mybackbutton"><i class="fa fa-arrow-left" aria-hidden="true"> Back</i></button>
+                                </li> 
+                                <li class="active breadcrumb-item" aria-current="page">
+                                    कुल जांच सूची
+                                </li>
+                            </ol>
+                        </nav>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="main-card mb-3 card">
+        <div class="card-body">
+            <div id="step-1">
+                <div class="form-row">
+                    <div class="col-md-6">
+                    </div>
+                    <div class="col-md-3">
+                        <div class="swatch-holder swatch-holder-sm color-box-1"></div>
+                        <br><b><span>Court</span></b>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="swatch-holder swatch-holder-sm color-box-2"></div>
+                        <br><b><span>Investigation</span></b>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="table-responsive" style="margin-top:15px;">
+                        @if (Model != null)
+                        {
+                            System.Data.DataSet ds = ((System.Data.DataSet)Model);
+                            System.Data.DataTable dt = new System.Data.DataTable();
+
+                            if (ds.Tables.Count > 0 && ds != null)
+                            {
+                                dt = ds.Tables[0];
+                            }
+                            <table id="scr-vtr-dynamic" class="example table table-hover table-bordered mb-0" style="width:100%;">
+                                <thead>
+                                    <tr>
+                                        @foreach (System.Data.DataColumn col in dt.Columns)
+                                        {
+                                            if (col.ColumnName == "Courtid" || col.ColumnName == "InvestigationId")
+                                            {
+                                                continue;
+                                            }
+                                            else
+                                            {
+                                                <th style="text-align:center;">@Html.Raw(col.ColumnName)</th>
+                                            }
+                                        }
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (System.Data.DataRow row in dt.Rows)
+                                    {
+                                        // Skip rows if necessary based on Courtid or InvestigationId
+                                        if (row["Courtid"].ToString() == "true" || row["InvestigationId"].ToString() == "true")
+                                        {
+                                            continue;
+                                        }
+                                        string status = row["स्थिति"].ToString();
+                                        string Courtid = row["Courtid"].ToString();
+                                        string InvestigationId = row["InvestigationId"].ToString();
+                                        string rowClass = string.Empty;
+
+                                        if (status == "Close")
+                                        {
+                                            rowClass = "gradient-danger";
+                                        }
+                                        else if (status == "Active")
+                                        {
+                                            rowClass = "info";
+                                        }
+                                        string rowColor = "white";
+                                        if (!string.IsNullOrEmpty(Courtid))
+                                        {
+                                            rowColor = "#edd760";
+                                        }
+                                        else if (!string.IsNullOrEmpty(InvestigationId))
+                                        {
+                                            rowColor = "#a3c7ff";
+                                        }
+                                        <tr style="background-color:@rowColor">
+                                            @foreach (System.Data.DataColumn column in dt.Columns)
+                                            {
+                                                if (column.ColumnName == "Courtid" || column.ColumnName == "InvestigationId")
+                                                {
+                                                    continue;
+                                                }
+
+                                                var cellValue = row[column].ToString();
+                                                if (column.ColumnName == "कार्रवाई")
+                                                {
+                                                    <td>
+                                                        @Html.EncodedActionLink(
+                                                            "देखें",
+                                                            "DepartmentalComplaintDetails",
+                                                            "Reports",
+                                                            new { ComplaintNo = cellValue },
+                                                            new { @class = "btn-transition btn btn-outline btn-" + rowClass + "" },
+                                                            "fa fa-eye"
+                                                        )
+                                                    </td>
+                                                }
+                                                else if (column.ColumnName == "स्थिति")
+                                                {
+                                                    <td>
+                                                        <span class="badge btn btn-@rowClass">
+                                                            @Html.Raw(cellValue)
+                                                        </span>
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td>@Html.Raw(cellValue)</td>
+                                                }
+                                            }
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+

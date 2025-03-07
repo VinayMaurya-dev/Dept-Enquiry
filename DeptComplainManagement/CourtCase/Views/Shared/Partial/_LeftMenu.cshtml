@@ -1,0 +1,121 @@
+﻿@using System.Data
+@{
+    var allowedUserNumbers = new[] { "10008" };
+} 
+    <div class="scrollbar-sidebar">
+        <div class="app-sidebar__inner">
+            <ul class="vertical-nav-menu">
+                <li class="app-sidebar__heading">
+                    <span class="badge badge-success">Active</span>
+                </li>
+                @foreach (DataRow row in ((DataSet)ViewBag.MenuData).Tables[0].Rows)
+                {
+                    <li>
+                        @{
+                            var subMenuRows = ((DataSet)ViewBag.MenuData).Tables[1].Select("MainMenuId = " + row["MainMenuId"].ToString());
+                        }
+
+                        <a href="@row["MainURL"].ToString()">
+                            @row["MenuName"]
+                            <i class="@row["Menu_Icon"].ToString()"></i>
+
+                            @if (subMenuRows.Length > 0)
+                            {
+                                <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                            }
+
+
+                        </a>
+
+                        @if (subMenuRows.Length > 0)
+                        {
+
+                            <ul>
+                                @foreach (var subRow in subMenuRows)
+                                {
+                                    <li>
+                                        <a href="@subRow["SubURL"].ToString()">
+                                            @subRow["SubMenuName"]
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                        }
+                    </li>
+                } 
+                @if (allowedUserNumbers.Contains(Session["UserNumber"].ToString()))
+                {
+                    <li class="">
+                        <a href="#" aria-expanded="false">
+                            Reports
+                            <i class="metismenu-icon pe-7s-note2"></i>
+                            <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                        </a>
+
+                        <ul class="mm-collapse" style="height: 7.04px;">
+                            <li>
+                                <a href="../Reports/TopEnquiry">
+                                    Top 20 New Enquiry
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../Reports/OldEnquiry">
+                                    Top 20 Oldest Enquiry
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../Reports/PendingComplaintAtEnquiryOfficer2">
+                                    Pendency at Enquiry Officer
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../Reports/NumberOfSampleFilesPostWise">
+                                    Summary Sheet Enquiry
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../Reports/DesignationWiseEnquiry">
+                                    Designation Wise  Enquiry
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../Reports/DepartmentalRuralEnquiryList">
+                                    Total Pending Rural Enquriy
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../Reports/DepartmentalUrbanEnquiryList">
+                                    Total Pending Urban Enquriy
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../Reports/financial_NonfinancialWiseComplaintList?Id=1">
+                                     Financial Enquiry
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../Reports/financial_NonfinancialWiseComplaintList?Id=2">
+                                      Non-Financial Enquiry
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../Reports/TopFinancialEnquiry">
+                                    Top 10 Financial Enquiry
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../Reports/TopNonFinancialEnquiry">
+                                    Top 10 Non-Financial Enquiry
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+
+
+
+
+

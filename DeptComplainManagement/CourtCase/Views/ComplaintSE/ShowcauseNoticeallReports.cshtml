@@ -1,0 +1,570 @@
+﻿@using CourtCase.Filters
+@model CourtCase.Models.ShowCauseNoticCls
+@{
+    ViewBag.Title = "ShowcauseNoticeallReports";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .color-box-3 {
+        background-color: white; /* Light Yellow */
+        opacity: unset;
+    }
+
+    .color-box-2 {
+        background-color: #166df6;
+        opacity: unset;
+    }
+
+    .color-box-1 {
+        background-color: #ffd800;
+        opacity: unset;
+    }
+
+    .bg-yellow {
+        background-color: yellow;
+    }
+
+    .bg-blue {
+        background-color: lightblue;
+    }
+
+    .bg-default {
+        background-color: white;
+    }
+</style>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+<div class="app-main__inner">
+    <div class="app-page-title app-page-title-simple">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div>
+                    <div class="page-title-head center-elem">
+                        <span class="d-inline-block pr-2">
+                            <i class="lnr-apartment opacity-6"></i>
+                        </span>
+                        <span class="d-inline-block">Show Cause Notice List</span>
+                    </div>
+                    <div class="page-title-subheading opacity-10">
+                        <nav class="" aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <button type="button" onclick="history.back()" value="BACK" class="btn btn-primary mybackbutton"><i class="fa fa-arrow-left" aria-hidden="true"> Back</i></button>
+                                </li>
+                                <li class="active breadcrumb-item" aria-current="page">
+                                    कारण बताओ नोटिस सूची
+                                </li>
+                            </ol>
+                        </nav>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="main-card mb-3 card">
+        <div class="card-body">
+            <div class="row">
+                <div class="mb-2 col-md-2">
+                    <label class="form-label">दिनांक से</label>
+                    <input type="date" class="form-control form-control-sm" placeholder="YYYY-MM-DD" id="Fromdate" />
+
+                </div>
+                <div class="mb-2 col-md-2">
+                    <label class="form-label">दिनांक तक</label>
+                    <input type="date" class="form-control form-control-sm" placeholder="YYYY-MM-DD" id="todate" />
+                </div>
+
+
+                <div class="position-relative form-group">
+                    <label for="exampleAddress" class="">
+                        निर्गत करने वाले अधिकारी का नाम
+                    </label><br />
+                    <select class="form-control form-control-sm" id="IssuingAuthorityName" name="IssuingAuthorityName">
+                        <option value="-1">Choose Option</option>
+                        <option value="Board Of Directors, U.P. Jal Nigam (Rural)">Board Of Directors, U.P. Jal Nigam (Rural)</option>
+                        <option value="Chairman, U.P. Jal Nigam (Rural)">Chairman, U.P. Jal Nigam (Rural)</option>
+                        <option value="Managing Director,  U.P. Jal Nigam (Rural)">Managing Director,  U.P. Jal Nigam (Rural)</option>
+                        <option value="Finance Director, U.P. Jal Nigam (Rural)">Finance Director, U.P. Jal Nigam (Rural)</option>
+                        <option value="Chief Engineer(अ-2-1)">Chief Engineer(अ-2-1)</option>
+                        <option value="Chief Engineer(अ-2-2)">Chief Engineer(अ-2-2)</option>
+                        <option value="Chief Engineer(अ-3)">Chief Engineer(अ-3)</option>
+                        <option value="Chief Engineer(अ-4)">Chief Engineer(अ-4)</option>
+                    </select>
+                </div>
+
+                <div class="col-md-2 mb-3">
+                    <div class="position-relative form-group">
+                        <label for="exampleAddress" class="">वर्तमान कार्यरत कार्यालय </label>
+                        <select class="form-control form-control-sm" id="ComplaintRelatedTo" name="NoticeRelatedTo"></select>
+                    </div>
+                </div>
+
+                <div class="col-md-2 mb-3" id="zoneddl">
+                    <div class="position-relative form-group">
+                        <label for="validationCustomUsername">वर्तमान ज़ोन </label>
+
+                        <select class="form-control form-control-sm zone" id="ComplaintRelatedZoneId" name="NoticeRelatedZoneId"></select>
+                    </div>
+
+                </div>
+
+                <div class="col-md-2 mb-3" id="circleddl">
+                    <div class="position-relative form-group">
+                        <label for="validationCustomUsername">वर्तमान सर्किल </label>
+                        <select class="form-control form-control-sm circle" id="ComplaintRelatedCircleId" name="NoticeRelatedCircleId"></select>
+
+                    </div>
+
+                </div>
+                <div class="col-md-2 mb-3" id="ddldivision">
+                    <div class="position-relative form-group">
+                        <label for="validationCustomUsername">वर्तमान डिवीज़न </label>
+                        <select class="form-control form-control-sm" id="ComplaintRelatedDivisionId" name="NoticeRelatedDivisionId"></select>
+
+                    </div>
+
+                </div>
+                <div class="col-md-2 mb-3">
+                    <div class="position-relative form-group">
+                        <label for="exampleAddress" class="">वर्तमान पदनाम</label><br />
+                        <select class="form-control form-control-sm" id="ComplainRelatedDesignationId" name="NoticeRelatedDesignationId"></select>
+                    </div>
+
+
+                </div>
+
+                <div class="col-md-2 mb-3">
+                    <div class="position-relative form-group">
+                        <label for="exampleAddress" class="">कार्मिक का नाम </label><br />
+                        <input type="text" class="form-control form-control-sm" id="ComplainantName" name="ComplainantName" />
+                    </div>
+                </div>
+
+                <div class="position-relative form-group">
+                    <label for="exampleAddress" class="">
+                        स्थिति
+                    </label><br />
+                    <select class="form-control form-control-sm" id="Status" name="Status">
+                        <option value="-1">Choose Option</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Close">Close</option>
+                         
+                    </select>
+                </div>
+                <div class="mb-2 col-md-2" style="margin-top:25px;">
+                    <button class="btn rounded-pill btn-success" type="button" id="btnSearch">
+                        <i class="fas fa-search"></i> खोजे
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <center>
+        <div class="main-card mb-3 card">
+            <div class="card-body">
+                <div id="step-1">
+                    <div class="form-row">
+                        <div class="table-responsive" style="margin-top:15px;" id="divDetails">
+                            @if (Model.table != null)
+                            {
+                                <table id="scr-vtr-dynamic" class="example table table-hover table-bordered mb-0" style="width:100%;">
+                                    <thead>
+                                        <tr>
+                                            @foreach (System.Data.DataColumn col in Model.table.Columns)
+                                            {
+                                                <th style="text-align:center;">@Html.Raw(col.ColumnName)</th>
+                                            }
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (System.Data.DataRow row in Model.table.Rows)
+                                        {
+                                        <tr>
+                                            @foreach (System.Data.DataColumn column in Model.table.Columns)
+                                            {
+                                                var cellValue = row[column].ToString();
+                                                if (column.ColumnName == "कार्रवाई")
+                                                {
+                                                    <td>
+                                                        @Html.EncodedActionLink(
+                                                            "देखें",
+                                                            "CauseNoticeListData",
+                                                            "ComplaintSE",
+                                                            new { ShowcauseNumber = cellValue },
+                                                            new { @class = "btn-transition btn btn-outline btn-primary" },
+                                                            "fa fa-eye"
+                                                        )
+                                                    </td>
+                                                }
+                                                else if (column.ColumnName == "स्थिति")
+                                                {
+                                                    if (cellValue.Trim() == "Close")
+                                                    {
+                                                        <td>
+                                                            <span class="badge badge-danger">
+                                                                @Html.Raw(cellValue)
+                                                            </span>
+                                                        </td>
+                                                    }
+                                                   else if (cellValue.Trim() == "Pending")
+                                                    {
+                                                        <td>
+                                                            <span class="badge badge-warning">
+                                                                @Html.Raw(cellValue)
+                                                            </span>
+                                                        </td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>
+                                                            <span class="badge badge-primary">
+                                                                @Html.Raw(cellValue)
+                                                            </span>
+                                                        </td>
+                                                    }
+
+                                                }
+                                                else
+                                                {
+                                                    <td style="text-align:center;">@Html.Raw(cellValue)</td>
+                                                }
+                                            }
+                                        </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            }
+                            else
+                            {
+                                <p>No data available</p>
+                            }
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </center>
+</div>
+<script src="~/Content/assets/js/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#zoneddl,#circleddl,#ddldivision').hide();
+
+        $("#ComplaintRelatedTo").change(function () {
+            var mrk = $(this).val().trim();
+            if (mrk == "HQ") {
+                $('#zoneddl,#circleddl,#ddldivision').hide();
+                $("#ComplaintRelatedZoneId").val('-1').trigger('change');
+                $("#ComplaintRelatedCircleId").val('-1').trigger('change');
+                $("#ComplaintRelatedDivisionId").val('-1').trigger('change');
+            }
+            else if (mrk == "Z") {
+                $('#circleddl,#ddldivision').hide();
+                $('#zoneddl').show();
+                bindZone('ComplaintRelatedZoneId', -1);
+                $("#ComplaintRelatedCircleId").val('-1').trigger('change');
+                $("#ComplaintRelatedDivisionId").val('-1').trigger('change');
+            }
+            else if (mrk == "C") {
+                $('#ddldivision').hide();
+                $('#zoneddl,#circleddl').show();
+                bindZone('ComplaintRelatedZoneId', -1);
+                bindCircle('ComplaintRelatedCircleId', -1, -1);
+                $("#ComplaintRelatedDivisionId").val('-1').trigger('change');
+            }
+            else if (mrk == "D") {
+                $('#zoneddl,#circleddl,#ddldivision').show();
+                bindZone('ComplaintRelatedZoneId', -1);
+                bindCircle('ComplaintRelatedCircleId', -1, -1);
+                bindDivision('ComplaintRelatedDivisionId', -1, -1, -1);
+            }
+            else {
+                $('#zoneddl,#circleddl,#ddldivision').hide();
+            }
+            BindComplaintDesignation('ComplainRelatedDesignationId', -1, mrk);
+
+
+        });
+        $("#ComplaintRelatedZoneId").change(function () {
+            var zone = $(this).val();
+            bindCircle("ComplaintRelatedCircleId", -1, zone);
+        });
+
+        $("#ComplaintRelatedCircleId").change(function () {
+            var selectedCircle = $('#ComplaintRelatedCircleId').val();
+            var zone = $("#ComplaintRelatedZoneId").val();
+            bindDivision("ComplaintRelatedDivisionId", -1, zone, selectedCircle);
+
+        });
+        BindComplaintDesignation('ComplainRelatedDesignationId', -1);
+        BindComplaintRelatedTo('ComplaintRelatedTo', -1);
+        bindZone('ComplaintRelatedZoneId', -1);
+        bindCircle('ComplaintRelatedCircleId', -1, -1);
+        bindDivision('ComplaintRelatedDivisionId', -1, -1, -1);
+        function BindComplaintDesignation(ids, defaultSelectionValues, RelatedTo) {
+            // Validate and set default selection values
+            if (['-1', '0', '', null, undefined].includes(defaultSelectionValues)) {
+                defaultSelectionValues = '-1';
+            }
+
+            const idArray = ids.split(',');
+
+            var obj = new Object();
+            obj.Action = "bindCompDesignationsNew";
+            obj.CaseRelatedTo = RelatedTo;
+            $.ajax({
+                type: 'POST',
+                url: '/DropdownBinder/fillDropdown',
+                data: { obj: obj },
+                success: function (Data) {
+                    idArray.forEach(id => {
+                        const ddl = $('#' + id.trim());
+                        ddl.empty(); // Clear the existing options
+
+                        ddl.append($('<option/>', {
+                            value: "-1",
+                            text: "Choose option"
+                        }));
+
+                        Data.forEach(rowData => {
+                            ddl.append($('<option/>', {
+                                value: rowData.id,
+                                text: rowData.value
+                            }));
+                        });
+
+                        if (defaultSelectionValues !== '-1') {
+                            ddl.val(defaultSelectionValues);
+                        }
+                    });
+                },
+                error: function (errorData) {
+                    console.error('Error occurred:', errorData);
+                }
+            });
+        }
+        function BindComplaintRelatedTo(ids, defaultSelectionValues = '-1') {
+            // Ensure defaultSelectionValues is correctly assigned
+            if (['-1', '0', '', null, undefined].includes(defaultSelectionValues)) {
+                defaultSelectionValues = '-1';
+            }
+
+            // Parse the provided `ids` string into an array
+            const idArray = ids.split(',');
+
+            // Object to send with the AJAX request
+            const obj = { Action: "bindDepartmentalRoles" };
+            $.ajax({
+                type: 'POST',
+                url: '/DropdownBinder/fillDropdown',
+                data: obj,
+                success: function (Data) {
+                    idArray.forEach(id => {
+                        const ddl = $('#' + id.trim());
+                        ddl.empty();
+                        ddl.append($('<option/>', {
+                            value: "-1",
+                            text: "Choose option"
+                        }));
+
+                        // Populate dropdown with data
+                        Data.forEach(rowData => {
+                            ddl.append($('<option/>', {
+                                value: rowData.id,
+                                text: rowData.value
+                            }));
+                        });
+
+                        // Set default value if applicable
+                        if (defaultSelectionValues !== '-1') {
+                            ddl.val(defaultSelectionValues);
+                        }
+                    });
+                },
+                error: function (errorData) {
+                    console.error("Error occurred while binding dropdown:", errorData);
+                }
+            });
+        }
+        function bindZone(id, defaultSelectionValues) {
+
+            defaultSelectionValues = typeof defaultSelectionValues !== 'undefined' ? defaultSelectionValues : '';
+            if (defaultSelectionValues == -1 || defaultSelectionValues == 0 || defaultSelectionValues == '-1' || defaultSelectionValues == '') {
+                defaultSelectionValues = '-1';
+            }
+            var obj = new Object();
+            obj.Action = "bindZone";
+
+            $.ajax({
+                type: 'POST',
+                url: '/DropdownBinder/fillDropdown',
+                data: { Action: obj.Action },
+                success: function (Data) {
+                    var ddl = $('#' + id);
+                    ddl.empty();
+                    ddl.append($('<option/>', {
+                        value: "-1",
+                        text: "Choose option "
+                    }));
+
+                    $.each(Data, function (index, rowData) {
+                        ddl.append($('<option/>', {
+                            value: rowData.id,
+                            text: rowData.value
+                        }));
+                    });
+                    ddl.val(defaultSelectionValues);
+                },
+                error: function (errorData) {
+                    console.log(errorData);
+                }
+            });
+
+        }
+        function bindCircle(id, defaultSelectionValues, ZoneId) {
+
+            defaultSelectionValues = typeof defaultSelectionValues !== 'undefined' ? defaultSelectionValues : '';
+            if (defaultSelectionValues == -1 || defaultSelectionValues == 0 || defaultSelectionValues == '-1' || defaultSelectionValues == '') {
+                defaultSelectionValues = '-1';
+            }
+            var obj = new Object();
+            obj.Action = "bindCircle";
+            obj.ZoneId = ZoneId;
+
+            $.ajax({
+                type: 'POST',
+                url: '/DropdownBinder/fillDropdown',
+                data: { Action: obj.Action, ZoneId: obj.ZoneId },
+                success: function (Data) {
+                    var ddl = $('#' + id);
+                    ddl.empty();
+                    ddl.append($('<option/>', {
+                        value: "-1",
+                        text: "Choose option "
+                    }));
+
+                    $.each(Data, function (index, rowData) {
+                        ddl.append($('<option/>', {
+                            value: rowData.id,
+                            text: rowData.value
+                        }));
+                    });
+                    ddl.val(defaultSelectionValues);
+                },
+                error: function (errorData) {
+                    console.log(errorData);
+                }
+            });
+
+        }
+        function bindDivision(id, defaultSelectionValues, ZoneId, CircleId) {
+
+            defaultSelectionValues = typeof defaultSelectionValues !== 'undefined' ? defaultSelectionValues : '';
+            if (defaultSelectionValues == -1 || defaultSelectionValues == 0 || defaultSelectionValues == '-1' || defaultSelectionValues == '') {
+                defaultSelectionValues = '-1';
+            }
+            var obj = new Object();
+            obj.Action = "bindDivision";
+            obj.ZoneId = ZoneId,
+                obj.CircleId = CircleId
+
+            $.ajax({
+                type: 'POST',
+                url: '/DropdownBinder/fillDropdown',
+                data: { Action: obj.Action, ZoneId: obj.ZoneId, CircleId: obj.CircleId },
+                success: function (Data) {
+                    var ddl = $('#' + id);
+                    ddl.empty();
+                    ddl.append($('<option/>', {
+                        value: "-1",
+                        text: "Choose option "
+                    }));
+
+                    $.each(Data, function (index, rowData) {
+                        ddl.append($('<option/>', {
+                            value: rowData.id,
+                            text: rowData.value
+                        }));
+                    });
+                    ddl.val(defaultSelectionValues);
+                },
+                error: function (errorData) {
+                    console.log(errorData);
+                }
+            });
+        }
+
+        $("#btnSearch").click(function () {
+            debugger;
+            var Fromdate = $("#Fromdate").val();
+            var todate = $("#todate").val();
+            var IssuingAuthorityName = $("#IssuingAuthorityName").val();
+            var NoticeRelatedDesignationId = $("#ComplainRelatedDesignationId").val();
+            var NoticeRelatedTo = $("#ComplaintRelatedTo").val();
+            var NoticeRelatedZoneId = $("#ComplaintRelatedZoneId").val();
+            var NoticeRelatedCircleId = $("#ComplaintRelatedCircleId").val();
+            var NoticeRelatedDivisionId = $("#ComplaintRelatedDivisionId").val();
+            var ComplainantName = $("#ComplainantName").val();
+            var Status = $("#Status").val();
+
+
+            var formData = {
+                Fromdate: Fromdate,
+                todate: todate,
+                IssuingAuthorityName: IssuingAuthorityName,
+                NoticeRelatedDesignationId: NoticeRelatedDesignationId,
+                NoticeRelatedTo: NoticeRelatedTo,
+                NoticeRelatedZoneId: NoticeRelatedZoneId,
+                NoticeRelatedCircleId: NoticeRelatedCircleId,
+                NoticeRelatedCircleId: NoticeRelatedCircleId,
+                NoticeRelatedCircleId: NoticeRelatedCircleId,
+                Status: Status,
+                ComplainantName: ComplainantName
+            };
+
+            $.post("/ComplaintSE/ShowcauseNoticeallReports", formData, function (response) {
+
+                var htmlNew = response;
+                $("#divDetails").html($(htmlNew).find("#divDetails").html());
+
+                // Clear and destroy previous DataTable before initializing a new one
+                if ($.fn.DataTable.isDataTable('.example')) {
+                    $('.example').DataTable().clear().destroy();
+                }
+
+                // Initialize the DataTable after replacing the content
+                new DataTable('.example', { // Fixed the selector to match the table
+                    layout: {
+                        topStart: {
+                            buttons: [
+                                'print',
+                                {
+                                    extend: 'excel',
+                                    exportOptions: {
+                                        columns: ':visible'
+                                    }
+                                },
+                                'colvis'
+                            ]
+                        }
+                    }
+                });
+
+            });
+        });
+
+    });
+</script>
+
+
+  

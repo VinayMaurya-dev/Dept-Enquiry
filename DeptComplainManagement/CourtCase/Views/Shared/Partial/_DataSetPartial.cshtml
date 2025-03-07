@@ -1,0 +1,1443 @@
+﻿@model CourtCase.Models.ComplaintDetails
+@{
+    System.Data.DataSet ds = ((System.Data.DataSet)ViewBag.Replies);
+    System.Data.DataTable dt = new System.Data.DataTable();
+    System.Data.DataTable ft = new System.Data.DataTable();
+    System.Data.DataTable it = new System.Data.DataTable();
+    System.Data.DataTable aarop = new System.Data.DataTable();
+    System.Data.DataTable statement = new System.Data.DataTable();
+    System.Data.DataTable finalstatus = new System.Data.DataTable();
+    System.Data.DataTable Reminder = new System.Data.DataTable();
+    System.Data.DataTable forwardInvest = new System.Data.DataTable();
+    System.Data.DataTable hearing = new System.Data.DataTable();
+    System.Data.DataTable Counter = new System.Data.DataTable();
+    System.Data.DataTable Revision = new System.Data.DataTable();
+    System.Data.DataTable Appeal = new System.Data.DataTable();
+    System.Data.DataTable finalRevAppstatus = new System.Data.DataTable();
+    System.Data.DataTable Courtdata = new System.Data.DataTable();
+    System.Data.DataTable Investigationdata = new System.Data.DataTable();
+
+    if (ds != null && ds.Tables.Count > 0)
+    {
+        dt = ds.Tables[0];
+        ft = ds.Tables[1];
+        it = ds.Tables[2];
+        aarop = ds.Tables[3];
+        statement = ds.Tables[4];
+        finalstatus = ds.Tables[5];
+        Reminder = ds.Tables[6];
+        forwardInvest = ds.Tables[7];
+        hearing = ds.Tables[8];
+        Counter = ds.Tables[9];
+        Revision = ds.Tables[10];
+        Appeal = ds.Tables[11];
+        finalRevAppstatus = ds.Tables[12];
+        Courtdata = ds.Tables[13];
+        Investigationdata = ds.Tables[14];
+    }
+}
+
+@if (Counter != null && Counter.Rows.Count > 0)
+ {
+    foreach (System.Data.DataRow counterRow in Counter.Rows)
+    {
+        int c = Convert.ToInt32(counterRow["SequenceCounter"]);
+
+        <div>
+            @if (it != null && it.Rows.Count > 0)
+            {
+                for (int i = 0; i < it.Rows.Count; i++)
+                {
+                    if (c == Convert.ToInt32(it.Rows[i]["SequenceCounter"]))
+                    {
+                        string collapseId = "collapsetwo" + i;
+                        string headingId = "headingtwo" + i;
+                        string dataTarget = "#" + collapseId;
+                        <div class="main-card mb-3 card">
+                            <div class="card-body">
+                                <h5 class="card-title">पदेन जांच अधिकारी</h5>
+
+                                <div id="accordion2" class="accordion-wrapper mb-3">
+
+
+                                    <div class="card mb-3">
+                                        <div id="@headingId" class="card-header">
+                                            <button type="button" data-toggle="collapse" data-target="@dataTarget"
+                                                    aria-expanded="false" aria-controls="@collapseId"
+                                                    class="text-left m-0 p-0 btn btn-link btn-block">
+                                                <h5 class="m-0 p-0">
+
+                                                    <b>पदेन जांच अधिकारी को दिनांक @it.Rows[i]["MarkedOnDate"].ToString() को प्रश्नगत जाँच अग्रसारित किया गया |</b>
+                                                    <i class="float-right pe-7s-angle-down-circle fa-1x" style="color:black;"></i>
+                                                </h5>
+                                            </button>
+                                        </div>
+                                        <div id="@collapseId" @*class="collapse"*@ data-parent="#accordion2" aria-labelledby="@headingId">
+                                            <div class="card-body">
+                                                <div class="media">
+                                                    <div class="media-body"> 
+                                                        <div class="mt-2">
+                                                            <div class="form-row">
+                                                                <div class="col-md-3 mb-3">
+                                                                    <div class="position-relative form-group">
+                                                                        <label>जांच अधिकारी कहाँ से है</label>
+                                                                        <input type="text" class="form-control" readonly value="@it.Rows[i]["InvestigatingOfficerRelatedTo"].ToString()" />
+                                                                    </div>
+                                                                </div>
+
+                                                                @* Zone, Circle, Division Visibility Logic *@
+                                                                @{
+                                                                    string relatedTo = it.Rows[i]["InvestigatingOfficerRelatedTo"].ToString();
+                                                                    bool showZone = relatedTo == "Zone" || relatedTo == "Circle" || relatedTo == "Division";
+                                                                    bool showCircle = relatedTo == "Circle" || relatedTo == "Division";
+                                                                    bool showDivision = relatedTo == "Division";
+                                                                }
+
+                                                                @if (showZone)
+                                                                {
+                                                                    <div class="col-md-3 mb-3">
+                                                                        <div class="position-relative form-group">
+                                                                            <label>Zone</label>
+                                                                            <input type="text" class="form-control" readonly value="@it.Rows[i]["InvestigatingOfficerZone"].ToString()" />
+                                                                        </div>
+                                                                    </div>
+                                                                }
+
+                                                                @if (showCircle)
+                                                                {
+                                                                    <div class="col-md-3 mb-3">
+                                                                        <div class="position-relative form-group">
+                                                                            <label>Circle</label>
+                                                                            <input type="text" class="form-control" readonly value="@it.Rows[i]["InvestigatingOfficerCircle"].ToString()" />
+                                                                        </div>
+                                                                    </div>
+                                                                }
+
+                                                                @if (showDivision)
+                                                                {
+                                                                    <div class="col-md-3 mb-3">
+                                                                        <div class="position-relative form-group">
+                                                                            <label>Division</label>
+                                                                            <input type="text" class="form-control" readonly value="@it.Rows[i]["InvestigatingOfficerDivision"].ToString()" />
+                                                                        </div>
+                                                                    </div>
+                                                                }
+
+                                                                <div class="col-md-3 mb-3">
+                                                                    <div class="position-relative form-group">
+                                                                        <label>अधिकारी पद का नाम</label>
+                                                                        <input type="text" class="form-control" readonly value="@it.Rows[i]["InvestigatingOfficerDesignationName"].ToString()" style="font-size:14px;" />
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-3 mb-3">
+                                                                    <div class="position-relative form-group">
+                                                                        <label>अधिकारी का ईमेल आईडी</label>
+                                                                        <input type="text" class="form-control" readonly value="@it.Rows[i]["InvestigatingOfficerName"].ToString()" id="InvestigatingOfficerName" />
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-3 mb-3">
+                                                                    <div class="position-relative form-group">
+                                                                        <label>अधिकारी का मोबाइल नंबर</label>
+                                                                        <input type="text" class="form-control" readonly value="@it.Rows[i]["InvestigatingOfficerMobile"].ToString()" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            }
+        </div> 
+        <div>
+                @if (aarop != null && aarop.Rows.Count > 0)
+                {
+                    for (int i = 0; i < aarop.Rows.Count; i++)
+                    {
+                        if (c == Convert.ToInt32(aarop.Rows[i]["SequenceCounter"]))
+                        {
+                            string collapseId = $"collapsethree_{i}";
+                            string headingId = $"headingthree_{i}";
+                            string dataTarget = $"#{collapseId}";
+                            <div class="main-card mb-3 card">
+                                <div class="card-body"> 
+                                    @if (c == 2)
+                                    {
+                                        <h5 class="card-title">आरोप विवरण</h5>
+                                        <div class="form-row">
+                                            <div class="col-md-3 mb-3">
+                                                <div class="form-group">
+                                                    <label>आरोपों की संख्या</label>
+                                                    @Html.TextBoxFor(m => m.NumberofCharges, new { @class = "form-control", @readonly = "true" })
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 mb-3">
+                                                <div class="form-group">
+                                                    <label>आरोप पत्र संख्या</label>
+                                                    @Html.TextBoxFor(m => m.ChargeSheetNumber, new { @class = "form-control", @readonly = "true" })
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 mb-3">
+                                                <div class="form-group">
+                                                    <label>अपलोड किया गया आरोप पत्र</label><br />
+                                                    @if (!string.IsNullOrEmpty(Model.ChargeSheetAttachment))
+                                                    {
+                                                        <a href="@Model.ChargeSheetAttachment.Replace("~", "")" target="_blank" class="mb-2 mr-2">
+                                                            <img src="~/assets/pdf/pdf3.png" style="height:50px;" class="img-responsive" />
+                                                        </a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a href="javascript:void(0);" class="mb-2 mr-2 disabled">
+                                                            <img src="~/assets/pdf/pdf3.png" style="height:50px;" />
+                                                        </a>
+                                                    }
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 mb-3">
+                                                <div class="form-group">
+                                                    <label>आरोप पत्र निर्गत की तिथि</label>
+                                                    @Html.TextBoxFor(model => model.DateOfIssueChargeSheet, new { @type = "date", @class = "form-control", @readonly = "true" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    <div id="accordion3" class="accordion-wrapper mb-3">
+
+
+                                        <div class="card mb-3">
+                                            <div id="@headingId" class="card-header">
+                                                <button type="button" data-toggle="collapse" data-target="@dataTarget"
+                                                        aria-expanded="false" aria-controls="@collapseId"
+                                                        class="text-left m-0 p-0 btn btn-link btn-block">
+                                                    <h5 class="m-0 p-0"><b>विवरण :- @(i + 1)</b></h5>
+                                                    <i class="float-right pe-7s-angle-down-circle fa-1x" style="color:black;"></i>
+                                                </button>
+                                            </div>
+                                            <div id="@collapseId" data-parent="#accordion3" aria-labelledby="@headingId">
+                                                <div class="card-body">
+                                                    <div class="media">
+                                                        <div class="media-body">
+                                                            <div class="mt-2">
+                                                                <div class="form-row">
+                                                                    <div class="col-md-12 mb-3">
+                                                                        <div class="position-relative form-group">
+                                                                            <label for="validationCustomUsername">आरोप विवरण</label>
+                                                                            <textarea class="form-control" readonly rows="6">@aarop.Rows[i]["Aarop_Details"].ToString()</textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                }
+            </div>
+        <div>
+            @if (dt != null && dt.Rows.Count > 0)
+            {
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    if (c == Convert.ToInt32(dt.Rows[i]["SequenceCounter"]))
+                    {
+                        string collapseId = $"collapsefour_{i}";
+                        string headingId = $"headingfour_{i}";
+                        string dataTarget = $"#{collapseId}";
+                        <div class="main-card mb-3 card">
+                            <div class="card-body">
+                                <h5 class="card-title">टिप्पणी</h5>
+                                <div id="accordion4" class="accordion-wrapper mb-3">
+                                    <div class="card mb-3">
+                                        <div id="@headingId" class="card-header">
+                                            <button type="button" data-toggle="collapse" data-target="@dataTarget"
+                                                    aria-expanded="false" aria-controls="@collapseId"
+                                                    class="text-left m-0 p-0 btn btn-link btn-block">
+                                                <h5 class="m-0 p-0">
+                                                    @dt.Rows[i]["RemarkByDepartment"] <b>@dt.Rows[i]["DesignationName"]</b> द्वारा दिनांक @dt.Rows[i]["RemarkOnDate"].ToString() को टिप्पणी
+                                                    <i class="float-right pe-7s-angle-down-circle fa-1x" style="color:black;"></i>
+                                                </h5>
+                                            </button>
+                                        </div>
+                                        <div id="@collapseId" class="collapse" data-parent="#accordion4" aria-labelledby="@headingId">
+                                            <div class="card-body">
+                                                <div class="media">
+                                                    <div class="media-body">
+                                                        <div class="float-right text-muted small">@dt.Rows[i]["RemarkOnDate"].ToString()</div>
+                                                        <div class="mt-2">
+                                                            <div class="form-row">
+                                                                <div class="col-md-6 mb-3">
+                                                                    <div class="position-relative form-group">
+                                                                        <label>टिप्पणी का विषय</label>
+                                                                        <input type="text" class="form-control" readonly value="@dt.Rows[i]["ComplaintMarkedRemarkSubject"].ToString()" />
+                                                                    </div>
+                                                                </div>
+                                                                @if (!string.IsNullOrWhiteSpace(dt.Rows[i]["OtherComplaintDocument"].ToString()))
+                                                                {
+                                                                    <div class="col-md-6 mb-3">
+                                                                        <div class="position-relative form-group">
+                                                                            <label>अपलोड किया गया डॉक्यूमेंट</label><br />
+                                                                            <a href="@dt.Rows[i]["OtherComplaintDocument"].ToString()" target="_blank" class="mb-2 mr-2">
+                                                                                <img src="~/assets/pdf/pdf3.png" style="height:50px;" />
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                }
+                                                                <div class="col-md-12 mb-3">
+                                                                    <div class="position-relative form-group">
+                                                                        <label>टिप्पणी का विवरण</label>
+                                                                        <textarea class="form-control" style="resize:none;" rows="5" readonly>@Html.Raw(dt.Rows[i]["ComplaintMarkedRemarkDescription"].ToString())</textarea>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            }
+        </div>
+        <div>
+            @if (Reminder != null && Reminder.Rows.Count > 0)
+            {
+                for (int i = 0; i < Reminder.Rows.Count; i++)
+                {
+                    if (c == Convert.ToInt32(Reminder.Rows[i]["SequenceCounter"]))
+                    {
+                        string collapseId = $"collapseSev_{i}";
+                        string headingId = $"headingSev_{i}";
+                        string dataTarget = $"#{collapseId}";
+                        <div class="main-card mb-3 card">
+                            <div class="card-body">
+                                <div id="accordion4" class="accordion-wrapper mb-3">
+
+
+                                    <div class="card mb-3">
+                                        <div id="@headingId" class="card-header">
+                                            <button type="button" data-toggle="collapse" data-target="@dataTarget"
+                                                    aria-expanded="false" aria-controls="@collapseId"
+                                                    class="text-left m-0 p-0 btn btn-link btn-block">
+                                                <h5 class="m-0 p-0">
+                                                    <b> @Reminder.Rows[i]["ActionName"].ToString()</b>
+                                                    <i class="float-right pe-7s-angle-down-circle fa-1x" style="color:black;"></i>
+                                                </h5>
+                                            </button>
+                                        </div>
+                                        <div id="@collapseId" data-parent="#accordion4" aria-labelledby="@headingId">
+                                            <div class="card-body">
+                                                <div class="media">
+                                                    <div class="media-body"> 
+                                                        <div class="mt-2">
+                                                            <div class="form-row">
+
+                                                                <div class="col-md-4 mb-3">
+                                                                    <div class="position-relative form-group">
+                                                                        <label>पत्रांक संख्या</label><br />
+                                                                        <input type="text" class="form-control" readonly value="@Reminder.Rows[i]["LetterNumber"].ToString()" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4 mb-3">
+                                                                    <div class="position-relative form-group">
+                                                                        <label> दिनांक</label><br />
+                                                                        <input type="text" class="form-control" readonly value="@Reminder.Rows[i]["LetterDate"].ToString()" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4 mb-3">
+                                                                    <div class="position-relative form-group">
+                                                                        <label>अपलोड किया गया  दस्तावेज</label><br />
+                                                                        <a href="@Reminder.Rows[i]["Attatchment"].ToString()" target="_blank" class="mb-2 mr-2">
+                                                                            <img src="~/assets/pdf/pdf3.png" style="height:50px;" />
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            }
+        </div>
+        <div>
+            @if (forwardInvest != null && forwardInvest.Rows.Count > 0)
+            {
+                for (int i = 0; i < forwardInvest.Rows.Count; i++)
+                {
+                    if (c == Convert.ToInt32(forwardInvest.Rows[i]["SequenceCounter"]))
+                    {
+                        string collapseId = $"collapseEight_{i}";
+                        string headingId = $"headingEight_{i}";
+                        string dataTarget = $"#{collapseId}";
+                        <div class="main-card mb-3 card">
+                            <div class="card-body">
+                                <div id="accordion8" class="accordion-wrapper mb-3">
+
+
+                                    <div class="card mb-3">
+                                        <div id="@headingId" class="card-header">
+                                            <button type="button" data-toggle="collapse" data-target="@dataTarget"
+                                                    aria-expanded="false" aria-controls="@collapseId"
+                                                    class="text-left m-0 p-0 btn btn-link btn-block">
+                                                <h5 class="m-0 p-0">
+                                                    <b>जाँच आख्या से असहमति की दशा में पुनः जाँच हेतु नियुक्ति अधिकारी द्वारा जाँच अधिकारी को प्रेषित पत्र का विवरण</b>
+                                                    <i class="float-right pe-7s-angle-down-circle fa-1x" style="color:black;"></i>
+                                                </h5>
+                                            </button>
+                                        </div>
+                                        <div id="@collapseId" data-parent="#accordion8" aria-labelledby="@headingId">
+                                            <div class="card-body">
+                                                <div class="media">
+                                                    <div class="media-body"> 
+                                                        <div class="mt-2">
+                                                            <div class="form-row">
+
+                                                                <div class="col-md-4 mb-3">
+                                                                    <div class="position-relative form-group">
+                                                                        <label>पत्रांक संख्या</label><br />
+                                                                        <input type="text" class="form-control" readonly value="@forwardInvest.Rows[i]["LetterNumber"].ToString()" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4 mb-3">
+                                                                    <div class="position-relative form-group">
+                                                                        <label> दिनांक</label><br />
+                                                                        <input type="text" class="form-control" readonly value="@forwardInvest.Rows[i]["LetterDate"].ToString()" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4 mb-3">
+                                                                    <div class="position-relative form-group">
+                                                                        <label>अपलोड किया गया  दस्तावेज</label><br />
+                                                                        <a href="@forwardInvest.Rows[i]["Attatchment"].ToString()" target="_blank" class="mb-2 mr-2">
+                                                                            <img src="~/assets/pdf/pdf3.png" style="height:50px;" />
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            }
+        </div>
+        <div>
+            @if (statement != null && statement.Rows.Count > 0)
+            {
+                for (int i = 0; i < statement.Rows.Count; i++)
+                {
+                    if (c == Convert.ToInt32(statement.Rows[i]["SequenceCounter"]))
+                    {
+                        string collapseId = $"collapsefive_{i}";
+                        string headingId = $"headingfive_{i}";
+                        string dataTarget = $"#{collapseId}";
+                        <div class="main-card mb-3 card">
+                            <div class="card-body">
+                                <h5 class="card-title">आख्या</h5>
+                                <div id="accordion5" class="accordion-wrapper mb-3">
+
+
+                                    <div class="card mb-3">
+                                        <div id="@headingId" class="card-header">
+                                            <button type="button" data-toggle="collapse" data-target="@dataTarget"
+                                                    aria-expanded="false" aria-controls="@collapseId"
+                                                    class="text-left m-0 p-0 btn btn-link btn-block">
+                                                <h5 class="m-0 p-0">
+                                                    @if (i == 0)
+                                                    {
+                                                        <b>जाँच अधिकारी द्वारा दिनांक @statement.Rows[i]["StatementOnDate"].ToString() को प्रेषित जाँच आख्या का विवरण</b>
+                                                    }
+                                                    else
+                                                    {
+                                                        <b>जाँच अधिकारी द्वारा दिनांक @statement.Rows[i]["StatementOnDate"].ToString() को पुनः प्रेषित जाँच आख्या का विवरण</b>
+                                                    }
+
+                                                    @*पदेन  @statement.Rows[i]["StatementByDepartment"] द्वारा दिनांक @statement.Rows[i]["StatementOnDate"].ToString() को आख्या*@
+                                                    <i class="float-right pe-7s-angle-down-circle fa-1x" style="color:black;"></i>
+                                                </h5>
+                                            </button>
+                                        </div>
+                                        <div id="@collapseId" data-parent="#accordion5" aria-labelledby="@headingId">
+                                            <div class="card-body">
+                                                <div class="media">
+                                                    <div class="media-body">
+                                                       
+                                                        <div class="mt-2">
+                                                            <div class="form-row">
+                                                                @if (!string.IsNullOrWhiteSpace(statement.Rows[i]["StatementComplaintDocument"].ToString()))
+                                                                {
+                                                                    <div class="col-md-6 mb-3">
+                                                                        <div class="position-relative form-group">
+                                                                            <label>अपलोड किया गया दस्तावेज़</label><br />
+                                                                            <a href="@statement.Rows[i]["StatementComplaintDocument"].ToString()" target="_blank" class="mb-2 mr-2 btn">
+                                                                                <img src="~/assets/pdf/pdf3.png" style="height:50px;" class="img-responsive" />
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                }
+                                                                <div class="col-md-6 mb-3">
+                                                                    <div class="position-relative form-group">
+                                                                        <label>जाँच आख्या प्रेषण की तिथि</label>
+                                                                        <input type="text" class="form-control" readonly value="@statement.Rows[i]["DateofdispatchComplaint"].ToString()" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12 mb-3">
+                                                                    <div class="position-relative form-group">
+                                                                        <label>आख्या का विवरण</label>
+                                                                        <textarea class="form-control" style="resize:none;" rows="5" readonly>@statement.Rows[i]["StatementDescription"].ToString()</textarea>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            }
+        </div>
+        <div>
+            @if (ft != null && ft.Rows.Count > 0)
+            {
+                for (int i = 0; i < ft.Rows.Count; i++)
+                {
+                    if (c == Convert.ToInt32(ft.Rows[i]["SequenceCounter"]))
+                    {
+                        string collapseId = "collapseOne" + i;
+                        string headingId = "headingOne" + i;
+                        string dataTarget = "#" + collapseId;
+                        <div class="main-card mb-3 card">
+                            <div class="card-body">
+                                <div class="vertical-without-time vertical-timeline--animate vertical-timeline--one-column">
+                                    <div class="vertical-timeline-item vertical-timeline-element">
+                                        <div>
+                                            <span class="vertical-timeline-element-icon bounce-in">
+                                                <i class="badge badge-dot badge-dot-xl badge-success"> </i>
+                                            </span>
+                                            <div class="vertical-timeline-element-content bounce-in">
+                                                <h3 class="timeline-title">अग्रसारित अधिकारी</h3>
+                                                <br />
+                                                <div id="accordion1" class="accordion-wrapper mb-3">
+                                                    <div class="card mb-3">
+                                                        <div id="@headingId" class="card-header">
+                                                            <button type="button" data-toggle="collapse" data-target="@dataTarget"
+                                                                    aria-expanded="false" aria-controls="@collapseId"
+                                                                    class="text-left m-0 p-0 btn btn-link btn-block">
+                                                                <h5 class="m-0 p-0">
+                                                                    <b>@ft.Rows[i]["ForwardingOfficerBy"].ToString() </b> द्वारा <b style="color:#e6470c;"><i>@ft.Rows[i]["ReasonedDecision"].ToString()</i></b> <b> @ft.Rows[i]["ForwardingOfficer"].ToString()</b> को दिनांक @ft.Rows[i]["RemarkedOnDate"].ToString() को अग्रसारित किया
+                                                                    <i class="float-right pe-7s-angle-down-circle fa-1x" style="color:black;"></i>
+                                                                </h5>
+                                                            </button>
+                                                        </div>
+                                                        <div data-parent="#accordion1" id="@collapseId" aria-labelledby="@headingId">
+                                                            <div class="card-body">
+                                                                <div class="media">
+                                                                    <div class="media-body"> 
+                                                                        <div class="mt-2">
+                                                                            <div class="form-row">
+                                                                                <div class="col-md-4 mb-3">
+                                                                                    <div class="position-relative form-group">
+                                                                                        <label>पत्रावली प्रेषित करने की तिथि</label>
+                                                                                        <input type="text" class="form-control" readonly="readonly" value="@ft.Rows[i]["LetterDate"].ToString()" />
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-4 mb-3">
+                                                                                    <div class="position-relative form-group">
+                                                                                        <label>पत्रावली प्रेषण हेतु अधिकारी का पदनाम</label>
+                                                                                        <input type="text" class="form-control" readonly="readonly" value="@ft.Rows[i]["ForwardingOfficer"].ToString()" />
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-4 mb-3">
+                                                                                    <div class="position-relative form-group">
+                                                                                        <label>कार्यालय मत</label><br />
+                                                                                        @if (!string.IsNullOrEmpty(ft.Rows[i]["LetterAttatchment"].ToString()))
+                                                                                        {
+                                                                                            <a href="@ft.Rows[i]["LetterAttatchment"].ToString()" target="_blank" class="mb-2 mr-2">
+                                                                                                <img src="~/assets/pdf/pdf3.png" style="height:50px;" class="img-responsive" />
+                                                                                            </a>
+                                                                                        }
+                                                                                        else
+                                                                                        {
+                                                                                            <a href="javascript:void(0);" class="mb-2 mr-2 disabled">
+                                                                                                <img src="~/assets/pdf/pdf3.png" style="height:50px;" title="Not Uploaded" />
+                                                                                            </a>
+                                                                                        }
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-12 mb-3">
+                                                                                    <div class="position-relative form-group">
+                                                                                        <label>टिप्पणी</label>
+                                                                                        <textarea class="form-control" readonly="readonly" rows="5">@ft.Rows[i]["ForwardingOfficerComment"].ToString()</textarea>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            }
+        </div>
+        <div>
+            @if (hearing != null && hearing.Rows.Count > 0)
+            {
+                for (int i = 0; i < hearing.Rows.Count; i++)
+                {
+                    if (c == Convert.ToInt32(hearing.Rows[i]["SequenceCounter"]))
+                    {
+                        string collapseId = $"collapseSev_{i}";
+                        string headingId = $"headingSev_{i}";
+                        string dataTarget = $"#{collapseId}";
+
+                        <div class="main-card mb-3 card">
+                            <div class="card-body">
+                                <div class="vertical-without-time vertical-timeline--animate vertical-timeline--one-column">
+                                    <div class="vertical-timeline-item vertical-timeline-element">
+                                        <div>
+                                            <span class="vertical-timeline-element-icon bounce-in">
+                                                <i class="badge badge-dot badge-dot-xl badge-success"> </i>
+                                            </span>
+
+                                            <div class="vertical-timeline-element-content bounce-in">
+                                                <h3 class="timeline-title">दोषी पाये जाने पर  सुनवाई /अभ्यावेदन प्रस्तुत करने अपचारी को अवसर प्रदान किया जाना</h3>
+                                                <br />
+                                                <div id="accordion4" class="accordion-wrapper mb-3">
+                                                    <div class="card mb-3">
+                                                        <div id="@headingId" class="card-header">
+                                                            <button type="button" data-toggle="collapse" data-target="@dataTarget"
+                                                                    aria-expanded="false" aria-controls="@collapseId"
+                                                                    class="text-left m-0 p-0 btn btn-link btn-block">
+                                                                <h5 class="m-0 p-0">
+                                                                    <b> @hearing.Rows[i]["ActionName"].ToString()</b>
+                                                                    <i class="float-right pe-7s-angle-down-circle fa-1x" style="color:black;"></i>
+                                                                </h5>
+                                                            </button>
+                                                        </div>
+                                                        <div id="@collapseId" data-parent="#accordion4" aria-labelledby="@headingId">
+                                                            <div class="card-body">
+                                                                <div class="media">
+                                                                    <div class="media-body"> 
+                                                                        <div class="mt-2">
+                                                                            <div class="form-row">
+
+                                                                                <div class="col-md-4 mb-3">
+                                                                                    <div class="position-relative form-group">
+                                                                                        <label>पत्रांक संख्या</label><br />
+                                                                                        <input type="text" class="form-control" readonly value="@hearing.Rows[i]["LetterNumber"].ToString()" />
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-4 mb-3">
+                                                                                    <div class="position-relative form-group">
+                                                                                        <label> दिनांक</label><br />
+                                                                                        <input type="text" class="form-control" readonly value="@hearing.Rows[i]["LetterDate"].ToString()" />
+                                                                                    </div>
+                                                                                </div>
+                                                                                @if (!string.IsNullOrEmpty(hearing.Rows[i]["DesignationName"].ToString()))
+                                                                                {
+                                                                                    <div class="col-md-4 mb-3">
+                                                                                        <div class="position-relative form-group">
+                                                                                            <label> अधिकारी का पदनाम, जिनको सुनवाई करने के उपरांत पत्रावली वापस की जा रही है</label><br />
+                                                                                            <input type="text" class="form-control" readonly value="@hearing.Rows[i]["DesignationName"].ToString()" />
+                                                                                        </div>
+                                                                                    </div>
+                                                                                }
+
+                                                                                <div class="col-md-4 mb-3">
+                                                                                    <div class="position-relative form-group">
+                                                                                        <label>अपलोड किया गया  दस्तावेज</label><br />
+                                                                                        <a href="@hearing.Rows[i]["Attatchment"].ToString()" target="_blank" class="mb-2 mr-2">
+                                                                                            <img src="~/assets/pdf/pdf3.png" style="height:50px;" />
+                                                                                        </a>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-12 mb-3">
+                                                                                    <div class="position-relative form-group">
+                                                                                        <label>टिप्पणी</label>
+                                                                                        <textarea class="form-control" readonly="readonly" rows="5">@hearing.Rows[i]["ForwardingOfficerComment"].ToString()</textarea>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div> 
+                                                </div>
+                                            </div>
+                                        </div> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            }
+        </div>
+        <div>
+            @if (finalstatus != null && finalstatus.Rows.Count > 0)
+            {
+                for (int i = 0; i < finalstatus.Rows.Count; i++)
+                {
+                    if (c == Convert.ToInt32(finalstatus.Rows[i]["SequenceCounter"]))
+                    {
+                        string collapseId = "collapsesix" + i;
+                        string headingId = "headingsix" + i;
+                        string dataTarget = "#" + collapseId;
+                        <div class="main-card mb-3 card">
+                            <div class="card-body">
+                                <div class="vertical-without-time vertical-timeline--animate vertical-timeline--one-column">
+                                    <div class="vertical-timeline-item vertical-timeline-element">
+                                        <span class="vertical-timeline-element-icon bounce-in">
+                                            <i class="badge badge-dot badge-dot-xl badge-success"> </i>
+                                        </span>
+                                        <div class="vertical-timeline-element-content bounce-in">
+                                            <h3 class="timeline-title">अंतिम स्टेटस</h3>
+                                            <br />
+                                            <div id="accordion2" class="accordion-wrapper mb-3">
+
+
+                                                <div class="card mb-3">
+                                                    <div id="@headingId" class="card-header">
+                                                        <button type="button" data-toggle="collapse" data-target="@dataTarget"
+                                                                aria-expanded="false" aria-controls="@collapseId"
+                                                                class="text-left m-0 p-0 btn btn-link btn-block">
+                                                            <h5 class="m-0 p-0">
+                                                                <b> अंतिम स्टेटस देखे</b>
+                                                                <i class="float-right pe-7s-angle-down-circle fa-1x" style="color:black;"></i>
+                                                            </h5>
+                                                        </button>
+                                                    </div>
+                                                    <div id="@collapseId" data-parent="#accordion2" aria-labelledby="@headingId">
+                                                        <div class="card-body">
+                                                            <div class="form-row ">
+                                                                <div class="col-md-4 mb-3">
+                                                                    <div class="position-relative form-group">
+                                                                        <label for="validationCustomUsername">
+                                                                            कार्यालय ज्ञाप संख्या
+                                                                        </label>
+                                                                        <input type="text" class="form-control" readonly="readonly" value="@finalstatus.Rows[i]["FinalOfficeMemorandumNo"].ToString()" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4 mb-3">
+                                                                    <div class="position-relative form-group">
+                                                                        <label for="validationCustomUsername">
+                                                                            अंतिम तिथि
+                                                                        </label>
+                                                                        <input type="text" class="form-control" readonly="readonly" value="@finalstatus.Rows[i]["FinalDate"].ToString()" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4 mb-3">
+                                                                    <div class="position-relative form-group">
+                                                                        <label for="validationCustomUsername">
+                                                                            अपलोड किया गया दस्तावेज़
+                                                                        </label>
+                                                                        <a href="@finalstatus.Rows[i]["FinalAttatchment"].ToString()" target="_blank" class="mb-2 mr-2">
+                                                                            <img src="~/assets/pdf/pdf3.png" style="height:50px;" />
+                                                                        </a>
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4 mb-3">
+                                                                    <div class="position-relative form-group">
+                                                                        <label for="validationCustomUsername">
+                                                                            जांच स्थिति
+                                                                        </label>
+                                                                        <input type="text" class="form-control" readonly="readonly" value="@finalstatus.Rows[i]["FinalStatus"].ToString()" />
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12 mb-3">
+                                                                    <div class="position-relative form-group">
+                                                                        <label for="validationCustomUsername">
+                                                                            टिप्पणी
+                                                                        </label>
+                                                                        <textarea class="form-control" style="resize:none;" rows="5" readonly>@finalstatus.Rows[i]["FinalRemarks"].ToString()</textarea>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    }
+                }
+
+
+            }
+        </div>
+        <div>
+            @if (Revision != null && Revision.Rows.Count > 0)
+            {
+                for (int i = 0; i < Revision.Rows.Count; i++)
+                {
+                    if (c == Convert.ToInt32(Revision.Rows[i]["SequenceCounter"]))
+                    {
+                        string collapseId = "collapse123" + i;
+                        string headingId = "heading123" + i;
+                        string dataTarget = "#" + collapseId;
+                        <div class="main-card mb-3 card">
+                            <div class="card-body">
+                                <div class="vertical-without-time vertical-timeline--animate vertical-timeline--one-column">
+                                    <div class="vertical-timeline-item vertical-timeline-element">
+                                        <span class="vertical-timeline-element-icon bounce-in">
+                                            <i class="badge badge-dot badge-dot-xl badge-success"> </i>
+                                        </span>
+                                        <div class="vertical-timeline-element-content bounce-in">
+                                            <h3 class="timeline-title">पुनरीक्षण</h3>
+                                            <br />
+                                            <div id="accordion2" class="accordion-wrapper mb-3">
+
+
+                                                <div class="card mb-3">
+                                                    <div id="@headingId" class="card-header">
+                                                        <button type="button" data-toggle="collapse" data-target="@dataTarget"
+                                                                aria-expanded="false" aria-controls="@collapseId"
+                                                                class="text-left m-0 p-0 btn btn-link btn-block">
+
+
+
+                                                            @if (Revision.Rows[i]["ForwadingOfficerUserNumber"].ToString() == "SE Complain")
+                                                            {
+                                                                <h5 class="m-0 p-0">
+                                                                    <b>@Revision.Rows[i]["CreatedBy_User_Number"].ToString() </b> द्वारा <b style="color:#e6470c;"></b>
+                                                                    दिनांक @Revision.Rows[i]["EntryDate"].ToString() को पुनरीक्षण में लिया गया निर्णय
+                                                                    <i class="float-right pe-7s-angle-down-circle fa-1x" style="color:black;"></i>
+                                                                </h5>
+                                                            }
+                                                            else
+                                                            {
+                                                                <h5 class="m-0 p-0">
+                                                                    <b>@Revision.Rows[i]["CreatedBy_User_Number"].ToString() </b> द्वारा <b style="color:#e6470c;"></b>
+                                                                    <b> @Revision.Rows[i]["ForwadingOfficerUserNumber"].ToString()</b> को दिनांक @Revision.Rows[i]["EntryDate"].ToString() को पुनरीक्षण के लिए अग्रसारित किया
+                                                                    <i class="float-right pe-7s-angle-down-circle fa-1x" style="color:black;"></i>
+                                                                </h5>
+                                                            }
+
+
+
+
+                                                            @*<h5 class="m-0 p-0">
+                                                                    <b> पुनरीक्षण देखे</b>
+                                                                    <i class="float-right pe-7s-angle-down-circle fa-1x" style="color:black;"></i>
+                                                                </h5>*@
+                                                        </button>
+                                                    </div>
+                                                    <div id="@collapseId" data-parent="#accordion2" aria-labelledby="@headingId">
+                                                        <div class="card-body">
+                                                            <div class="form-row ">
+
+                                                                @{
+                                                                    var fileNumber = Revision.Rows[i]["FileNumber"];
+                                                                }
+
+                                                                @if (fileNumber != DBNull.Value && fileNumber != null)
+                                                                {
+                                                                    <div class="col-md-4 mb-3">
+                                                                        <div class="position-relative form-group">
+                                                                            <label for="validationCustomUsername">
+                                                                                पुनरीक्षण पत्रावली संख्या
+                                                                            </label>
+                                                                            <input type="text" class="form-control" readonly="readonly" value="@fileNumber.ToString()" />
+                                                                        </div>
+                                                                    </div>
+                                                                }
+
+
+                                                                <div class="col-md-4 mb-3">
+                                                                    <div class="position-relative form-group">
+                                                                        <label for="validationCustomUsername">
+                                                                            अधिकारी का पदनाम
+                                                                        </label>
+                                                                        <input type="text" class="form-control" readonly="readonly" value="@Revision.Rows[i]["ForwadingOfficerUserNumber"].ToString()" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4 mb-3">
+                                                                    <div class="position-relative form-group">
+                                                                        <label for="validationCustomUsername">
+                                                                            अपलोड किया गया दस्तावेज़
+                                                                        </label>
+                                                                        <a href="@Revision.Rows[i]["Attatchhment"].ToString()" target="_blank" class="mb-2 mr-2">
+                                                                            <img src="~/assets/pdf/pdf3.png" style="height:50px;" />
+                                                                        </a>
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12 mb-3">
+                                                                    <div class="position-relative form-group">
+                                                                        <label for="validationCustomUsername">
+                                                                            टिप्पणी
+                                                                        </label>
+                                                                        <textarea class="form-control" style="resize:none;" rows="5" readonly>@Revision.Rows[i]["Desctioption"].ToString()</textarea>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    }
+                }
+
+
+            }
+        </div>
+        <div>
+            @if (Appeal != null && Appeal.Rows.Count > 0)
+            {
+                for (int i = 0; i < Appeal.Rows.Count; i++)
+                {
+                    if (c == Convert.ToInt32(Appeal.Rows[i]["SequenceCounter"]))
+                    {
+                        string collapseId = "collapse456" + i;
+                        string headingId = "heading456" + i;
+                        string dataTarget = "#" + collapseId;
+                        <div class="main-card mb-3 card">
+                            <div class="card-body">
+                                <div class="vertical-without-time vertical-timeline--animate vertical-timeline--one-column">
+                                    <div class="vertical-timeline-item vertical-timeline-element">
+                                        <span class="vertical-timeline-element-icon bounce-in">
+                                            <i class="badge badge-dot badge-dot-xl badge-success"> </i>
+                                        </span>
+                                        <div class="vertical-timeline-element-content bounce-in">
+                                            <h3 class="timeline-title"> अपील</h3>
+                                            <br />
+                                            <div id="accordion2" class="accordion-wrapper mb-3">
+
+
+                                                <div class="card mb-3">
+                                                    <div id="@headingId" class="card-header">
+                                                        <button type="button" data-toggle="collapse" data-target="@dataTarget"
+                                                                aria-expanded="false" aria-controls="@collapseId"
+                                                                class="text-left m-0 p-0 btn btn-link btn-block">
+
+                                                            @if (Appeal.Rows[i]["ForwadingOfficerUserNumber"].ToString() == "SE Complain")
+                                                            {
+                                                                <h5 class="m-0 p-0">
+                                                                    <b>@Appeal.Rows[i]["CreatedBy_User_Number"].ToString() </b> द्वारा <b style="color:#e6470c;"></b>
+                                                                    दिनांक @Appeal.Rows[i]["EntryDate"].ToString() को अपील में लिया गया निर्णय
+                                                                    <i class="float-right pe-7s-angle-down-circle fa-1x" style="color:black;"></i>
+                                                                </h5>
+                                                            }
+                                                            else
+                                                            {
+                                                                <h5 class="m-0 p-0">
+                                                                    <b>@Appeal.Rows[i]["CreatedBy_User_Number"].ToString() </b> द्वारा <b style="color:#e6470c;"></b>
+                                                                    <b> @Appeal.Rows[i]["ForwadingOfficerUserNumber"].ToString()</b> को दिनांक @Appeal.Rows[i]["EntryDate"].ToString() को अपील के लिए अग्रसारित किया
+                                                                    <i class="float-right pe-7s-angle-down-circle fa-1x" style="color:black;"></i>
+                                                                </h5>
+                                                            }
+                                                            @*<h5 class="m-0 p-0">
+                                                                    <b>@Appeal.Rows[i]["CreatedBy_User_Number"].ToString() </b> द्वारा <b style="color:#e6470c;"></b>
+                                                                    <b> @Appeal.Rows[i]["ForwadingOfficerUserNumber"].ToString()</b> को दिनांक @Appeal.Rows[i]["EntryDate"].ToString() को अग्रेषित किया
+                                                                    <i class="float-right pe-7s-angle-down-circle fa-1x" style="color:black;"></i>
+                                                                </h5>*@
+                                                        </button>
+                                                    </div>
+                                                    <div id="@collapseId" data-parent="#accordion2" aria-labelledby="@headingId">
+                                                        <div class="card-body">
+                                                            <div class="form-row ">
+                                                                @{
+                                                                    var fileNumber = Appeal.Rows[i]["FileNumber"];
+                                                                }
+
+                                                                @if (fileNumber != DBNull.Value && fileNumber != null)
+                                                                {
+                                                                    <div class="col-md-4 mb-3">
+                                                                        <div class="position-relative form-group">
+                                                                            <label for="validationCustomUsername">
+                                                                                अपील पत्रावली संख्या
+                                                                            </label>
+                                                                            <input type="text" class="form-control" readonly="readonly" value="@fileNumber.ToString()" />
+                                                                        </div>
+                                                                    </div>
+                                                                }
+
+                                                                <div class="col-md-4 mb-3">
+                                                                    <div class="position-relative form-group">
+                                                                        <label for="validationCustomUsername">
+                                                                            अपील पत्रावली प्रेषण हेतु अधिकारी का पदनाम
+                                                                        </label>
+                                                                        <input type="text" class="form-control" readonly="readonly" value="@Appeal.Rows[i]["ForwadingOfficerUserNumber"].ToString()" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4 mb-3">
+                                                                    <div class="position-relative form-group">
+                                                                        <label for="validationCustomUsername">
+                                                                            अपलोड किया गया दस्तावेज़
+                                                                        </label>
+                                                                        <a href="@Appeal.Rows[i]["Attatchhment"].ToString()" target="_blank" class="mb-2 mr-2">
+                                                                            <img src="~/assets/pdf/pdf3.png" style="height:50px;" />
+                                                                        </a>
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12 mb-3">
+                                                                    <div class="position-relative form-group">
+                                                                        <label for="validationCustomUsername">
+                                                                            टिप्पणी
+                                                                        </label>
+                                                                        <textarea class="form-control" style="resize:none;" rows="5" readonly>@Appeal.Rows[i]["Desctioption"].ToString()</textarea>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    }
+                }
+
+
+            }
+        </div>
+        <div>
+            @if (finalRevAppstatus != null && finalRevAppstatus.Rows.Count > 0)
+            {
+                for (int i = 0; i < finalRevAppstatus.Rows.Count; i++)
+                {
+                    if (c == Convert.ToInt32(finalRevAppstatus.Rows[i]["SequenceCounter"]))
+                    {
+                        string collapseId = "collapsesix" + i;
+                        string headingId = "headingsix" + i;
+                        string dataTarget = "#" + collapseId;
+                        <div class="main-card mb-3 card">
+                            <div class="card-body">
+                                <div class="vertical-without-time vertical-timeline--animate vertical-timeline--one-column">
+                                    <div class="vertical-timeline-item vertical-timeline-element">
+                                        <span class="vertical-timeline-element-icon bounce-in">
+                                            <i class="badge badge-dot badge-dot-xl badge-success"> </i>
+                                        </span>
+                                        <div class="vertical-timeline-element-content bounce-in">
+
+                                            @if (finalRevAppstatus.Rows[i]["StatustType"].ToString() == "Revision")
+                                            {
+
+                                                <h3 class="timeline-title">पुनरीक्षण स्टेटस</h3>
+                                            }
+                                            else
+                                            {
+
+                                                <h3 class="timeline-title">अपील स्टेटस</h3>
+                                            }
+
+                                            <br />
+                                            <div id="accordion2" class="accordion-wrapper mb-3">
+
+                                                <div class="card mb-3">
+                                                    <div id="@headingId" class="card-header">
+                                                        <button type="button" data-toggle="collapse" data-target="@dataTarget"
+                                                                aria-expanded="false" aria-controls="@collapseId"
+                                                                class="text-left m-0 p-0 btn btn-link btn-block">
+                                                            <h5 class="m-0 p-0">
+                                                                <b>
+                                                                    @if (finalRevAppstatus.Rows[i]["StatustType"].ToString() == "Revision")
+                                                                    {
+                                                                        <text>पुनरीक्षण अंतिम स्टेटस देखे </text>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <text>अपील अंतिम स्टेटस देखे</text>
+                                                                    }
+
+                                                                </b>
+                                                                <i class="float-right pe-7s-angle-down-circle fa-1x" style="color:black;"></i>
+                                                            </h5>
+                                                        </button>
+                                                    </div>
+                                                    <div id="@collapseId" data-parent="#accordion2" aria-labelledby="@headingId">
+                                                        <div class="card-body">
+                                                            <div class="form-row ">
+                                                                <div class="col-md-4 mb-3">
+                                                                    <div class="position-relative form-group">
+                                                                        <label for="validationCustomUsername">
+                                                                            कार्यालय ज्ञाप संख्या
+                                                                        </label>
+                                                                        <input type="text" class="form-control" readonly="readonly" value="@finalRevAppstatus.Rows[i]["FinalOfficeMemorandumNo"].ToString()" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4 mb-3">
+                                                                    <div class="position-relative form-group">
+                                                                        <label for="validationCustomUsername">
+                                                                            अंतिम तिथि
+                                                                        </label>
+                                                                        <input type="text" class="form-control" readonly="readonly" value="@finalRevAppstatus.Rows[i]["FinalDate"].ToString()" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4 mb-3">
+                                                                    <div class="position-relative form-group">
+                                                                        <label for="validationCustomUsername">
+                                                                            अपलोड किया गया दस्तावेज़
+                                                                        </label>
+                                                                        <a href="@finalRevAppstatus.Rows[i]["FinalAttatchment"].ToString()" target="_blank" class="mb-2 mr-2">
+                                                                            <img src="~/assets/pdf/pdf3.png" style="height:50px;" />
+                                                                        </a>
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4 mb-3">
+                                                                    <div class="position-relative form-group">
+                                                                        <label for="validationCustomUsername">
+                                                                            जांच स्थिति
+                                                                        </label>
+                                                                        <input type="text" class="form-control" readonly="readonly" value="@finalRevAppstatus.Rows[i]["FinalStatus"].ToString()" />
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12 mb-3">
+                                                                    <div class="position-relative form-group">
+                                                                        <label for="validationCustomUsername">
+                                                                            टिप्पणी
+                                                                        </label>
+                                                                        <textarea class="form-control" style="resize:none;" rows="5" readonly>@finalRevAppstatus.Rows[i]["FinalRemarks"].ToString()</textarea>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    }
+                }
+
+
+            }
+        </div>
+        <div>
+            @if (Courtdata != null && Courtdata.Rows.Count > 0)
+            {
+                for (int i = 0; i < Courtdata.Rows.Count; i++)
+                {
+                    if (c == Convert.ToInt32(Courtdata.Rows[i]["SequenceCounter"]))
+                    {
+                        string collapseId = "collapse553" + i;
+                        string headingId = "heading343" + i;
+                        string dataTarget = "#" + collapseId;
+                        <div class="main-card mb-3 card">
+                            <div class="card-body">
+                                <div class="vertical-without-time vertical-timeline--animate vertical-timeline--one-column">
+                                    <div class="vertical-timeline-item vertical-timeline-element">
+                                        <span class="vertical-timeline-element-icon bounce-in">
+                                            <i class="badge badge-dot badge-dot-xl badge-success"> </i>
+                                        </span>
+                                        <div class="vertical-timeline-element-content bounce-in">
+                                            <h3 class="timeline-title"> कोर्ट केस का विवरण </h3>
+                                            <br />
+                                            <div id="accordion2" class="accordion-wrapper mb-3">
+                                                <div class="card mb-3">
+                                                    <div id="@headingId" class="card-header">
+                                                        <button type="button" data-toggle="collapse" data-target="@dataTarget"
+                                                                aria-expanded="false" aria-controls="@collapseId"
+                                                                class="text-left m-0 p-0 btn btn-link btn-block">
+                                                            <h5 class="m-0 p-0">
+                                                                <b>कोर्ट केस का विवरण</b>
+                                                                <i class="float-right pe-7s-angle-down-circle fa-1x" style="color:black;"></i>
+                                                            </h5>
+                                                        </button>
+                                                    </div>
+                                                    <div id="@collapseId" data-parent="#accordion2" aria-labelledby="@headingId">
+                                                        <div class="card-body">
+                                                            <div class="media">
+                                                                <div class="media-body">
+                                                                    
+                                                                    <div class="mt-2">
+                                                                        <div class="form-row ">
+                                                                            <div class="col-md-4 mb-3">
+                                                                                <div class="position-relative form-group">
+                                                                                    <label for="validationCustomUsername">
+                                                                                        कोर्ट का नाम
+                                                                                    </label>
+                                                                                    <input type="text" class="form-control" readonly="readonly" value="@Courtdata.Rows[i]["CourtName"].ToString()" />
+                                                                                </div>
+                                                                            </div>
+
+
+                                                                            <div class="col-md-4 mb-3">
+                                                                                <div class="position-relative form-group">
+                                                                                    <label for="validationCustomUsername">
+                                                                                        @if (Courtdata.Rows[i]["CaseType"].ToString() == "Writ")
+                                                                                        {
+                                                                                            @:याचिका
+                                                                                        }
+                                                                                        else if (Courtdata.Rows[i]["CaseType"].ToString() == "Contempt")
+                                                                                        {
+                                                                                            @:अवमानना
+                                                                                        }
+
+                                                                                    </label>
+                                                                                    <input type="text" class="form-control" readonly="readonly" value="@Courtdata.Rows[i]["CaseType"].ToString()" />
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="col-md-4 mb-3">
+                                                                                <div class="position-relative form-group">
+                                                                                    <label for="validationCustomUsername">
+                                                                                        @(Courtdata.Rows[i]["CaseType"].ToString() == "Writ" ? "याचिका संख्या" : "अवमानना संख्या")
+                                                                                    </label>
+                                                                                    <input type="text" class="form-control" readonly="readonly" value="@Courtdata.Rows[i]["CaseNo"].ToString()" />
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-4 mb-3">
+                                                                                <div class="position-relative form-group">
+                                                                                    <label for="validationCustomUsername">
+                                                                                        वर्ष
+                                                                                    </label>
+                                                                                    <input type="text" class="form-control" readonly="readonly" value="@Courtdata.Rows[i]["CaseYear"].ToString()" />
+
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-4 mb-3">
+                                                                                <div class="position-relative form-group">
+                                                                                    <label for="validationCustomUsername">
+                                                                                        @(Courtdata.Rows[i]["CaseType"].ToString() == "Writ" ? "याचिका में मा० न्यायालय द्वारा पारित आदेश का विवरण" : "अवमानना में मा० न्यायालय द्वारा पारित आदेश का विवरण")
+                                                                                    </label><br />
+                                                                                    <a href="@Courtdata.Rows[i]["Attachment"].ToString()" target="_blank" class="mb-2 mr-2">
+                                                                                        <img src="~/assets/pdf/pdf3.png" style="height:50px;" />
+                                                                                    </a>
+
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="col-md-4 mb-3">
+                                                                                <div class="position-relative form-group">
+                                                                                    <label for="validationCustomUsername">
+                                                                                        कंप्यूटर संख्या
+                                                                                    </label>
+                                                                                    <input type="text" class="form-control" readonly="readonly" value="@Courtdata.Rows[i]["ComputerNumber"].ToString()" />
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="col-md-12 mb-3">
+                                                                                <div class="position-relative form-group">
+                                                                                    <label for="validationCustomUsername">
+                                                                                        टिप्पणी
+                                                                                    </label>
+                                                                                    <textarea class="form-control" style="resize:none;" rows="8" readonly>@Courtdata.Rows[i]["Remark"].ToString()</textarea>
+                                                                                </div>
+                                                                            </div>
+
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    }
+                }
+
+
+            }
+        </div>
+        <div>
+            @if (Investigationdata != null && Investigationdata.Rows.Count > 0)
+            {
+                for (int i = 0; i < Investigationdata.Rows.Count; i++)
+                {
+                    if (c == Convert.ToInt32(Investigationdata.Rows[i]["SequenceCounter"]))
+                    {
+                        string collapseId = "collapse6778" + i;
+                        string headingId = "heading7676" + i;
+                        string dataTarget = "#" + collapseId;
+                        <div class="main-card mb-3 card">
+                            <div class="card-body">
+                                <div class="vertical-without-time vertical-timeline--animate vertical-timeline--one-column">
+                                    <div class="vertical-timeline-item vertical-timeline-element">
+                                        <span class="vertical-timeline-element-icon bounce-in">
+                                            <i class="badge badge-dot badge-dot-xl badge-success"> </i>
+                                        </span>
+                                        <div class="vertical-timeline-element-content bounce-in">
+                                            <h3 class="timeline-title"> एजेंसी का विवरण </h3>
+                                            <div id="accordion2" class="accordion-wrapper mb-3">
+                                                <div class="card mb-3">
+                                                    <div id="@headingId" class="card-header">
+                                                        <button type="button" data-toggle="collapse" data- target="@dataTarget"
+                                                                aria-expanded="false" aria-controls="@collapseId"
+                                                                class="text-left m-0 p-0 btn btn-link btn-block">
+                                                            <h5 class="m-0 p-0">
+                                                                <b> प्रश्नगत जाँच अन्य एजेंसी द्वारा </b>
+                                                                <i class="float-right pe-7s-angle-down-circle fa-1x" style="color:black;"></i>
+                                                            </h5>
+                                                        </button>
+                                                    </div>
+                                                    <div id="@collapseId" data-parent="#accordion2" aria-labelledby="@headingId">
+                                                        <div class="card-body">
+                                                            <div class="media">
+                                                                <div class="media-body">
+                                                                   
+                                                                    <div class="mt-2">
+                                                                        <div class="card-body">
+                                                                            <div class="form-row ">
+                                                                                <div class="col-md-4 mb-3">
+                                                                                    <div class="position-relative form-group">
+
+                                                                                        <label for="validationCustomUsername">
+                                                                                            एजेंसी का नाम
+                                                                                        </label>
+                                                                                        <input type="text" class="form-control" readonly="readonly" value="@Investigationdata.Rows[i]["AgencyName"].ToString()" />
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-4 mb-3">
+                                                                                    <div class="position-relative form-group">
+                                                                                        @{
+                                                                                            string investigationId = Investigationdata.Rows[i]["InvestigationId"].ToString();
+                                                                                            string label;
+
+                                                                                            if (investigationId == "1")
+                                                                                            {
+                                                                                                label = "ED द्वारा प्रकरण में अधतन कृत कार्यवाही का विवरण";
+                                                                                            }
+                                                                                            else if (investigationId == "2")
+                                                                                            {
+                                                                                                label = "CBI द्वारा प्रकरण में अधतन कृत कार्यवाही का विवरण";
+                                                                                            }
+                                                                                            else if (investigationId == "3")
+                                                                                            {
+                                                                                                label = "SIT द्वारा प्रकरण में अधतन कृत कार्यवाही का विवरण";
+                                                                                            }
+                                                                                            else
+                                                                                            {
+                                                                                                label = "EOW द्वारा प्रकरण में अधतन कृत कार्यवाही का विवरण";
+                                                                                            }
+                                                                                        }
+                                                                                        <label for="validationCustomUsername">
+                                                                                            @label
+                                                                                        </label>
+                                                                                        <br />
+                                                                                        <a href="@Investigationdata.Rows[i]["Attachment"].ToString()" target="_blank" class="mb-2 mr-2">
+                                                                                            <img src="~/assets/pdf/pdf3.png" style="height:50px;" />
+                                                                                        </a>
+                                                                                    </div>
+                                                                                </div>
+
+
+                                                                                <div class="col-md-12 mb-3">
+                                                                                    <div class="position-relative form-group">
+                                                                                        <label for="validationCustomUsername">
+                                                                                            टिप्पणी
+                                                                                        </label>
+                                                                                        <textarea class="form-control" style="resize:none;" rows="8" readonly>@Investigationdata.Rows[i]["Remark"].ToString()</textarea>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    }
+                }
+            }
+        </div>
+
+    }
+
+ } 

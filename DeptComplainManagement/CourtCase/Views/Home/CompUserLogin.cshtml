@@ -1,0 +1,303 @@
+﻿@model  CourtCase.Models.UserLogin
+@{
+    Layout = null;
+    var msg = TempData["Msg"] ?? string.Empty;
+}
+
+<style>
+    #chartdiv, #chartBardiv {
+        width: 100%;
+        height: 422px;
+    }
+
+    g[aria-labelledby="id-66-title"] {
+        display: none;
+    }
+
+    g[aria-labelledby="id-154-title"] {
+        display: none;
+    }
+</style>
+
+<!-- Resources -->
+<script src="~/HomeChartJS/core.js"></script>
+<script src="~/HomeChartJS/charts.js"></script>
+<script src="~/HomeChartJS/animated.js"></script> 
+<!-- Chart code -->
+@{
+    // Pass ViewBag values to JavaScript variables
+    var totalEnquiry = ViewBag.TotalEnquiry;
+    var pendingEnquiry = ViewBag.PendingEnquiry;
+    var closedEnquiry = ViewBag.ClosedEnquiry;
+    var Level1 = ViewBag.Level1;
+    var Level2 = ViewBag.Level2;
+    var Level3 = ViewBag.Level3;
+    var Level4 = ViewBag.Level4;
+}
+
+
+<script>
+
+    am4core.ready(function () {
+        am4core.useTheme(am4themes_animated);
+
+        // Create chart instance
+        var chart = am4core.create("chartdiv", am4charts.PieChart);
+        //chart._logo.dispose()
+        // Add and configure Series
+        var pieSeries = chart.series.push(new am4charts.PieSeries());
+        pieSeries.dataFields.value = "litres";
+        pieSeries.dataFields.category = "country";
+        chart.innerRadius = am4core.percent(30);
+        pieSeries.slices.template.stroke = am4core.color("#fff");
+        pieSeries.slices.template.strokeWidth = 2;
+        pieSeries.slices.template.strokeOpacity = 1;
+        pieSeries.slices.template.cursorOverStyle = [
+            {
+                "property": "cursor",
+                "value": "pointer"
+            }
+        ];
+
+        pieSeries.alignLabels = false;
+        pieSeries.labels.template.bent = true;
+        pieSeries.labels.template.radius = 3;
+        pieSeries.labels.template.padding(0, 0, 0, 0);
+        pieSeries.ticks.template.disabled = true;
+
+        var shadow = pieSeries.slices.template.filters.push(new am4core.DropShadowFilter);
+        shadow.opacity = 0;
+
+        var hoverState = pieSeries.slices.template.states.getKey("hover");
+        var hoverShadow = hoverState.filters.push(new am4core.DropShadowFilter);
+        hoverShadow.opacity = 0.7;
+        hoverShadow.blur = 5;
+
+        // Add a legend
+        chart.legend = new am4charts.Legend();
+
+        // Bind ViewBag data to the chart
+          chart.data = [
+            //  { "country": "Total Enquiry", "litres": @totalEnquiry, "color": am4core.color("#203f77") },
+              { "country": "Pending Enquiry", "litres": @pendingEnquiry, "color": am4core.color("#d99605") },
+              { "country": "Closed Enquiry", "litres": @closedEnquiry, "color": am4core.color("#149e62") }
+        ];
+
+        // Apply slice colors
+        pieSeries.slices.template.propertyFields.fill = "color";
+    });
+</script>
+<script>
+    am4core.ready(function () { 
+        // Themes begin
+        am4core.useTheme(am4themes_animated);
+        // Themes end
+
+        // Create chart instance
+        var chart = am4core.create("chartBardiv", am4charts.XYChart);
+
+        // Add data
+        chart.data = [
+            { "country": "Level-1", "litres": @Level1, "color": am4core.color("#203f77") },
+            { "country": "Level-2", "litres": @Level2, "color": am4core.color("#d99605") },
+            { "country": "Level-3", "litres": @Level3, "color": am4core.color("#149e62") },
+            { "country": "Level-4", "litres": @Level4, "color": am4core.color("#af3cb8") }
+        ];
+
+        // Create axes
+        var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+        categoryAxis.dataFields.category = "country";
+        categoryAxis.renderer.grid.template.location = 0;
+        categoryAxis.renderer.minGridDistance = 30;
+
+        categoryAxis.renderer.labels.template.adapter.add("dy", function (dy, target) {
+            if (target.dataItem && target.dataItem.index % 2 === 1) {
+                return dy + 25;
+            }
+            return dy;
+        });
+
+        var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+        valueAxis.title.text = "Total Pending Enquiry"; 
+
+        // Create series
+        var series = chart.series.push(new am4charts.ColumnSeries());
+        series.dataFields.valueY = "litres";
+        series.dataFields.categoryX = "country";
+        series.name = "Litres";
+        series.columns.template.tooltipText = "{categoryX}: [bold]{valueY}[/]";
+        series.columns.template.fillOpacity = 0.8;
+
+        // Apply colors from data
+        series.columns.template.propertyFields.fill = "color";
+        series.columns.template.propertyFields.stroke = "color";
+
+        var columnTemplate = series.columns.template;
+        columnTemplate.strokeWidth = 2;
+        columnTemplate.strokeOpacity = 1;
+
+    }); // end am4core.ready()
+</script>
+
+
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Language" content="en">
+    <!-- External CSS libraries -->
+    <link type="text/css" rel="stylesheet" href="~/Content/assets/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="~/Content/assets/fonts/font-awesome/css/font-awesome.min.css">
+    <link type="text/css" rel="stylesheet" href="~/Content/assets/fonts/flaticon/font/flaticon.css">
+    <link href="~/assets/css/lobibox.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&amp;display=swap" rel="stylesheet">
+    <link href="~/assets/images/Jal_Nigam_Rural_Logo1.png" type="image/x-icon" rel="icon" />
+    <!-- Custom Stylesheet -->
+    <link type="text/css" rel="stylesheet" href="~/Content/assets/css/style.css">
+    <link rel="stylesheet" type="text/css" id="style_sheet" href="~/Content/assets/css/skins/default.css">
+    <title>Login Panel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
+    <link href="~/Content/mobileOtp.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <style>
+        .login-15 .logo-2 img {
+            height: 77px;
+            margin-bottom: 16px;
+        }
+
+        .details {
+            padding: 20px !important;
+        }
+
+        .header-logo3 img {
+            display: block;
+            height: 81px;
+        }
+
+        @@media (max-width: 768px) {
+            .header-logo1, .header-logo2, .header-logo4, .header-logo5 {
+                display: none; /* Hide all other logos */
+            }
+
+            .header-logo3 img {
+                display: block;
+                height: 81px;
+                width: auto;
+            }
+        }
+
+        @@media (max-width: 480px) {
+            .header-logo3 img {
+                height: 50px;
+                width: auto;
+            }
+        }  
+        
+
+    </style>
+</head>
+<body>
+    <header class="header p-2" style="background: #ffffff !important;">
+        <div class="container-fluid">
+            <!-- Row start -->
+            <div class="row gutters">
+                <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2 header-logo1">
+                    <a href="javascript:void(0);">
+                        <img src="/Jal_Nigam_Home_Page/img/up_logo-Copy.png" style=" display: block; margin-left: auto; margin-right: auto;height:80px;">
+                    </a>
+                </div>
+                <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2 header-logo5">
+
+                </div>
+                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 header-logo3">
+                    <a href="javascript:void(0);">
+                        <img src="/Jal_Nigam_Home_Page/img/Division_Checking_System_Logo.png" style=" display: block; margin-left: auto; margin-right: auto;">
+                    </a>
+                </div>
+                <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2 header-logo5">
+
+                </div>
+                <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2 header-logo4">
+                    <a href="javascript:void(0);">
+                        <img src="/Jal_Nigam_Home_Page/img/nmcg-logo.png" style="display: block; margin-left: auto; margin-right: auto;height:80px;">
+                    </a>
+                </div>
+                <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-8">
+                </div>
+            </div>
+            <!-- Row end -->
+        </div>
+    </header>
+    <div class="login-15">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="login-inner-form">
+                        <div class="details" style="min-height: 400px !important;">
+                            <div class="card-title text-center h6">Enquiry Status</div>
+                            <div id="chartdiv"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="login-inner-form">
+                        <div class="details"> 
+                            <h4 style="margin-bottom: 15px">Log In to your account</h4>
+                            @Html.AntiForgeryToken()
+
+                            @if (!string.IsNullOrEmpty(Convert.ToString(ViewData["ErrorMsg"])))
+                            {
+                                if (ViewData["ErrorMsg"].ToString() == "Success")
+                                {
+                                    <div class="alert alert-success" id="errorMsg">
+                                        Successfully Login !
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="alert alert-danger" id="errorMsg">
+                                        @ViewData["ErrorMsg"]
+                                    </div>
+                                }
+                            }
+
+                            <!-- Password Login Form -->
+                            @Html.Partial("Partial/_UserIDPassword")
+                            <!-- Password Mobile Form -->
+                            @Html.Partial("Partial/_MobileInputPartial")
+                            <!-- Include the OTP Input Partial -->
+                            @Html.Partial("Partial/_OtpInputPartial")
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="login-inner-form">
+                        <div class="details">
+                            <div class="card-title text-center h6">Level Wise Pending Enquiry</div>
+                            <div id="chartBardiv"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer style="background:#693fb2; color:#ffffff;height:50px; line-height:50px;text-align:center;">
+        <div class="container-fluid">
+            <p>
+                Powered By :<a href="http://thinkcomputers.co.in/" target="_blank" style="color:white;">Think Computers</a> © @DateTime.Now.Year All Right Reserved
+            </p>
+        </div>
+    </footer>
+    <!--notification js -->
+    <script src="~/assets/css/lobibox.min.js"></script>
+    <script src="~/assets/css/notifications.min.js"></script>
+    <script src="~/assets/css/notification-custom-script.js"></script>
+    <script>
+        function GetMsg(e) { Lobibox.notify("warning", { pauseDelayOnHover: !0, size: "mini", rounded: !0, delayIndicator: !1, icon: "bx bx-error", continueDelayOnInactiveTab: !1, position: "top right", msg: e }) } function GetSuccessMsg(e) { Lobibox.notify("success", { position: "top right", icon: "bx bx-check-circle", msg: e }) } function refreshCaptcha() { var e = "/Captcha/GetCaptcha"; e += "?t=" + (new Date).getTime(), $("#captcha").attr("src", e) } function ValidateNumber() { var e = $("#MobileUserRelatedTo").val(), o = $("#MobileZoneId").val() || "-1", i = $("#MobileCircleId").val() || "-1", l = $("#MobileDivisionId").val() || "-1", t = $("#txtMobileNo").val(); return "-1" == e ? (GetMsg("Select User Related To"), $("#MobileUserRelatedTo").focus(), !1) : "" == t ? (GetMsg("Enter Mobile No"), $("#txtMobileNo").focus(), !1) : t.length < 10 ? (GetMsg("Invalid Mobile No"), $("#txtMobileNo").focus(), !1) : void $.post("/Home/GenerateOTP", { MobileNo: t, ZoneId: o, CircleId: i, DivisionId: l, UserRelatedTo: e }, (function (e) { e.IsOTPGenerated ? sendOtp() : "Falied" === e.Message ? GetMsg("Invalid Mobile Number !") : "TimeFalied" === e.Message && GetMsg("Try After 5 minutes Later !") })) } function sendOtp() { document.getElementById("mobileForm").style.display = "none", document.getElementById("otpForm").style.display = "block", document.getElementById("mobileDisplay").innerText = document.getElementById("txtMobileNo").value,  document.getElementById("otp-UserRelaetdTo").value = document.getElementById("MobileUserRelatedTo").value || "", document.getElementById("otp-ZoneId").value = document.getElementById("MobileZoneId").value || -1, document.getElementById("otp-CircleId").value = document.getElementById("MobileCircleId").value || -1, document.getElementById("otp-DivisionId").value = document.getElementById("MobileDivisionId").value || -1 } function showMobileInput() { document.getElementById("mobileForm").style.display = "block", document.getElementById("passwordForm").style.display = "none", document.getElementById("otpForm").style.display = "none" } function showPasswordInput() { document.getElementById("mobileForm").style.display = "none", document.getElementById("passwordForm").style.display = "block" } $("#btnLogin").click((function () { var e = $("#UserRelatedTo").val(), t = $("#txtUserId").val(), n = $("#txtPassword").val(), o = $("#captchacode").val(); return "-1" == e ? (GetMsg("Select User Related To !"), !1) : "" == t ? (GetMsg("Enter Your Email ID !"), !1) : "" == n ? (GetMsg("Enter Your Password !"), !1) : "" == o ? (GetMsg("Enter Your Captcha Code !"), !1) : void 0 })), $(document).on({ contextmenu: function (e) { e.preventDefault() } }), $(document).on("keydown", (function (e) { e.ctrlKey })), document.addEventListener("keydown", (function (e) { "F12" === e.key && e.preventDefault() })), $(document).keydown((function (e) { ("I" === e.key || e.ctrlKey && e.shiftKey && "I" === e.key) && e.preventDefault() })), $(document).keydown((function (e) { ("F12" === e.key || e.ctrlKey && e.shiftKey && "I" === e.key) && e.preventDefault() })), $(document).ready((function () { $("#errorMsg").show().delay(5e3).fadeOut(), refreshCaptcha() })), $("#txtMobileNo").keypress((function (e) { var t = e.keyCode || e.which, n = /^\d+/.test(String.fromCharCode(t)); return n || e.preventDefault(), n })), document.addEventListener("DOMContentLoaded", (function () { const e = document.querySelectorAll("#otp-code input"); e.forEach(((t, n) => { t.addEventListener("input", (t => { 1 === t.target.value.length && n < e.length - 1 && e[n + 1].focus() })), t.addEventListener("keydown", (o => { "Backspace" === o.key && n > 0 && !t.value && e[n - 1].focus() })) }))}));
+    </script>
+ 
+</body>
+</html>

@@ -1,0 +1,511 @@
+﻿@{
+    ViewBag.Title = "ViewEnquiry";
+    Layout = null;
+}
+@{
+    System.Data.DataTable dt = ((System.Data.DataTable)ViewBag.data); 
+}
+
+<style> 
+    .login-15 .logo-2 img {
+        height: 77px;
+        margin-bottom: 16px;
+    } 
+
+    .header-logo3 img {
+        display: block;
+        height: 81px;
+    }
+    input {
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        border-bottom: 1px dotted black;
+    }
+
+    @@media (max-width: 768px) {
+        .header-logo1, .header-logo2, .header-logo4, .header-logo5 {
+            display: none;  
+        }
+
+        .header-logo3 img {
+            display: block;
+            height: 81px;
+            width: auto;
+        }
+    }
+
+    @@media (max-width: 480px) {
+        .header-logo3 img {
+            height: 50px;
+            width: auto;
+        }
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+    }  
+</style>  
+<style> 
+    .timeline-title {
+        text-align: center;
+    } 
+    .colorful-title {
+        background: linear-gradient(to right, #FF6F61, #6B5B95, #88B04B, #F7CAC9, #92A8D1); 
+        color: transparent;
+        font-weight: bold;
+        font-size: 24px;
+    } 
+    .colorful-title {
+        color: #FF6F61; /* Choose any color */
+        font-weight: bold;
+        font-size: 24px;
+    }
+
+</style> 
+    <html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta http-equiv="Content-Language" content="en">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+        <link href="~/assets/images/Jal_Nigam_Rural_Logo1.png" type="image/x-icon" rel="icon" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
+        <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+        <style>
+            .login-15 .logo-2 img {
+                height: 77px;
+                margin-bottom: 16px;
+            }
+
+            .details {
+                padding: 20px !important;
+            }
+
+            .header-logo3 img {
+                display: block;
+                height: 81px;
+            }
+
+            @@media (max-width: 768px) {
+                .header-logo1, .header-logo2, .header-logo4, .header-logo5 {
+                    display: none; /* Hide all other logos */
+                }
+
+                .header-logo3 img {
+                    display: block;
+                    height: 81px;
+                    width: auto;
+                }
+            }
+
+            @@media (max-width: 480px) {
+                .header-logo3 img {
+                    height: 50px;
+                    width: auto;
+                }
+            }
+
+            .lnr-text-align-center {
+                text-align: center;
+            }
+            .border1 {
+                height: 20px;
+                margin-left: auto;
+                margin-right: auto;
+                width: 30%;
+                display: block;
+            }
+            .headinghindi {
+                font-size: 25px !important;
+                color: #292ebb !important;
+                text-align: center !important;
+                display: block !important;
+            }
+            .bodyback {
+                background: url(../Content/assets/img/backimg2.png) fixed;
+            }
+            @@media print {
+                body { 
+                    -webkit-print-color-adjust: exact; 
+                }
+                .bodyback {
+                    background: none !important;
+                }
+                #printButton {
+                    display: none;
+                }
+                
+                footer {
+                    display: none;
+                }
+                .page-break {
+                    page-break-before: always;
+                    padding-top: 20mm; /* Adjust as needed */
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="app-container app-theme-white body-tabs-shadow fixed-header fixed-sidebar">
+            <div class="app-main">
+                <header class="header p-2" style="background: #ffffff !important;">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2 header-logo1">
+                                <a href="javascript:void(0);">
+                                    <img src="/Jal_Nigam_Home_Page/img/up_logo-Copy.png" style=" display: block; margin-left: auto; margin-right: auto;height:80px;">
+                                </a>
+                            </div>
+                            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2 header-logo5">
+
+                            </div>
+                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 header-logo3">
+                                <a href="javascript:void(0);">
+                                    <img src="/Jal_Nigam_Home_Page/img/Division_Checking_System_Logo.png" style=" display: block; margin-left: auto; margin-right: auto;">
+                                </a>
+                            </div>
+                            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2 header-logo5">
+
+                            </div>
+                            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-2 header-logo4">
+                                <a href="javascript:void(0);">
+                                    <img src="/Jal_Nigam_Home_Page/img/nmcg-logo.png" style="display: block; margin-left: auto; margin-right: auto;height:80px;">
+                                </a>
+                            </div>
+                            <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-8">
+                            </div>
+                        </div>
+                        <!-- Row end -->
+                    </div>
+                </header>
+                @if (dt != null)
+                {
+                    <div class="main-card m-3 card bodyback">
+                        <div class="card-body">
+                            <div class="vertical-without-time vertical-timeline--animate vertical-timeline--one-column" id="divPublicDepartment">
+                                <span class="text-center headinghindi">कर्मचारी के ख़िलाफ़ दर्ज शिकायत</span>
+                                <img src="~/Content/assets/img/border.png" alt="border" class="img-responsive border1">
+                                <button id="printButton" class="btn btn-primary" style="margin: 10px;">Print</button>
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <label for="exampleAddress">कंप्यूटर संख्या</label><br />
+                                        <input type="text" value="@dt.Rows[0]["ComplaintNo"].ToString()" readonly class="form-control" />
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label for="exampleAddress">ग्रामीण / नगरीय</label><br />
+                                        <input type="text" value="@dt.Rows[0]["R_U"].ToString()" readonly class="form-control" />
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label for="exampleAddress">विभागीय जांच किनके द्वारा आरंभ की गई</label><br />
+                                        <input type="text" value="@dt.Rows[0]["ComplaintEnquiryType"].ToString()" readonly class="form-control" />
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="exampleAddress">कार्मिक का विभागीय कोड</label><br />
+                                            <input type="text" value="@dt.Rows[0]["EmployeeId"].ToString()" readonly class="form-control" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <label for="exampleAddress">कार्मिक का नाम</label><br />
+                                        <input type="text" value="@dt.Rows[0]["ComplainantName"].ToString()" readonly class="form-control" />
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label for="exampleAddress">कार्मिक का मोबाइल नंबर</label><br />
+                                        <input type="text" value="@dt.Rows[0]["MobileNo"].ToString()" readonly class="form-control" />
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label for="exampleAddress">कार्मिक का ईमेल आईडी</label><br />
+                                        <input type="text" value="@dt.Rows[0]["EmailId"].ToString()" readonly class="form-control" />
+                                    </div>
+
+
+                                    <div class="col-md-4 mb-3">
+                                        <label for="exampleAddress">वर्तमान कार्यरत कार्यालय</label><br />
+                                        <input type="text" value="@dt.Rows[0]["ComplaintRelatedTo"].ToString()" readonly class="form-control" />
+                                    </div>
+
+
+                                    @if (dt.Rows[0]["ComplaintRelatedTo"].ToString() == "Zone")
+                                    {
+                                        <div class="col-md-4 mb-3">
+                                            <label for="validationCustomUsername">वर्तमान  ज़ोन </label>
+                                            <input type="text" value="@dt.Rows[0]["ComplaintRelatedZoneName"].ToString()" readonly class="form-control" />
+                                        </div>
+                                    }
+                                    else if (dt.Rows[0]["ComplaintRelatedTo"].ToString() == "Circle")
+                                    {
+                                        <div class="col-md-4 mb-3">
+                                            <label for="validationCustomUsername">वर्तमान  ज़ोन </label>
+                                            <input type="text" value="@dt.Rows[0]["ComplaintRelatedZoneName"].ToString()" readonly class="form-control" />
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label for="validationCustomUsername">वर्तमान  सर्किल </label>
+                                            <input type="text" value="@dt.Rows[0]["ComplaintRelatedCircleName"].ToString()" readonly class="form-control" />
+                                        </div>
+                                    }
+                                    else if (dt.Rows[0]["ComplaintRelatedTo"].ToString() == "Division")
+                                    {
+                                        <div class="col-md-4 mb-3">
+                                            <label for="validationCustomUsername">वर्तमान  ज़ोन </label>
+                                            <input type="text" value="@dt.Rows[0]["ComplaintRelatedZoneName"].ToString()" readonly class="form-control" />
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label for="validationCustomUsername">वर्तमान  सर्किल </label>
+                                            <input type="text" value="@dt.Rows[0]["ComplaintRelatedCircleName"].ToString()" readonly class="form-control" />
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label for="validationCustomUsername">वर्तमान  डिवीज़न </label>
+                                            <input type="text" value="@dt.Rows[0]["ComplaintRelatedDivisionName"].ToString()" readonly class="form-control" />
+                                        </div>
+                                    }
+
+
+                                    <div class="col-md-4 mb-3">
+                                        <label for="exampleAddress">वर्तमान पदनाम</label><br />
+                                        <input type="text" value="@dt.Rows[0]["ComplainRelatedDesignationName"].ToString()" readonly class="form-control" />
+                                    </div>
+
+
+                                    <div class="col-md-4 mb-3">
+                                        <label>जांच संस्थित किये जाने का पत्रावली संख्या</label>
+                                        <input type="text" value="@dt.Rows[0]["OfficeMemorandumNumber"].ToString()" readonly class="form-control" />
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label>जांच संस्थित किये जाने का पत्रांक दिनांक</label>
+                                        <input type="text" value="@dt.Rows[0]["OfficeMemorandumDate"].ToString()" readonly class="form-control" />
+                                    </div>
+
+
+                                    <div class="col-md-4 mb-3">
+                                        <label for="validationCustom05">अपलोड किया गया डॉक्यूमेंट (नियुक्ति अधिकारी का पत्र) &nbsp;</label>
+                                        <br />
+                                        @if (!string.IsNullOrEmpty(@dt.Rows[0]["Attachment"].ToString()))
+                                        {
+                                            <a href="@dt.Rows[0]["Attachment"].ToString().Replace("~", "")" target="_blank" class="mb-2 mr-2">
+                                                <img src="~/assets/pdf/pdf3.png" style="height:50px;" />
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a href="javascript:void(0);" target="_blank" class="mb-2 mr-2 disabled">
+                                                <img src="~/assets/pdf/pdf3.png" style="height:50px;" />
+                                            </a>
+                                        }
+                                    </div>
+
+                                </div>
+                                <span class="text-center headinghindi">संस्थित जाँच के समय अपचारी के कार्यालय का विवरण</span>
+                                <img src="~/Content/assets/img/border.png" alt="border" class="img-responsive border1">
+                                <hr />
+                                <div class="row">
+
+
+                                    <div class="col-md-4 mb-3">
+                                        <label for="exampleAddress">संस्थित जांच कार्यालय</label>
+                                        <input type="text" value="@dt.Rows[0]["PreviousComplaintRelatedTo"].ToString()" readonly class="form-control" />
+                                    </div>
+
+                                    @if (dt.Rows[0]["PreviousComplaintRelatedTo"].ToString() == "Zone" || dt.Rows[0]["PreviousComplaintRelatedTo"].ToString() == "Circle" || dt.Rows[0]["PreviousComplaintRelatedTo"].ToString() == "Division")
+                                    {
+                                        <div class="col-md-4 mb-3">
+                                            <label for="validationCustomUsername">संस्थित जांच का ज़ोन</label>
+                                            <input type="text" value="@dt.Rows[0]["PreviousComplaintRelatedZoneName"].ToString()" readonly class="form-control" />
+                                        </div>
+                                    }
+
+                                    @if (dt.Rows[0]["PreviousComplaintRelatedTo"].ToString() == "Circle" || dt.Rows[0]["PreviousComplaintRelatedTo"].ToString() == "Division")
+                                    {
+                                        <div class="col-md-4 mb-3">
+                                            <label for="validationCustomUsername">संस्थित जांच का सर्किल</label>
+                                            <input type="text" value="@dt.Rows[0]["PreviousComplaintRelatedCircleName"].ToString()" readonly class="form-control" />
+                                        </div>
+                                    }
+
+                                    @if (dt.Rows[0]["PreviousComplaintRelatedTo"].ToString() == "Division")
+                                    {
+                                        <div class="col-md-4 mb-3">
+                                            <label for="validationCustomUsername">संस्थित जांच का डिवीज़न</label>
+                                            <input type="text" value="@dt.Rows[0]["PreviousComplaintRelatedDivisionName"].ToString()" readonly class="form-control" />
+                                        </div>
+                                    }
+
+
+                                    <div class="col-md-4 mb-3">
+                                        <label for="exampleAddress">संस्थित जांच का पदनाम</label>
+                                        <input type="text" value="@dt.Rows[0]["PreviousComplaintDesignationName"].ToString()" readonly class="form-control" />
+                                    </div>
+
+
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="exampleAddress">कार्य अवधि(कब से)</label>
+                                            <input type="text" value="@dt.Rows[0]["WorkDurationFrom"].ToString()" readonly class="form-control" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <label for="exampleAddress">कार्य अवधि(कब तक)</label>
+                                        <input type="text" value="@dt.Rows[0]["WorkDurationTo"].ToString()" readonly class="form-control" />
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <br />
+                                        <input type="checkbox" name="IsFinancial" value="वित्तीय" onclick="onlyOne1(this)" @(dt.Rows[0]["IsFinancial"].ToString() == "वित्तीय" ? "checked" : "") disabled />&emsp;वित्तीय &emsp;
+                                        <input type="checkbox" name="IsFinancial" value="गैर वित्तीय" onclick="onlyOne1(this)" @(dt.Rows[0]["IsFinancial"].ToString() == "गैर वित्तीय" ? "checked" : "") disabled />&emsp;गैर वित्तीय
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <label for="validationCustom05">राशि</label>
+                                        <input type="text" value="@dt.Rows[0]["FinancialAmount"].ToString()" readonly class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="validationCustom05">निलंबन की स्तिथि</label><br />
+                                        <input type="checkbox" name="IsSuspension" value="हाँ" onclick="onlyOne2(this)" @(dt.Rows[0]["IsSuspension"].ToString() == "हाँ" ? "checked" : "") disabled />&emsp;हाँ &emsp;
+                                        <input type="checkbox" name="IsSuspension" value="नहीं" onclick="onlyOne2(this)" @(dt.Rows[0]["IsSuspension"].ToString() == "नहीं" ? "checked" : "") disabled />&emsp;नहीं
+                                    </div>
+
+
+                                    @{
+                                        var isSuspension = dt.Rows[0]["IsSuspension"].ToString() == "हाँ";
+                                    }
+
+                                    @if (!isSuspension)
+                                    {
+                                        <div class="col-md-6 mb-3">
+                                            <div class="position-relative form-group">
+                                                <label for="validationCustom05">संबद्ध कार्यालय का नाम</label>
+                                                <input type="text" value="@dt.Rows[0]["AssociatedOfficeName"].ToString()" readonly class="form-control" />
+                                            </div>
+                                        </div>
+
+
+                                    }
+
+                                </div>
+
+
+                                @if (isSuspension)
+                                {
+                                    <div class="row">
+                                        <div class="col-md-4 mb-3">
+                                            <div class="position-relative form-group">
+                                                <label for="exampleAddress" class="">संबद्ध कार्यालय </label>
+                                                <input type="text" value="@dt.Rows[0]["AffiliatedOfficesRelatedTo"].ToString()" readonly class="form-control" />
+
+                                            </div>
+                                        </div>
+                                        @if (dt.Rows[0]["AffiliatedOfficesRelatedTo"].ToString() == "HQ")
+                                        {
+                                            if (!string.IsNullOrWhiteSpace(dt.Rows[0]["AffiliatedOfficesRelatedTo"].ToString()))
+                                            {
+                                                <div class="col-md-4 mb-3">
+                                                    <div class="position-relative form-group">
+                                                        <label for="exampleAddress" class="">संबद्ध कार्यालय का नाम</label><br />
+                                                        <input type="text" value="@dt.Rows[0]["AffiliatedOfficesName"].ToString()" readonly class="form-control" />
+
+                                                    </div>
+                                                </div>
+                                            }
+
+                                        }
+                                        else if (Model.AffiliatedOfficesRelatedTo == "Zone")
+                                        {
+                                            <div class="col-md-4 mb-3">
+                                                <div class="position-relative form-group">
+                                                    <label for="validationCustomUsername">संबद्ध ज़ोन </label>
+                                                    <input type="text" value="@dt.Rows[0]["AffiliatedOfficesZoneName"].ToString()" readonly class="form-control" />
+
+                                                </div>
+
+                                            </div>
+                                        }
+                                        else if (dt.Rows[0]["AffiliatedOfficesRelatedTo"].ToString() == "Circle")
+                                        {
+                                            <div class="col-md-4 mb-3">
+                                                <div class="position-relative form-group">
+                                                    <label for="validationCustomUsername">संबद्ध ज़ोन </label>
+                                                    <input type="text" value="@dt.Rows[0]["AffiliatedOfficesZoneName"].ToString()" readonly class="form-control" />
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <div class="position-relative form-group">
+                                                    <label for="validationCustomUsername">संबद्ध सर्किल </label>
+
+                                                    <input type="text" value="@dt.Rows[0]["AffiliatedOfficesCircleName"].ToString()" readonly class="form-control" />
+                                                </div>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="col-md-4 mb-3">
+                                                <div class="position-relative form-group">
+                                                    <label for="validationCustomUsername">संबद्ध ज़ोन </label>
+                                                    <input type="text" value="@dt.Rows[0]["AffiliatedOfficesZoneName"].ToString()" readonly class="form-control" />
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <div class="position-relative form-group">
+                                                    <label for="validationCustomUsername">संबद्ध सर्किल </label>
+                                                    <input type="text" value="@dt.Rows[0]["AffiliatedOfficesCircleName"].ToString()" readonly class="form-control" />
+                                                </div>
+
+                                            </div>
+                                            <div class="col-md-4 mb-3">
+                                                <div class="position-relative form-group">
+                                                    <label for="validationCustomUsername">संबद्ध डिवीज़न </label>
+                                                    <input type="text" value="@dt.Rows[0]["AffiliatedOfficesDivisionName"].ToString()" readonly class="form-control" />
+                                                </div>
+                                            </div>
+                                        }
+
+                                    </div>
+
+                                }
+
+                                <div class="form-row">
+                                    <div class="col-md-12 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">
+                                                विवरण
+                                            </label>
+                                            <textarea class="form-control" readonly>@dt.Rows[0]["ComplaintDescription"].ToString()</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <footer style="background:#693fb2; color:#ffffff;height:50px; line-height:50px;text-align:center;">
+                    <div class="container-fluid">
+                        <p>
+                            Powered By :<a href="http://thinkcomputers.co.in/" target="_blank" style="color:white;">Think Computers</a>&nbsp; © @DateTime.Now.Year
+                        </p>
+                    </div>
+                </footer>
+
+            </div>
+        </div>
+        <script>
+            document.getElementById("printButton").addEventListener("click", function () {
+                window.print();
+            });
+        </script>
+    </body>
+</html>
+
+  
+ 

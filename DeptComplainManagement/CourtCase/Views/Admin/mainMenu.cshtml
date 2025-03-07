@@ -1,0 +1,217 @@
+﻿@model CourtCase.Models.MenuViewModel
+@{
+    ViewBag.Title = "mainMenu";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+} 
+<div class="app-main__inner">
+    <div class="app-page-title app-page-title-simple">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div>
+                    <div class="page-title-head center-elem">
+                        <span class="d-inline-block pr-2">
+                            <i class="lnr-apartment opacity-6"></i>
+                        </span>
+                        <span class="d-inline-block">Create Main Menu </span>
+                    </div>
+                    <div class="page-title-subheading opacity-10">
+                        <nav class="" aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <button type="button" onclick="history.back()" value="BACK" class="btn btn-primary mybackbutton"><i class="fa fa-arrow-left" aria-hidden="true"> Back</i></button> 
+                                </li>
+
+                                <li class="active breadcrumb-item" aria-current="page">
+                                    Main Menu
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="tab-content">
+        <div class="main-card mb-3 card">
+            <div class="card-body">
+                <div class="form-row" id="caseTypeDiv">
+                    @Html.HiddenFor(m =>m.MainMenuId, new { @class = "form-control" })
+                    <div class="col-md-3 mb-2">
+                        <label for="">Menu Name</label>
+                        <div class="input-group">
+                            @Html.TextBoxFor(m => m.MenuName, new { @class = "form-control" })
+
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <label for="">Controller Name</label>
+                        <div class="input-group">
+                            @Html.TextBoxFor(m => m.MainController, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <label for="">Action Name</label>
+                        <div class="input-group">
+                            @Html.TextBoxFor(m => m.MainAction, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <label for="">Menu URL</label>
+                        <div class="input-group">
+                            @Html.TextBoxFor(m => m.MainURL, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <label for="">Menu Icon</label>
+                        <div class="input-group">
+                            <select class="form-control" name="MenuIcon" id="MenuIcon">
+                                <option value="-1">
+                                    Select
+                                </option>
+                                <option value="metismenu-icon pe-7s-rocket" data-icon="metismenu-icon pe-7s-rocket">
+                                    Rocket
+                                </option>
+                                <option value="metismenu-icon pe-7s-browser" data-icon="metismenu-icon pe-7s-browser">
+                                    Pages
+                                </option>
+                                <option value="metismenu-icon pe-7s-star" data-icon="metismenu-icon pe-7s-star">
+                                    Star
+                                </option>
+                                <option value="metismenu-icon pe-7s-note2" data-icon="metismenu-icon pe-7s-note2">
+                                    Report
+                                </option>
+                                <option value="metismenu-icon pe-7s-light" data-icon="metismenu-icon pe-7s-light">
+                                    Element
+                                </option>
+                                <option value="metismenu-icon pe-7s-graph" data-icon="metismenu-icon pe-7s-graph">
+                                    Chart
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <label for="">Sequence</label>
+                        <div class="input-group">
+                            @Html.TextBoxFor(m => m.Sequence, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-3 mt-2">
+                        <div class=" form-group" style="margin-top:22px!important">
+                            <input type="submit" id="btnSubmit" value="Save" class="btn btn-info">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
+            <div class="card order-card" style="margin:-18px;padding:10px;"> 
+                <div class="card-block">
+                    <table style="width: 100%;" id="scr-vtr-dynamic" class="example">
+                        <thead>
+                            <tr> 
+                                <th>Menu Icon</th>
+                                <th>Menu Name</th>
+                                <th>Controller Name</th>
+                                <th>Action Name</th>
+                                <th>Menu URL</th>
+                                <th>Sequence</th>
+                                <th>Update</th>
+                            </tr>
+                        </thead> 
+                        <tbody>
+                            @if (Model.Table != null)
+                            {
+                                int i = 0;
+                                foreach (System.Data.DataRow data in Model.Table.Rows)
+                                {
+                                       <tr> 
+                                        <td><i class="@(data["Menu_Icon"])" style="font-size:22px;"></i></td>
+                                        <td>@data["MenuName"]</td>
+                                        <td>@data["ControllerName"]</td>
+                                        <td>@data["ActionName"]</td>
+                                        <td>@data["URL"]</td>
+                                        <td>@data["Sequence"]</td>
+
+                                        <td>
+                                            <a href="/Admin/MainMenu?MainMenuId=@data["MainMenuId"]" class="btn btn-info">Edit</a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+
+<script>
+    
+    $(document).ready(function () {
+        $("#btnSubmit").click(function () {
+            var MainMenuId = $("#MainMenuId").val().trim();
+            var MenuName = $("#MenuName").val().trim();
+            var MainController = $("#MainController").val().trim();
+            var MainAction = $("#MainAction").val().trim();
+            var MainURL =  $("#MainURL").val().trim();
+            var MenuIcon = $("#MenuIcon").val().trim();
+            var Sequence = $("#Sequence").val().trim();
+            if (MenuName == "") {
+                GetMsg("Enter Menu Name !");
+                return false;
+            }
+            if (MainController == "") {
+                GetMsg("Enter Controller Name !");
+                return false;
+            }
+            if (MainAction == "") {
+                GetMsg("Enter Action Name !");
+                return false;
+            }
+            if (MainURL == "") {
+                GetMsg("Enter URL !");
+                return false;
+            }
+            if (MenuIcon == "-1") {
+                GetMsg("Select Menu Icon !");
+                return false;
+            }
+            if (Sequence == "") {
+                GetMsg("Enter Menu Sequence !");
+                return false;
+            } 
+            $.post("/Admin/MenuMasterUpdate",
+                {
+                    MenuName: MenuName,
+                    MainController: MainController,
+                    MainAction: MainAction,
+                    MainURL: MainURL,
+                    MenuIcon: MenuIcon,
+                    Sequence: Sequence,
+                    MainMenuId: MainMenuId
+                },
+                function (response) {
+                    if (response.SR != "0") {
+                        ClearAll();
+                        GetSuccessMsg(response.Msg);  
+                        setInterval(function () {
+                            location.reload();  
+                        }, 3000);
+                    }
+                }
+            );
+
+        });
+    });
+    function ClearAll() {
+        $("#MenuName").val('');
+        $("#MainController").val('');
+        $("#MainAction").val('');
+        $("#MainURL").val('');
+        $("#MenuIcon").val('');
+        $("#Sequence").val('0');
+    }
+</script>

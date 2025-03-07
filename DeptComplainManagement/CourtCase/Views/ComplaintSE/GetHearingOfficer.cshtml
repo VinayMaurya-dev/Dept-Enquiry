@@ -1,0 +1,127 @@
+﻿@using CourtCase.Filters
+@{
+    ViewBag.Title = "GetHearingOfficer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string op = ViewBag.op as string;
+}
+@{
+
+    string Title = "";
+
+      if (op == "recivepersonal")
+    {
+        Title = "व्यक्तिगत सुनवाई एवं अभ्यावेदन प्राप्त होने के स्तर पर";
+    }
+     
+
+}
+
+
+<div class="app-main__inner">
+    <div class="app-page-title app-page-title-simple">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div>
+                    <div class="page-title-head center-elem">
+                        <span class="d-inline-block pr-2">
+                            <i class="lnr-apartment opacity-6"></i>
+                        </span>
+                        <span class="d-inline-block"> शिकायत अनुभाग के अन्तर्गत प्रचलित पत्रावलियों में जांच अधिकारी से अप्राप्त जांच आख्या का विवरण-</span>
+                    </div>
+                    <div class="page-title-subheading opacity-10">
+                        <nav class="" aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <button type="button" onclick="history.back()" value="BACK" class="btn btn-primary mybackbutton"><i class="fa fa-arrow-left" aria-hidden="true"> Back</i></button>
+                                </li>
+
+                                <li class="active breadcrumb-item" aria-current="page">
+                                    @Title
+
+                                </li>
+                            </ol>
+                        </nav>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <center>
+
+        <div class="main-card mb-3 card">
+            <div class="card-body">
+                <div id="step-1">
+                    <div class="form-row" id="divDetails">
+                        <div class="table-responsive" style="margin-top:15px;">
+                            @if (Model != null)
+                            {
+                                System.Data.DataSet ds = ((System.Data.DataSet)Model);
+                                System.Data.DataTable dt = new System.Data.DataTable();
+
+                                if (ds.Tables.Count > 0 && ds != null)
+                                {
+                                    dt = ds.Tables[0];
+                                }
+                                <table id="scr-vtr-dynamic" class="example table table-hover table-striped table-bordered mb-0" style="width:100%;">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center;">क्र०सं</th>  <!-- Adding the Serial Number Header -->
+                                            @foreach (System.Data.DataColumn col in dt.Columns)
+                                            {
+                                                <th style="text-align:center;">@Html.Raw(col.ColumnName)</th>
+                                            }
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        @if (dt.Rows.Count > 0)
+                                        {
+                                            int serialNo = 1;<!-- Initialize the serial number -->
+                                            foreach (System.Data.DataRow row in dt.Rows)
+                                            {
+                                                <tr>
+                                                    <!-- Serial Number Column -->
+                                                    <td style="text-align:center;">@serialNo</td> <!-- Display the serial number -->
+
+                                                    @foreach (System.Data.DataColumn column in dt.Columns)
+                                                    {
+                                                        var cellValue = row[column].ToString();
+                                                        if (column.ColumnName == "कार्रवाई")
+                                                        {
+                                                            <td>
+                                                                @Html.EncodedActionLink("देखें",
+                                                                    "DepartmentalComplaintDetails",
+                                                                    "ComplaintSE",
+                                                                    new { ComplaintNo = cellValue },
+                                                                    new { @class = "btn-transition btn btn-outline btn-primary" },
+                                                                    "fa fa-eye"
+                                                                )
+                                                            </td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td style="text-align:center;">@Html.Raw(cellValue)</td>
+                                                        }
+                                                    }
+
+                                                </tr>
+                                                serialNo++; <!-- Increment the serial number for the next row -->
+                                            }
+                                        }
+                                    </tbody>
+                                </table> 
+                            }
+                        </div>
+
+
+                    </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </center>
+            </div>
+

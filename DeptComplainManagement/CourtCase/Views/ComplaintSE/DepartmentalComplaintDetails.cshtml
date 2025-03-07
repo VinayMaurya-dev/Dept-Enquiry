@@ -1,0 +1,2893 @@
+﻿<div>
+    @model CourtCase.Models.ComplaintDetails
+@{
+    ViewBag.Title = "DepartmentalComplaintDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    System.Data.DataSet ds = ((System.Data.DataSet)ViewBag.Replies);
+    System.Data.DataTable dt = new System.Data.DataTable();
+    System.Data.DataTable aarop = new System.Data.DataTable();
+    System.Data.DataTable it = new System.Data.DataTable();
+    System.Data.DataTable ft = new System.Data.DataTable();
+    System.Data.DataTable statement = new System.Data.DataTable();
+    System.Data.DataTable Revision = new System.Data.DataTable();
+    System.Data.DataTable Appeal = new System.Data.DataTable();
+
+    if (ds != null && ds.Tables.Count > 0)
+    {
+        dt = ds.Tables[0];
+        ft = ds.Tables[1];
+        it = ds.Tables[2];
+        aarop = ds.Tables[3];
+        statement = ds.Tables[4];
+        Revision = ds.Tables[10];
+        Appeal = ds.Tables[11];
+    }
+}
+<style>
+    bold {
+        font-weight: bold;
+    }
+
+    .pe-7s-angle-down {
+        font-weight: 800;
+        font-size: 25px;
+    }
+
+
+    .accordion-wrapper {
+        border: none !important;
+    }
+
+    .toast-top-right {
+        top: 12px;
+    }
+</style>
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+<div class="app-main__inner">
+    <div class="app-page-title app-page-title-simple">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div>
+                    <div class="page-title-head center-elem">
+                        <span class="d-inline-block pr-2">
+                            <i class="lnr-apartment opacity-6"></i>
+                        </span>
+                        <span class="d-inline-block">Departmental Enquiry Details</span>
+                    </div>
+                    <div class="page-title-subheading opacity-10">
+                        <nav class="" aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <button type="button" onclick="history.back()" value="BACK" class="btn btn-primary mybackbutton"><i class="fa fa-arrow-left" aria-hidden="true"> Back</i></button>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <a href="javascript:void(0)" onclick="window.history.back();">
+                                        विभागीय जांच सूची
+                                    </a>
+                                </li>
+
+                                <li class="active breadcrumb-item" aria-current="page">
+                                    विभागीय जांच विवरण
+                                </li>
+                            </ol>
+                        </nav>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="main-card mb-3 card">
+
+        <div class="card-body">
+            <div class="vertical-without-time vertical-timeline--animate vertical-timeline--one-column" id="divPublicDepartment">
+                <div class="vertical-timeline-item vertical-timeline-element">
+                    <div>
+                        <span class="vertical-timeline-element-icon bounce-in">
+                            <i class="badge badge-dot badge-dot-xl badge-success"> </i>
+                        </span>
+                        <div class="vertical-timeline-element-content bounce-in">
+                            <h4 class="timeline-title">अपचारी का विवरण</h4>
+                            <div class="form-row">
+                                <div class="col-md-4 mb-3">
+                                    <div class="position-relative form-group">
+                                        <label for="exampleAddress" class="">
+                                            कंप्यूटर संख्या
+                                        </label><br />
+                                        @Html.TextBoxFor(m => m.ComplaintNo, new { @class = "form-control", @readonly = "true", @id = "ComplaintNo", @style = "font-size:14px" })
+                                    </div>
+                                </div>
+                                @Html.HiddenFor(m => m.GuiltyEmployeeDesignation, new { @class = "form-control", @readonly = "true", @id = "hiddenGuiltyEmployeeDesignation" })
+                                <div class="col-md-4 mb-3">
+                                    <div class="position-relative form-group">
+                                        <label for="exampleAddress" class="">
+                                            ग्रामीण / नगरीय
+                                        </label><br />
+
+                                        @Html.TextBoxFor(m => m.R_U, new { @class = "form-control", @readonly = "true", @id = "R_U", @style = "font-size:14px" })
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="position-relative form-group">
+                                        <label for="exampleAddress" class=""> विभागीय जांच किनके द्वारा आरंभ की गई</label><br />
+                                        @Html.TextBoxFor(m => m.ComplaintEnquiryType, new { @class = "form-control", @readonly = "true", @id = "EnquiryType", @style = "font-size:14px" })
+                                    </div>
+
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="position-relative form-group">
+                                        <label for="exampleAddress" class="">
+                                            कार्मिक का विभागीय कोड
+                                        </label><br />
+                                        @Html.TextBoxFor(m => m.EmployeeId, new { @class = "form-control", @readonly = "true", @id = "EmployeeId" })
+
+
+                                    </div>
+
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="position-relative form-group">
+                                        <label for="exampleAddress" class="">कार्मिक का नाम</label><br />
+                                        @Html.TextBoxFor(m => m.ComplainantName, new { @class = "form-control", @readonly = "true", @id = "WorkingName" })
+
+
+                                    </div>
+
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="position-relative form-group">
+                                        <label for="exampleAddress" class="">कार्मिक का मोबाइल नंबर</label><br />
+                                        @Html.TextBoxFor(m => m.MobileNo, new { @class = "form-control", @readonly = "true" })
+                                    </div>
+
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="position-relative form-group">
+                                        <label for="exampleAddress" class="">कार्मिक का ईमेल आईडी</label><br />
+                                        @Html.TextBoxFor(m => m.EmailId, new { @class = "form-control", @readonly = "true" })
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+                                    <div class="position-relative form-group">
+                                        <label for="exampleAddress" class="">वर्तमान कार्यरत कार्यालय</label><br />
+                                        @Html.TextBoxFor(m => m.ComplaintRelatedTo, new { @class = "form-control", @readonly = "true", @id = "RoleTypeName" })
+
+
+                                    </div>
+
+                                </div>
+
+                                @if (Model.ComplaintRelatedTo == "Zone")
+                                {
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">वर्तमान  ज़ोन </label>
+                                            @Html.TextBoxFor(m => m.ComplaintRelatedZoneName, new { @class = "form-control", @readonly = "true" })
+
+                                        </div>
+
+                                    </div>
+                                }
+                                else if (Model.ComplaintRelatedTo == "Circle")
+                                {
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">वर्तमान  ज़ोन </label>
+                                            @Html.TextBoxFor(m => m.ComplaintRelatedZoneName, new { @class = "form-control", @readonly = "true" })
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">वर्तमान  सर्किल </label>
+                                            @Html.TextBoxFor(m => m.ComplaintRelatedCircleName, new { @class = "form-control", @readonly = "true" })
+
+                                        </div>
+
+                                    </div>
+                                }
+                                else if (Model.ComplaintRelatedTo == "Division")
+                                {
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">वर्तमान  ज़ोन</label>
+                                            @Html.TextBoxFor(m => m.ComplaintRelatedZoneName, new { @class = "form-control", @readonly = "true" })
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">वर्तमान  सर्किल </label>
+                                            @Html.TextBoxFor(m => m.ComplaintRelatedCircleName, new { @class = "form-control", @readonly = "true" })
+
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">वर्तमान  डिवीज़न </label>
+                                            @Html.TextBoxFor(m => m.ComplaintRelatedDivisionName, new { @class = "form-control", @readonly = "true" })
+
+                                        </div>
+
+                                    </div>
+                                }
+                                <div class="col-md-4 mb-3">
+                                    <div class="position-relative form-group">
+                                        <label for="exampleAddress" class="">वर्तमान पदनाम</label><br />
+                                        @Html.TextBoxFor(m => m.ComplainRelatedDesignationName, new { @class = "form-control", @readonly = "true", @id = "ComplaintDesignation" })
+
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="position-relative form-group">
+                                        <label>जांच संस्थित किये जाने का पत्रावली संख्या</label>
+                                        @Html.TextBoxFor(m => m.OfficeMemorandumNumber, new { @class = "form-control", @readonly = "true" })
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+                                    <div class="position-relative form-group">
+                                        <label>जांच संस्थित किये जाने का पत्रांक दिनांक</label>
+                                        @Html.TextBoxFor(m => m.OfficeMemorandumDate, new { @class = "form-control", @readonly = "true" })
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="position-relative form-group">
+                                        <label for="validationCustom05">अपलोड किया गया डॉक्यूमेंट (नियुक्ति अधिकारी का पत्र) &nbsp; </label>
+                                        @if (Model.Attachment != null && Model.Attachment != "")
+                                        {
+                                            <a href="@Model.Attachment.Replace("~","")" target="_blank" class="mb-2 mr-2">  <img src="~/assets/pdf/pdf3.png" style="height:50px;" /></a>
+                                        }
+                                        else
+                                        {
+                                            <a href="javascript:void(0);" target="_blank" class="mb-2 mr-2  disabled">  <img src="~/assets/pdf/pdf3.png" style="height:50px;" /></a>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="vertical-without-time vertical-timeline--animate vertical-timeline--one-column">
+                <div class="vertical-timeline-item vertical-timeline-element">
+                    <div>
+                        <span class="vertical-timeline-element-icon bounce-in">
+                            <i class="badge badge-dot badge-dot-xl badge-success"> </i>
+                        </span>
+
+                        <div class="vertical-timeline-element-content bounce-in">
+                            <h3 class="timeline-title">संस्थित जाँच के समय अपचारी के कार्यालय का विवरण</h3>
+                            <br />
+                            <div class="form-row">
+                                <div class="col-md-4 mb-3">
+                                    <div class="position-relative form-group">
+                                        <label for="exampleAddress" class="">संस्थित जांच कार्यालय </label>
+                                        @Html.TextBoxFor(m => m.PreviousComplaintRelatedTo, new { @class = "form-control", @readonly = "true" })
+                                    </div>
+                                </div>
+                                @if (Model.PreviousComplaintRelatedTo == "HQ")
+                                {
+
+                                }
+                                else if (Model.PreviousComplaintRelatedTo == "Zone")
+                                {
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">संस्थित जांच का ज़ोन </label>
+                                            @Html.TextBoxFor(m => m.PreviousComplaintRelatedZoneName, new { @class = "form-control", @readonly = "true" })
+                                        </div>
+
+                                    </div>
+                                }
+                                else if (Model.PreviousComplaintRelatedTo == "Circle")
+                                {
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">संस्थित जांच का  ज़ोन </label>
+                                            @Html.TextBoxFor(m => m.PreviousComplaintRelatedZoneName, new { @class = "form-control", @readonly = "true" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">संस्थित जांच का सर्किल </label>
+                                            @Html.TextBoxFor(m => m.PreviousComplaintRelatedCircleName, new { @class = "form-control", @readonly = "true" })
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">संस्थित जांच का ज़ोन </label>
+                                            @Html.TextBoxFor(m => m.PreviousComplaintRelatedZoneName, new { @class = "form-control", @readonly = "true" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">संस्थित जांच का सर्किल </label>
+                                            @Html.TextBoxFor(m => m.PreviousComplaintRelatedCircleName, new { @class = "form-control", @readonly = "true" })
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">संस्थित जांच का डिवीज़न </label>
+                                            @Html.TextBoxFor(m => m.PreviousComplaintRelatedDivisionName, new { @class = "form-control", @readonly = "true" })
+                                        </div>
+                                    </div>
+                                }
+
+                                <div class="col-md-4 mb-3">
+                                    <div class="position-relative form-group">
+                                        <label for="exampleAddress" class="">संस्थित जांच का पदनाम</label><br />
+                                        @Html.TextBoxFor(m => m.PreviousComplaintDesignationName, new { @class = "form-control", @readonly = "true" })
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="position-relative form-group">
+                                        <label for="exampleAddress" class="">कार्य अवधि(कब से) </label><br />
+                                        @Html.TextBoxFor(m => m.WorkDurationFrom, new { @class = "form-control", @lang = "hii", @readonly = "true" })
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="position-relative form-group">
+                                        <label for="exampleAddress" class="">कार्य अवधि(कब तक) </label><br />
+                                        @Html.TextBoxFor(m => m.WorkDurationTo, new { @class = "form-control", @lang = "hii", @readonly = "true" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="position-relative form-group">
+                                        <br />
+                                        <input type="checkbox" name="IsFinancial" value="वित्तीय"
+                                               onclick="onlyOne1(this)"
+                                               @(Model.IsFinancial == "वित्तीय" ? "checked" : "") disabled />&emsp;वित्तीय &emsp;
+                                        <input type="checkbox" name="IsFinancial" value="गैर वित्तीय"
+                                               onclick="onlyOne1(this)"
+                                               @(Model.IsFinancial == "गैर वित्तीय" ? "checked" : "") disabled />&emsp;गैर वित्तीय
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <div class="position-relative form-group">
+                                        <label for="validationCustom05">राशि</label>
+                                        @Html.TextBoxFor(m => m.FinancialAmount, new { @class = "form-control", @readonly = "true" })
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <div class="position-relative form-group">
+                                        <label for="validationCustom05">निलंबन की स्तिथि</label> <br />
+                                        <input type="checkbox" name="IsSuspension" value="हाँ"
+                                               onclick="onlyOne2(this)"
+                                               @(Model.IsSuspension == "हाँ" ? "checked" : "") disabled />&emsp;हाँ &emsp;
+                                        <input type="checkbox" name="IsSuspension" value="नहीं"
+                                               onclick="onlyOne2(this)"
+                                               @(Model.IsSuspension == "नहीं" ? "checked" : "") disabled />&emsp;नहीं
+                                    </div>
+                                </div>
+                                @{
+                                    var isSuspension = Model.IsSuspension == "हाँ";
+                                }
+
+                                @if (!isSuspension)
+                                {
+                                    <div class="col-md-6 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustom05">संबद्ध कार्यालय का नाम</label>
+                                            @Html.TextBoxFor(m => m.AssociatedOfficeName, new { @class = "form-control", @readonly = "true" })
+                                        </div>
+                                    </div>
+                                }
+
+                            </div>
+                            @if (isSuspension)
+                            {
+                                <div class="form-row">
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="exampleAddress" class="">संबद्ध कार्यालय </label>
+                                            @Html.TextBoxFor(m => m.AffiliatedOfficesRelatedTo, new { @class = "form-control", @readonly = "true" })
+                                        </div>
+                                    </div>
+                                    @if (Model.AffiliatedOfficesRelatedTo == "HQ")
+                                    {
+                                        if (!string.IsNullOrWhiteSpace(Model.AffiliatedOfficesName))
+                                        {
+                                            <div class="col-md-4 mb-3">
+                                                <div class="position-relative form-group">
+                                                    <label for="exampleAddress" class="">संबद्ध कार्यालय का नाम</label><br />
+                                                    @Html.TextBoxFor(m => m.AffiliatedOfficesName, new { @class = "form-control", @readonly = "true" })
+                                                </div>
+                                            </div>
+                                        }
+
+                                    }
+                                    else if (Model.AffiliatedOfficesRelatedTo == "Zone")
+                                    {
+                                        <div class="col-md-4 mb-3">
+                                            <div class="position-relative form-group">
+                                                <label for="validationCustomUsername">संबद्ध ज़ोन </label>
+                                                @Html.TextBoxFor(m => m.AffiliatedOfficesZoneName, new { @class = "form-control", @readonly = "true" })
+                                            </div>
+
+                                        </div>
+                                    }
+                                    else if (Model.AffiliatedOfficesRelatedTo == "Circle")
+                                    {
+                                        <div class="col-md-4 mb-3">
+                                            <div class="position-relative form-group">
+                                                <label for="validationCustomUsername">संबद्ध ज़ोन </label>
+                                                @Html.TextBoxFor(m => m.AffiliatedOfficesZoneName, new { @class = "form-control", @readonly = "true" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <div class="position-relative form-group">
+                                                <label for="validationCustomUsername">संबद्ध सर्किल </label>
+                                                @Html.TextBoxFor(m => m.AffiliatedOfficesCircleName, new { @class = "form-control", @readonly = "true" })
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="col-md-4 mb-3">
+                                            <div class="position-relative form-group">
+                                                <label for="validationCustomUsername">संबद्ध ज़ोन </label>
+                                                @Html.TextBoxFor(m => m.AffiliatedOfficesZoneName, new { @class = "form-control", @readonly = "true" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <div class="position-relative form-group">
+                                                <label for="validationCustomUsername">संबद्ध सर्किल </label>
+                                                @Html.TextBoxFor(m => m.AffiliatedOfficesCircleName, new { @class = "form-control", @readonly = "true" })
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <div class="position-relative form-group">
+                                                <label for="validationCustomUsername">संबद्ध डिवीज़न </label>
+                                                @Html.TextBoxFor(m => m.AffiliatedOfficesDivisionName, new { @class = "form-control", @readonly = "true" })
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            }
+
+                            <div class="form-row">
+                                <div class="col-md-12 mb-3">
+                                    <div class="position-relative form-group">
+                                        <label for="validationCustomUsername">
+                                            विवरण
+                                        </label>
+                                        @Html.TextAreaFor(m => m.ComplaintDescription, new { @class = "form-control", @onkeypress = "return /[a-z0-9, ]/i.test(event.key)", @style = "resize:none;", @rows = "5", @readonly = "true" })
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-footer d-flex flex-wrap justify-content-between align-items-center px-0 pt-0 pb-3">
+                @if (Model.IsFinalStatusAdded == false)
+                {
+                    <div class="px-4 pt-3">
+                        @if (Model.IsAddedAarop == true)
+                        {
+                            if (statement.Rows.Count > 0)
+                            {
+                                if (Model.ComplainCurrentStatus == Session["UserNumber"].ToString() || string.IsNullOrWhiteSpace(Model.ComplainCurrentStatus))
+                                {
+                                    <input type="checkbox" name="FinalStatus" />
+                                    <span class="blink">अंतिम परिणाम जोड़ने के लिए चेकबॉक्स को चेक करें |</span>
+                                }
+                            }
+
+                        }
+                    </div>
+                    <div class="px-4 pt-3">
+                        @if (Model.IsAddedAarop == false)
+                        {
+                            <button type="button" class="btn btn-pill btn-shadow btn-primary" id="Aaropbutton">
+                                आरोप जोड़े
+                            </button>
+                        }
+                        @if (Model.IsAddedAarop == true)
+                        {
+                            if (statement.Rows.Count > 0)
+                            {
+                                if (Model.ComplainCurrentStatus == Session["UserNumber"].ToString() || string.IsNullOrWhiteSpace(Model.ComplainCurrentStatus))
+                                {
+                                    <button type="button" class="btn btn-pill btn-shadow btn-primary" id="addforwardingofficer">
+                                        शिकायत अनुभाग का परिशीलन जोड़े
+                                    </button>
+                                    <button type="button" class="btn btn-pill btn-shadow btn-primary" id="Againforwardbutton">
+                                        जाँच अधिकारी को पुनः अग्रेषित करे
+                                    </button>
+                                    <button type="button" class="btn btn-pill btn-shadow btn-danger" id="addFinalStatus" disabled>
+                                        अंतिम परिणाम जोड़े
+                                    </button>
+                                    <button type="button"
+                                            class="btn btn-pill btn-shadow btn-primary"
+                                            id="addcourtcase"
+                                            @(Model.CourtId == 0 ? "" : "disabled")>
+                                        कोर्ट केस जोड़ें
+                                    </button>
+
+                                    <button type="button" class="btn btn-pill btn-shadow btn-secondary" id="addinvestigation"
+                                            @(Model.InvestigationId == 0 ? "" : "disabled")>
+                                        ED,CBI,SIT,EOW प्रचलित जाँच का विवरण जोड़ें
+                                    </button>
+                                }
+                            }
+                            <button type="button" class="btn btn-pill btn-shadow btn-success mt-2" id="remarkbutton">
+                                टिप्पणी जोड़े
+                            </button>
+
+                        }
+                    </div>
+                }
+                @if (Model.IsFinalStatusAdded == true)
+                {
+                    <div class="px-4 pt-3"></div>
+                    <div class="px-4 pt-3 d-flex flex-wrap">
+                        @*<div class="px-4 pt-3 d-flex flex-wrap">*@
+                        @if (Model.ComplainCurrentStatus == Session["UserNumber"].ToString())
+                        {
+                            if (Model.IsAppealAdded == false)
+                            {
+                                if (Model.IsRevisionAdded == false)
+                                {
+                                    <button type="button" class="btn btn-pill btn-shadow btn-primary m-1" id="Revisionbtn">
+                                        पुनरीक्षण जोड़े
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button type="button" class="btn btn-pill btn-shadow btn-danger m-1" id="addFinalStatus1">
+                                        पुनरीक्षण अंतिम परिणाम जोड़े
+                                    </button>
+                                }
+                            }
+
+
+                            if (Model.IsAppealAdded == false)
+                            {
+                                <button type="button" class="btn btn-pill btn-shadow btn-primary m-1" id="Appealbtn">
+                                    अपील जोड़े
+                                </button>
+                            }
+                            else
+                            {
+                                <button type="button" class="btn btn-pill btn-shadow btn-danger m-1" id="addFinalAppealStatus">
+                                    अपील अंतिम परिणाम जोड़े
+                                </button>
+                            }
+
+                            <button type="button"
+                                    class="btn btn-pill btn-shadow btn-primary m-1"
+                                    id="addcourtcase"
+                                    @(Model.CourtId == 0 ? "" : "disabled")>
+                                कोर्ट केस जोड़ें
+                            </button>
+
+                            <button type="button"
+                                    class="btn btn-pill btn-shadow btn-danger m-1"
+                                    id="addcontemtcase"
+                                    @(Model.CourtId != 0 ? "" : "disabled")>
+                                अवमानना केस जोड़ें
+                            </button>
+
+
+                            if (Model.IsAgencyAdded == false)
+                            {
+                                <button type="button" class="btn btn-pill btn-shadow btn-secondary m-1" id="addinvestigation"
+                                        @(Model.InvestigationId == 0 ? "" : "disabled")>
+                                    ED,CBI,SIT,EOW प्रचलित जाँच का विवरण जोड़ें
+                                </button>
+                            } 
+                        }
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+    <div class="card mb-3" id="Aaropdiv">
+        @Html.HiddenFor(m => m.ComplaintNo, new { @id = "hiddenComplain_number" })
+        <div class="card-body">
+            <div class="form-row">
+                <div class="col-md-3 mb-3">
+                    <div class="form-group">
+                        <label>आरोप पत्र संख्या</label>
+                        @Html.TextBoxFor(m => m.ChargeSheetNumber, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="form-group">
+                        <label>आरोप पत्र अपलोड करें</label>
+                        @Html.TextBoxFor(model => model.ChargeSheetAttachment, new { @type = "file", @class = "form-control", @id = "ChargeSheetAttachment", @onchange = "return filechange1();", @accept = "application/pdf" })
+                        <span style="color:red;font-family:Cambria;font-weight:bolder;">केवल PDF फ़ाइल अपलोड करें!</span>
+                    </div>
+
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="form-group">
+                        <label>आरोप पत्र निर्गत की तिथि</label>
+                        @Html.TextBoxFor(model => model.DateOfIssueChargeSheet, new { @data_toggle = "datepicker-month", @autocomplete = "off", @placeholder = "MM/DD/YYYY", @maxlength = "10", @class = "form-control" })
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="form-group">
+                        <label>आरोपों की संख्या</label>
+                        <input type="number" name="NumberofCharges" value="" class="form-control" id="NumberofCharges" />
+
+                    </div>
+                </div>
+                <div class="col-md-12 mb-3">
+                    <div class="form-group">
+                        <div id="container" class="col-sm-12"></div> <!-- Added col-sm-12 here -->
+                        <div id="error-message" style="color: red;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-footer d-flex flex-wrap justify-content-between align-items-center px-0 pt-0 pb-3">
+            <div class="px-4 pt-3">
+            </div>
+            <div class="px-4 pt-3">
+                <button type="submit" class="btn btn-primary" onclick="return SaveAaropDetails(this);">
+                    सेव करें
+                </button>
+                <button type="button" class="btn btn-danger" onclick="$('#Aaropdiv').hide()">
+                    बंद करें
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="card mb-3" id="FinalStatusdiv1">
+        @using (Html.BeginForm("AddFinalRevisinAppealStatus", "ComplaintSE", FormMethod.Post, new { encType = "multipart/form-data", @onsubmit = "return ValidateFinalRevisionResult()" }))
+        {
+            @Html.HiddenFor(m => m.ComplaintNo);
+
+            <div class="card-body">
+                <div class="form-row ">
+                    <div class="col-md-4 mb-3">
+                        <div class="position-relative form-group">
+                            <label for="validationCustomUsername">
+                                कार्यालय ज्ञाप संख्या
+                            </label>
+                            @Html.TextBoxFor(m => m.FinalOfficeMemorandumNo, new { @class = "form-control", @id = "FinalOfficeMemorandumNo1" })
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="position-relative form-group">
+                            <label for="validationCustomUsername">
+                                अंतिम तिथि
+                            </label>
+                            @Html.TextBoxFor(m => m.FinalDate, new { @class = "form-control", @type = "text", @id = "FinalDate1", @data_toggle = "datepiker-Month" })
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="position-relative form-group">
+                            <label for="validationCustomUsername">
+                                अपलोड डॉक्यूमेंट
+                            </label>
+                            @Html.TextBoxFor(model => model.FinalAttatchment, new { @type = "file", @class = "form-control", @onchange = "return filechange();", @id = "FinalAttatchment1" })
+                            <span style="color:red;font-family:Cambria;font-weight:bolder;">केवल PDF फ़ाइल अपलोड करें!</span>
+
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="position-relative form-group">
+                            <label for="validationCustomUsername">
+                                स्टेटस
+                            </label>
+                            @Html.DropDownList("FinalStatus",
+     new List<SelectListItem>
+     {
+         new SelectListItem { Text = "Close", Value = "Close" }
+     },
+     new { @class = "form-control", id = "FinalStatus1" })
+
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <div class="position-relative form-group">
+                            <label for="validationCustomUsername">
+                                टिप्पणी जोड़ें
+                            </label>
+                            @Html.TextAreaFor(m => m.FinalRemarks, new { @class = "form-control", @style = "resize:none;", @rows = "5", @lang = "hi", @id = "txtFinalRemarks1" })
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-footer d-flex flex-wrap justify-content-between align-items-center px-0 pt-0 pb-3">
+                    <div class="px-4 pt-3">
+
+                    </div>
+                    <div class="px-4 pt-3">
+
+                        <button type="submit" class="btn btn-primary">
+                            सेव करें
+                        </button>
+
+                        <button type="button" class="btn btn-danger" onclick="$('#FinalStatusdiv1').hide()">
+                            बंद करें
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="card mb-3" id="FinalStatusdiv">
+        @using (Html.BeginForm("AddFinalStatus", "ComplaintSE", FormMethod.Post, new { encType = "multipart/form-data", @onsubmit = "return ValidateFinalStatus()" }))
+        {
+            @Html.HiddenFor(m => m.ComplaintNo);
+
+            <div class="card-body">
+                <div class="form-row ">
+                    <div class="col-md-4 mb-3">
+                        <div class="position-relative form-group">
+                            <label for="validationCustomUsername">
+                                कार्यालय ज्ञाप संख्या
+                            </label>
+                            @Html.TextBoxFor(m => m.FinalOfficeMemorandumNo, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="position-relative form-group">
+                            <label for="validationCustomUsername">
+                                अंतिम तिथि
+                            </label>
+                            @Html.TextBoxFor(m => m.FinalDate, new { @class = "form-control", @type = "text", @data_toggle = "datepicker-month", placeholder = "MM/DD/YYYY" })
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="position-relative form-group">
+                            <label for="validationCustomUsername">
+                                अपलोड डॉक्यूमेंट
+                            </label>
+                            @Html.TextBoxFor(model => model.FinalAttatchmentDoc, new { @type = "file", @class = "form-control", @onchange = "return filechange();", @id = "FinalAttatchmentDoc" })
+                            <span style="color:red;font-family:Cambria;font-weight:bolder;">केवल PDF फ़ाइल अपलोड करें!</span>
+
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="position-relative form-group">
+                            <label for="validationCustomUsername">
+                                स्टेटस
+                            </label>
+                            @Html.DropDownList("FinalStatus",
+                                 new List<SelectListItem>
+                                 {
+                                     new SelectListItem { Text = "Close", Value = "Close" }
+                                 },
+                                 new { @class = "form-control" })
+
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <div class="position-relative form-group">
+                            <label for="validationCustomUsername">
+                                टिप्पणी जोड़ें
+                            </label>
+                            @Html.TextAreaFor(m => m.FinalRemarks, new { @class = "form-control", @style = "resize:none;", @rows = "5", @lang = "hi", @id = "txtFinalRemarks" })
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-footer d-flex flex-wrap justify-content-between align-items-center px-0 pt-0 pb-3">
+                    <div class="px-4 pt-3">
+
+                    </div>
+                    <div class="px-4 pt-3">
+
+                        <button type="submit" class="btn btn-primary">
+                            सेव करें
+                        </button>
+
+                        <button type="button" class="btn btn-danger" onclick="$('#FinalStatusdiv').hide()">
+                            बंद करें
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="card mb-3" id="Againforwarddiv">
+        @using (Html.BeginForm("ForWardToInvestigationOfficer", "ComplaintSE", FormMethod.Post, new { encType = "multipart/form-data", @onsubmit = "return AgainforwardValidate()" }))
+        {
+            @Html.HiddenFor(m => m.ComplaintNo);
+            <div class="card-body">
+                <div class="vertical-without-time vertical-timeline--animate vertical-timeline--one-column">
+                    <div class="vertical-timeline-item vertical-timeline-element">
+                        <div>
+                            <span class="vertical-timeline-element-icon bounce-in">
+                                <i class="badge badge-dot badge-dot-xl badge-success"> </i>
+                            </span>
+
+                            <div class="vertical-timeline-element-content bounce-in">
+                                <h3 class="timeline-title">जाँच आख्या से असहमति की दशा में पुनः जाँच हेतु नियुक्ति अधिकारी द्वारा जाँच अधिकारी को प्रेषित पत्र का विवरण</h3>
+                                <br />
+                                <div class="form-row">
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">पत्रांक संख्या</label>
+                                            <input type="text" class="form-control" name="LetterNumber" id="LetterNumber" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">
+                                                दिनांक
+                                            </label>
+                                            <input type="text" class="form-control" name="LetterDate" id="LetterDate" data-toggle="datepicker-month" placeholder="MM/DD/YYYY" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">
+                                                दस्तावेज अपलोड
+                                            </label>
+                                            <input type="file" class="form-control" name="AttatchmentDoc" accept="application/pdf" id="AttatchmentDoc" onchange="return AttatchmentDocument();" />
+                                            <span style="color:red;font-family:Cambria;font-weight:bolder;">केवल PDF फ़ाइल अपलोड करें!</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer d-flex flex-wrap justify-content-between align-items-center px-0 pt-0 pb-3">
+                                    <div class="px-4 pt-3">
+                                    </div>
+                                    <div class="px-4 pt-3">
+
+                                        <button type="submit" class="btn btn-primary">
+                                            सेव करें
+                                        </button>
+
+                                        <button type="button" class="btn btn-danger" onclick="$('#Againforwarddiv').hide()">
+                                            बंद करें
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+    <div class="main-card mb-3 card mb-3" id="remarkdiv">
+        <div class="card-body">
+            <div class="vertical-without-time vertical-timeline--animate vertical-timeline--one-column">
+                <div class="vertical-timeline-item vertical-timeline-element">
+                    <div>
+                        <span class="vertical-timeline-element-icon bounce-in">
+                            <i class="badge badge-dot badge-dot-xl badge-success"> </i>
+                        </span>
+
+                        <div class="vertical-timeline-element-content bounce-in">
+                            <br />
+                            @using (Html.BeginForm("OperatorRemark", "ComplaintSE", FormMethod.Post, new { encType = "multipart/form-data", @onsubmit = "return Validate()" }))
+                            {
+                                @Html.HiddenFor(m => m.ComplaintNo);
+
+
+                                <div class="form-row ">
+                                    <div class="col-md-6 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">
+                                                टिप्पणी का विषय
+                                            </label>
+                                            @Html.TextAreaFor(m => m.ComplaintMarkedRemarkSubject, new { @class = "form-control", @style = "resize:none;", @rows = "1", @lang = "hi", @id = "txtComplaintMarkedRemarkSubject" })
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">
+                                                डॉक्यूमेंट अपलोड करें
+                                            </label>
+                                            @Html.TextBoxFor(model => model.OtherComplaintDocument, new { @type = "file", @class = "form-control", @onchange = "return filechange();", @id = "FileUpload" })
+                                            <span style="color:red;font-family:Cambria;font-weight:bolder;">केवल PDF फ़ाइल अपलोड करें!</span>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">
+                                                टिप्पणी का विवरण
+                                            </label>
+                                            @Html.TextAreaFor(m => m.ComplaintMarkedRemarkDescription, new { @class = "form-control", @style = "resize:none;", @rows = "5", @lang = "hi", @id = "txtComplaintMarkedRemarkDescription" })
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="card-footer d-flex flex-wrap justify-content-between align-items-center px-0 pt-0 pb-3">
+                                    <div class="px-4 pt-3">
+
+                                    </div>
+                                    <div class="px-4 pt-3">
+
+                                        <button type="submit" class="btn btn-primary" id="btnSubmit">
+                                            सेव करें
+                                        </button>
+
+                                        <button type="button" class="btn btn-danger" onclick="$('#remarkdiv').hide()">
+                                            बंद करें
+                                        </button>
+                                    </div>
+                                </div>
+
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card mb-3" id="forwarddiv">
+        @using (Html.BeginForm("AddForwardingOfficer", "ComplaintSE", FormMethod.Post, new { encType = "multipart/form-data", @onsubmit = "return FunPerusalValidation()" }))
+        {
+            @Html.HiddenFor(m => m.ComplaintNo);
+            <div class="card-body">
+                <div class="vertical-without-time vertical-timeline--animate vertical-timeline--one-column">
+                    <div class="vertical-timeline-item vertical-timeline-element">
+                        <div>
+                            <span class="vertical-timeline-element-icon bounce-in">
+                                <i class="badge badge-dot badge-dot-xl badge-success"> </i>
+                            </span>
+
+                            <div class="vertical-timeline-element-content bounce-in">
+                                <h3 class="timeline-title">शिकायत अनुभाग का परिशीलन</h3>
+                                <br />
+                                <div class="form-row">
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">पत्रावली प्रेषित करने की तिथि  </label>
+                                            @Html.TextBoxFor(m => m.LetterDate, new { @class = "form-control", @data_toggle = "datepicker-month", @placeholder = "MM/DD/YYYY", @id = "txtperusalLetterDate", @autocomplete = "off", @maxlength = "10" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">पत्रावली प्रेषण हेतु अधिकारी का पदनाम  </label>
+                                            <select class="dropdown form-control officerdesignation" id="ForwadingOfficerDesignations" name="ForwadingOfficerUserNumber"></select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">कार्यालय मत </label>
+                                            <input type="file" class="form-control" name="AttachmentperusalDoc" />
+                                            <span style="color:red;font-family:Cambria;font-weight:bolder;">केवल PDF फ़ाइल अपलोड करें!</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">
+                                                टिप्पणी
+                                            </label>
+                                            @Html.TextAreaFor(m => m.ForwardingOfficerComment, new { @class = "form-control", @style = "resize:none;", @rows = "5", @lang = "hii" })
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-footer d-flex flex-wrap justify-content-between align-items-center px-0 pt-0 pb-3">
+                <div class="px-4 pt-3">
+                </div>
+                <div class="px-4 pt-3">
+                    <button type="submit" class="btn btn-primary">
+                        सेव करें
+                    </button>
+                    <button type="button" class="btn btn-danger" onclick="$('#forwarddiv').hide()">
+                        बंद करें
+                    </button>
+                </div>
+            </div>
+        }
+
+    </div>
+    <div class="card mb-3" id="appealdiv">
+        @using (Html.BeginForm("Appeal", "ComplaintSE", FormMethod.Post, new { encType = "multipart/form-data", @onsubmit = "return ValidateAppeal()" }))
+        {
+            @Html.HiddenFor(m => m.ComplaintNo);
+            <div class="card-body">
+                <div class="vertical-without-time vertical-timeline--animate vertical-timeline--one-column">
+                    <div class="vertical-timeline-item vertical-timeline-element">
+                        <div>
+                            <span class="vertical-timeline-element-icon bounce-in">
+                                <i class="badge badge-dot badge-dot-xl badge-success"> </i>
+                            </span>
+
+                            <div class="vertical-timeline-element-content bounce-in">
+                                <h3 class="timeline-title">अपील करे</h3>
+                                <br />
+                                <div class="form-row">
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">पत्रावली संख्या   </label>
+                                            @Html.TextBoxFor(m => m.FileNumber, new { @class = "form-control", @id = "txtFileNumber2" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">अपील पत्रावली प्रेषण हेतु अधिकारी का पदनाम  </label>
+                                            <select class="dropdown form-control" id="AppealForwadingOfficerDesignations" name="ForwadingOfficerUserNumber"></select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">फ़ाइल अपलोड करें </label>
+                                            <input type="file" class="form-control" name="Attatchhment" id="Attachment2" />
+                                            <span style="color:red;font-family:Cambria;font-weight:bolder;">केवल PDF फ़ाइल अपलोड करें!</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">
+                                                टिप्पणी
+                                            </label>
+                                            @Html.TextAreaFor(m => m.Desctioption, new { @class = "form-control", @style = "resize:none;", @rows = "5", @lang = "hii", @id = "txtDesctioption2" })
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-footer d-flex flex-wrap justify-content-between align-items-center px-0 pt-0 pb-3">
+                <div class="px-4 pt-3">
+                </div>
+                <div class="px-4 pt-3">
+                    <button type="submit" class="btn btn-primary">
+                        सेव करें
+                    </button>
+                    <button type="button" class="btn btn-danger" onclick="$('#appealdiv').hide()">
+                        बंद करें
+                    </button>
+                </div>
+            </div>
+        }
+
+    </div>
+    <div class="card mb-3" id="Revisiondiv">
+        @using (Html.BeginForm("Revision", "ComplaintSE", FormMethod.Post, new { encType = "multipart/form-data", @onsubmit = "return ValidateRevision()" }))
+        {
+            @Html.HiddenFor(m => m.ComplaintNo);
+            <div class="card-body">
+                <div class="vertical-without-time vertical-timeline--animate vertical-timeline--one-column">
+                    <div class="vertical-timeline-item vertical-timeline-element">
+                        <div>
+                            <span class="vertical-timeline-element-icon bounce-in">
+                                <i class="badge badge-dot badge-dot-xl badge-success"> </i>
+                            </span>
+
+                            <div class="vertical-timeline-element-content bounce-in">
+                                <h3 class="timeline-title">जांच पुनरीक्षण करे</h3>
+                                <br />
+                                <div class="form-row">
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">
+                                                पुनरीक्षण पत्रावली संख्या
+                                            </label>
+                                            @Html.TextBoxFor(m => m.FileNumber, new { @class = "form-control", @id = "txtFileNumber1" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">पुनरीक्षण पत्रावली प्रेषण हेतु अधिकारी का पदनाम  </label>
+                                            <select class="dropdown form-control" id="RevisionForwadingOfficerDesignations" name="ForwadingOfficerUserNumber"></select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">फ़ाइल अपलोड करें </label>
+                                            <input type="file" class="form-control" name="Attatchhment" id="Attachment1" />
+                                            <span style="color:red;font-family:Cambria;font-weight:bolder;">केवल PDF फ़ाइल अपलोड करें!</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">
+                                                टिप्पणी
+                                            </label>
+                                            @Html.TextAreaFor(m => m.Desctioption, new { @class = "form-control", @style = "resize:none;", @rows = "5", @lang = "hii", @id = "txtDesctioption1" })
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-footer d-flex flex-wrap justify-content-between align-items-center px-0 pt-0 pb-3">
+                <div class="px-4 pt-3">
+                </div>
+                <div class="px-4 pt-3">
+                    <button type="submit" class="btn btn-primary">
+                        सेव करें
+                    </button>
+                    <button type="button" class="btn btn-danger" onclick="$('#Revisiondiv').hide()">
+                        बंद करें
+                    </button>
+                </div>
+            </div>
+        }
+
+    </div>
+    <div class="card mb-3" id="Appealfinalstatusdiv">
+        @using (Html.BeginForm("AddAppealFinalResultStatus", "ComplaintSE", FormMethod.Post, new { encType = "multipart/form-data", @onsubmit = "return ValidateFinalAppealResult()" }))
+        {
+            @Html.HiddenFor(m => m.ComplaintNo);
+
+            <div class="card-body">
+                <div class="form-row ">
+                    <div class="col-md-4 mb-3">
+                        <div class="position-relative form-group">
+                            <label for="validationCustomUsername">
+                                कार्यालय ज्ञाप संख्या
+                            </label>
+                            @Html.TextBoxFor(m => m.FinalOfficeMemorandumNo, new { @class = "form-control", @id = "FinalOfficeMemorandumNo2" })
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="position-relative form-group">
+                            <label for="validationCustomUsername">
+                                अंतिम तिथि
+                            </label>
+                            @Html.TextBoxFor(m => m.FinalDate, new { @class = "form-control", @type = "text", @id = "FinalDate2", @data_toggle = "datepicker-month", @autocomplete = "off", @placeholder = "MM/DD/YYYY", @maxlength = "10" })
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="position-relative form-group">
+                            <label for="validationCustomUsername">
+                                अपलोड डॉक्यूमेंट
+                            </label>
+                            @Html.TextBoxFor(model => model.FinalAttatchment, new { @type = "file", @class = "form-control", @onchange = "return filechange();", @id = "CourtAttatchment" })
+                            <span style="color:red;font-family:Cambria;font-weight:bolder;">केवल PDF फ़ाइल अपलोड करें!</span>
+
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="position-relative form-group">
+                            <label for="validationCustomUsername">
+                                स्टेटस
+                            </label>
+                            @Html.DropDownList("FinalStatus",
+     new List<SelectListItem>
+     {
+         new SelectListItem { Text = "Close", Value = "Close" }
+     },
+     new { @class = "form-control" })
+
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <div class="position-relative form-group">
+                            <label for="validationCustomUsername">
+                                टिप्पणी जोड़ें
+                            </label>
+                            @Html.TextAreaFor(m => m.FinalRemarks, new { @class = "form-control", @style = "resize:none;", @rows = "5", @lang = "hi", @id = "txtFinalRemarks2" })
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-footer d-flex flex-wrap justify-content-between align-items-center px-0 pt-0 pb-3">
+                    <div class="px-4 pt-3">
+
+                    </div>
+                    <div class="px-4 pt-3">
+
+                        <button type="submit" class="btn btn-primary">
+                            सेव करें
+                        </button>
+
+                        <button type="button" class="btn btn-danger" onclick="$('#Appealfinalstatusdiv').hide()">
+                            बंद करें
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="main-card mb-3 card mb-3" id="AddCourtCasediv">
+        <div class="card-body">
+            <div class="vertical-without-time vertical-timeline--animate vertical-timeline--one-column">
+                <div class="vertical-timeline-item vertical-timeline-element">
+                    <div>
+                        <span class="vertical-timeline-element-icon bounce-in">
+                            <i class="badge badge-dot badge-dot-xl badge-success"> </i>
+                        </span>
+                        <div class="vertical-timeline-element-content bounce-in">
+                            <br />
+                            @using (Html.BeginForm("ADDCourtCase", "ComplaintSE", FormMethod.Post, new { encType = "multipart/form-data", @onsubmit = "return ValidateCourtCase()" }))
+                            {
+                                @Html.HiddenFor(m => m.ComplaintNo);
+                                <div class="form-row">
+                                    <div class="col-md-3 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">
+                                                कोर्ट का नाम
+                                            </label>
+                                            <select class="dropdown form-control form-control-sm" id="CourtCaseDrop" name="courtId" onchange="showOtherCourtCaseTextBox()"></select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3 mb-3" id="otherAgencyDiv1" style="display: none;">
+                                        <div class="position-relative form-group">
+                                            <label for="otherTextBox">
+                                                अन्य कोर्ट का नाम
+                                            </label>
+                                            <input type="text" id="otherTextBox1" name="OtherCourt" placeholder="Enter Other Court Case Name" style="display: none;" class="form-control form-control-sm">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="otherTextBox">
+                                                याचिका
+                                            </label>
+                                            <select class="form-control form-control-sm" id="CaseType" name="CaseType">
+                                                <option value="-1">Select</option>
+                                                <option value="Writ">याचिका</option>
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="otherTextBox" id="CaseNolabel">
+                                                याचिका संख्या
+                                            </label>
+                                            <input type="text" id="CaseNo" name="CaseNo" placeholder="Enter" class="form-control form-control-sm">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="otherTextBox">
+                                                वर्ष
+                                            </label>
+                                            @{
+                                                int currentYear = DateTime.Now.Year;
+                                                var years = Enumerable.Range(currentYear - 19, 20).OrderByDescending(y => y);
+                                            }
+
+                                            <select id="ddlYears" class="form-control form-control-sm" name="YearId">
+                                                <option value="-1">Select Year</option>
+                                                @foreach (var year in years)
+                                                {
+                                                    <option value="@year">@year</option>
+                                                }
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername" id="CaseTypeuploadlabel">
+                                                अपलोड डॉक्यूमेंट
+                                            </label>
+                                            @Html.TextBoxFor(model => model.FinalAttatchmentDoc, new { @type = "file", @class = "form-control  form-control-sm", @onchange = "return filechange();", @id = "CourtCaseAttatchment" })
+                                            <span style="color:red;font-family:Cambria;font-weight:bolder;">केवल PDF फ़ाइल अपलोड करें!</span>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="otherTextBox">
+                                                कंप्यूटर संख्या
+                                            </label>
+                                            <input type="text" id="ComputerNo" name="ComputerNumber" placeholder="Enter Computer Number" class="form-control form-control-sm">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">
+                                                टिप्पणी जोड़ें
+                                            </label>
+                                            @Html.TextAreaFor(m => m.Remark, new { @class = "form-control form-control-sm", @style = "resize:none;", @rows = "8", @lang = "hi", @id = "CourtRemark" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer d-flex flex-wrap justify-content-between align-items-center px-0 pt-0 pb-3">
+                                    <div class="px-4 pt-3">
+
+                                    </div>
+                                    <div class="px-4 pt-3">
+
+                                        <button type="submit" class="btn btn-primary">
+                                            सेव करें
+                                        </button>
+
+                                        <button type="button" class="btn btn-danger" onclick="$('#AddCourtCasediv').hide()">
+                                            बंद करें
+                                        </button>
+                                    </div>
+                                </div>
+
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card mb-3" id="AddInvestigationdiv">
+        @using (Html.BeginForm("ADDInvestigation", "ComplaintSE", FormMethod.Post, new { encType = "multipart/form-data", @onsubmit = "return ValidateInvestigation()" }))
+        {
+            @Html.HiddenFor(m => m.ComplaintNo);
+
+            <div class="card-body">
+                <div class="form-row ">
+                    <div class="col-md-4 mb-3" hidden>
+                        <div class="position-relative form-group">
+                            <label for="validationCustomUsername">
+                                केस नंबर
+                            </label>
+                            @Html.TextBoxFor(m => m.CaseNo, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="position-relative form-group">
+                            <label for="InvestigationId">
+                                एजेंसी का नाम
+                            </label>
+                            <!-- Dropdown with options, including 'Other' -->
+                            <select class="dropdown form-control" id="InvestigationId" name="InvestigationId" onchange="showInvestigationOtherTextBox()"></select>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3" id="otherAgencyDiv" style="display: none;">
+                        <div class="position-relative form-group">
+                            <label for="otherTextBox">
+                                अन्य एजेंसी का नाम
+                            </label>
+                            <input type="text" id="otherTextBox" name="OtherAgencyName" placeholder="Enter Other Agency Name" style="display: none;" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="position-relative form-group">
+                            <label for="validationCustomUsername" id="Investigationuploadlevel">
+                                अपलोड डॉक्यूमेंट
+                            </label>
+                            @Html.TextBoxFor(model => model.Attachment, new { @type = "file", @class = "form-control", @onchange = "return filechange();", @id = "InvestigationAttachment" })
+                            <span style="color:red;font-family:Cambria;font-weight:bolder;">केवल PDF फ़ाइल अपलोड करें!</span>
+
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-12 mb-3">
+                        <div class="position-relative form-group">
+                            <label for="validationCustomUsername">
+                                टिप्पणी जोड़ें
+                            </label>
+                            @Html.TextAreaFor(m => m.Remark, new { @class = "form-control", @style = "resize:none;", @rows = "5", @lang = "hi", @id = "Remark" })
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer d-flex flex-wrap justify-content-between align-items-center px-0 pt-0 pb-3">
+                    <div class="px-4 pt-3">
+
+                    </div>
+                    <div class="px-4 pt-3">
+
+                        <button type="submit" class="btn btn-primary">
+                            सेव करें
+                        </button>
+
+                        <button type="button" class="btn btn-danger" onclick="$('#AddInvestigationdiv').hide()">
+                            बंद करें
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+
+    <div class="main-card mb-3 card mb-3" id="AddContemtCasediv">
+        <div class="card-body">
+            <div class="vertical-without-time vertical-timeline--animate vertical-timeline--one-column">
+                <div class="vertical-timeline-item vertical-timeline-element">
+                    <div>
+                        <span class="vertical-timeline-element-icon bounce-in">
+                            <i class="badge badge-dot badge-dot-xl badge-success"> </i>
+                        </span>
+                        <div class="vertical-timeline-element-content bounce-in">
+                            <br />
+                            @using (Html.BeginForm("ADDContemtCase", "ComplaintSE", FormMethod.Post, new { encType = "multipart/form-data", @onsubmit = "return ValidateContemtCase()" }))
+                            {
+                                @Html.HiddenFor(m => m.ComplaintNo);
+                                <div class="form-row">
+                                    <div class="col-md-3 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">
+                                                कोर्ट का नाम
+                                            </label>
+                                            <input type="text" class="form-control form-control-sm" readonly="readonly" value="@Model.CourtName" />
+                                            <input type="hidden" value="@Model.CourtId" name="CourtId" />
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-3 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="otherTextBox">
+                                                अवमानना
+                                            </label>
+                                            <select class="form-control form-control-sm" id="CaseType1" name="CaseType">
+                                                <option value="-1">Select</option>
+                                                <option value="Contempt">अवमानना</option>
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="otherTextBox" id="CaseNolabel">
+                                                अवमानना संख्या
+                                            </label>
+                                            <input type="text" id="CaseNo" name="CaseNo" placeholder="Enter" class="form-control form-control-sm">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="otherTextBox">
+                                                वर्ष
+                                            </label>
+                                            <input type="text" class="form-control form-control-sm" readonly="readonly" value="@Model.CaseYear" name="YearId" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername" id="CaseContemtuploadlabel">
+                                                अवमानना में मा० न्यायालय द्वारा पारित आदेश का विवरण
+                                            </label>
+                                            @Html.TextBoxFor(model => model.FinalAttatchmentDoc, new { @type = "file", @class = "form-control  form-control-sm", @onchange = "return filechange();", @id = "CourtCaseAttatchment" })
+                                            <span style="color:red;font-family:Cambria;font-weight:bolder;">केवल PDF फ़ाइल अपलोड करें!</span>
+
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-3 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="otherTextBox">
+                                                कंप्यूटर संख्या
+                                            </label>
+                                            <input type="text" class="form-control form-control-sm" readonly="readonly" value="@Model.ComputerNumber" name="ComputerNumber" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">
+                                                टिप्पणी जोड़ें
+                                            </label>
+                                            @Html.TextAreaFor(m => m.Remark, new { @class = "form-control form-control-sm", @style = "resize:none;", @rows = "8", @lang = "hi", @id = "CourtRemark" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer d-flex flex-wrap justify-content-between align-items-center px-0 pt-0 pb-3">
+                                    <div class="px-4 pt-3">
+
+                                    </div>
+                                    <div class="px-4 pt-3">
+
+                                        <button type="submit" class="btn btn-primary">
+                                            सेव करें
+                                        </button>
+
+                                        <button type="button" class="btn btn-danger" onclick="$('#AddContemtCasediv').hide()">
+                                            बंद करें
+                                        </button>
+                                    </div>
+                                </div>
+
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @Html.Partial("Partial/_DataSetPartial")
+
+
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        var msg = '@TempData["msg"]';
+        if (msg == "Update") {
+            toastr.options = {
+                "closeButton": true,
+                "timeout": 1000,
+                "progressBar": true,
+                "positionClass": "toast-top-right"
+            }
+            toastr.success('डेटा सफलतापूर्वक अपडेट हो गया!');
+        }
+        else if (msg == "error") {
+            toastr.options = {
+                "closeButton": true,
+                "timeout": 1000,
+                "progressBar": true,
+                "positionClass": "toast-top-right"
+            }
+            toastr.error('एरर!');
+        }
+        else if (msg == "inserted") {
+            toastr.options = {
+                "closeButton": true,
+                "timeout": 1000,
+                "progressBar": true,
+                "positionClass": "toast-top-right"
+            }
+            toastr.success('डेटा सफलतापूर्वक सेव हो गया!');
+        }
+        $('#appealdiv,#Revisiondiv').hide();
+        $('#lastupdatedate').hide();
+        $('#FinalStatusdiv1').hide();
+        $('#AddCourtCasediv').hide();
+        $('#AddContemtCasediv').hide();
+        $('#AddInvestigationdiv').hide();
+        $('#Appealfinalstatusdiv').hide();
+        $('#lastupdateForwardingdate').hide();
+        $('#remarkdiv,#FinalStatusdiv').hide();
+        $('#forwarddiv').hide();
+        $('#Againforwarddiv').hide();
+        $('#OtherRemarkSubjectdiv').hide();
+        $('#MarkedZonediv,#Markedcirclediv,#Markeddivisiondiv,#Aaropdiv').hide();
+        bindDesignationsMarkedOfficer('ForwadingOfficerDesignations', -1, -1);
+        bindDesignationsMarkedOfficerAppeal('AppealForwadingOfficerDesignations', -1, -1);
+        bindDesignationsMarkedOfficerRevision('RevisionForwadingOfficerDesignations', -1, -1);
+        bindDesignationsCourtCase('CourtCaseDrop', -1, -1);
+        bindDesignationsInvestigationAgency('InvestigationId', -1, -1);
+
+        bindInspZone('MarkedZoneId', -1);
+        bindInspCircle('MarkedCircleId', -1, -1);
+        bindInspDivision('MarkeddivisionId', -1, -1, -1);
+        bindInspUserTypeRoles('MarkToInspRoleType', -1);
+        bindInspOfficerDesignations('InvestigatingOfficerDesignation', -1, -1);
+        $('#ComplaintRemarkSubjects').change(function () {
+            if ($('#ComplaintRemarkSubjects').val() == '8') {
+                $('#OtherRemarkSubjectdiv').show();
+            }
+            else {
+                $('#OtherRemarkSubjectdiv').hide();
+            }
+        });
+        $('#addforwardingofficer').click(function () {
+
+            const myDiv = document.getElementById('forwarddiv');
+            if (myDiv.style.display === 'none') {
+                myDiv.style.display = 'block';
+            } else {
+                myDiv.style.display = 'none';
+            }
+            $('#AddCourtCasediv').hide();
+            $('#remarkdiv').hide();
+            $('#Againforwarddiv').hide();
+            $('#ForwardOfficerDate1').val('');
+            $('#ForwardingOfficerLetterNo1').val('');
+            $('#ForwardingMarkToRoleType').val('HQ');
+
+            bindDesignationsMarkedOfficer('ForwadingOfficerDesignations', -1, -1);
+
+        });
+        $('#addFinalStatus').click(function () {
+            const myDiv = document.getElementById('FinalStatusdiv');
+
+
+            if (myDiv.style.display === 'none') {
+                myDiv.style.display = 'block';
+            } else {
+                myDiv.style.display = 'none';
+                $("input[type='checkbox'][name='FinalStatus']").prop("checked", false).trigger('change');
+            }
+            $('#AddCourtCasediv').hide();
+            $('#remarkdiv').hide();
+            $('#forwarddiv').hide();
+            $('#FinalStatusdiv1').hide();
+        });
+
+        $('#addcourtcase').click(function () {
+            const myDiv = document.getElementById('AddCourtCasediv');
+            if (myDiv.style.display === 'none') {
+                myDiv.style.display = 'block';
+            } else {
+                myDiv.style.display = 'none';
+                $("input[type='checkbox'][name='FinalStatus']").prop("checked", false).trigger('change');
+            }
+
+            $('#Againforwarddiv').hide();
+            $('#remarkdiv').hide();
+            $('#forwarddiv').hide();
+            $('#FinalStatusdiv1').hide();
+            $('#AddInvestigationdiv').hide();
+        });
+
+        $('#addcontemtcase').click(function () {
+            const myDiv = document.getElementById('AddContemtCasediv');
+            if (myDiv.style.display === 'none') {
+                myDiv.style.display = 'block';
+            } else {
+                myDiv.style.display = 'none';
+                $("input[type='checkbox'][name='FinalStatus']").prop("checked", false).trigger('change');
+            }
+
+            $('#remarkdiv').hide();
+            $('#forwarddiv').hide();
+            $('#FinalStatusdiv1').hide();
+            $('#AddInvestigationdiv').hide();
+            $('#AddCourtCasediv').hide();
+        });
+        $('#addinvestigation').click(function () {
+            const myDiv = document.getElementById('AddInvestigationdiv');
+
+            if (myDiv.style.display === 'none') {
+                myDiv.style.display = 'block';
+            } else {
+                myDiv.style.display = 'none';
+                $("input[type='checkbox'][name='FinalStatus']").prop("checked", false).trigger('change');
+            }
+
+            $('#remarkdiv').hide();
+            $('#forwarddiv').hide();
+            $('#AddCourtCasediv').hide();
+        });
+        $('#addFinalStatus1').click(function () {
+            const myDiv = document.getElementById('FinalStatusdiv1');
+
+
+            if (myDiv.style.display === 'none') {
+                myDiv.style.display = 'block';
+            } else {
+                myDiv.style.display = 'none';
+                $("input[type='checkbox'][name='FinalStatus']").prop("checked", false).trigger('change');
+            }
+
+            $('#remarkdiv').hide();
+            $('#forwarddiv').hide();
+        });
+
+        $('#addFinalAppealStatus').click(function () {
+            const myDiv = document.getElementById('Appealfinalstatusdiv');
+
+
+            if (myDiv.style.display === 'none') {
+                myDiv.style.display = 'block';
+            } else {
+                myDiv.style.display = 'none';
+                $("input[type='checkbox'][name='FinalStatus']").prop("checked", false).trigger('change');
+            }
+
+            $('#remarkdiv').hide();
+            $('#forwarddiv').hide();
+        });
+        $('#remarkbutton').click(function () {
+            const myDiv = document.getElementById('remarkdiv');
+
+
+            if (myDiv.style.display === 'none') {
+                myDiv.style.display = 'block';
+            } else {
+                myDiv.style.display = 'none';
+            }
+
+            $('#forwarddiv').hide();
+            $('#Againforwarddiv').hide();
+            $('#AddCourtCasediv').hide();
+            $('#AddInvestigationdiv').hide();
+        });
+        $('#Aaropbutton').click(function () {
+            const myDiv = document.getElementById('Aaropdiv');
+
+
+            if (myDiv.style.display === 'none') {
+                myDiv.style.display = 'block';
+            } else {
+                myDiv.style.display = 'none';
+            }
+            $('#forwarddiv').hide();
+            $('#remarkdiv').hide();
+            $('#Againforwarddiv').hide();
+        });
+        $('#Againforwardbutton').click(function () {
+            const myDiv = document.getElementById('Againforwarddiv');
+            if (myDiv.style.display === 'none') {
+                myDiv.style.display = 'block';
+            } else {
+                myDiv.style.display = 'none';
+            }
+
+            $('#forwarddiv').hide();
+            $('#remarkdiv').hide();
+            $('#Aaropdiv').hide();
+            $('#AddCourtCasediv').hide();
+
+        });
+
+        $('#Appealbtn').click(function () {
+            const myDiv = document.getElementById('appealdiv');
+            if (myDiv.style.display === 'none') {
+                myDiv.style.display = 'block';
+            } else {
+                myDiv.style.display = 'none';
+            }
+            $('#Revisiondiv').hide();
+        });
+        $('#Revisionbtn').click(function () {
+            const myDiv = document.getElementById('Revisiondiv');
+            if (myDiv.style.display === 'none') {
+                myDiv.style.display = 'block';
+            } else {
+                myDiv.style.display = 'none';
+            }
+            $('#appealdiv').hide();
+        });
+        $("#MarkToInspRoleType").change(function () {
+
+            var mrk1 = $(this).val();
+            bindInspOfficerDesignations('InvestigatingOfficerDesignation', -1, mrk1);
+            if (mrk1 == "HQ") {
+                $('#MarkedZonediv,#Markedcirclediv,#Markeddivisiondiv').hide();
+                $('#MarkedZoneId').val('-1').trigger('change');
+                $('#MarkedCircleId').val('-1').trigger('change');
+                $('#MarkeddivisionId').val('-1').trigger('change');
+            }
+            else if (mrk1 == "Z") {
+                $('#Markedcirclediv,#Markeddivisiondiv').hide();
+                $('#MarkedZonediv').show();
+                bindInspZone('MarkedZoneId', -1);
+                $('#MarkedCircleId').val('-1').trigger('change');
+            }
+            else if (mrk1 == "C") {
+                $('#Markeddivisiondiv').hide();
+                $('#MarkedZonediv,#Markedcirclediv').show();
+                bindInspCircle('MarkedCircleId', -1, -1);
+                $('#MarkeddivisionId').val('-1').trigger('change');
+
+
+            }
+            else if (mrk1 == "D") {
+
+                $('#MarkedZonediv,#Markedcirclediv,#Markeddivisiondiv').show();
+                bindInspDivision('MarkeddivisionId', -1, -1, -1);
+                $('#MarkedZoneId').val('-1').trigger('change');
+            }
+            else {
+                $('#MarkedZonediv,#Markedcirclediv,#Markeddivisiondiv').hide();
+            }
+            $("#InvestigatingOfficerName").val('');
+            $("#InvestigatingOfficerMobile").val('');
+        });
+        $("#MarkedZoneId").change(function () {
+
+            var zone = $(this).val();
+            var mrk1 = $("#MarkToInspRoleType").val();
+            var $circleDropdown = "MarkedCircleId";
+            bindInspCircle($circleDropdown, -1, zone);
+            bindInspOfficerDesignations("InvestigatingOfficerDesignation", "-1", mrk1, zone ,"-1","-1");
+        });
+        $("#MarkedCircleId").change(function () {
+            var circle = $(this).val();
+            var mrk1 = $("#MarkToInspRoleType").val();
+            var zone = $("#MarkedZoneId").val();
+            var $divisionDropdown ="MarkedDivisionId";
+            bindInspDivision($divisionDropdown, -1, zone, circle);
+            bindInspOfficerDesignations("InvestigatingOfficerDesignation", "-1", mrk1, zone, circle, "-1");
+        })
+        $("#MarkedDivisionId").change(function () {
+            var circle = $("#MarkedCircleId").val();
+            var mrk1 = $("#MarkToInspRoleType").val();
+            var zone = $("#MarkedZoneId").val();
+            var division = $("#MarkedDivisionId").val();
+            bindInspOfficerDesignations("InvestigatingOfficerDesignation", "-1", mrk1, zone, circle, division);
+        })
+        $("#InvestigatingOfficerDesignation").change(function () {
+
+            var DesignationId = $(this).val();
+            if (DesignationId == "-1") {
+                $("#InvestigatingOfficerName").val('');
+                $("#InvestigatingOfficerMobile").val('');
+            } else {
+                var RoleTypeId = $('#MarkToInspRoleType').val();
+                var ZoneId = $('#MarkedZoneId').val();
+                var CircleId = $('#MarkedCircleId').val();
+                var DivisionId = $('#MarkedDivisionId').val();
+                bindInspOfficerName('InvestigatingOfficerName', -1, DesignationId, RoleTypeId, ZoneId, CircleId, DivisionId);
+            }
+
+        })
+        $('#InvestigatingOfficerAppointedDate1').change(function () {
+
+            var getdate = $(this).val();
+            var calculateddate = date.setDate(date.getdate + 15)
+            alter(getdate, calculateddate);
+        });
+
+    });
+
+    function showOtherCourtCaseTextBox() {
+        var select = document.getElementById("CourtCaseDrop");
+        var textBox = document.getElementById("otherTextBox1");
+        var otherCourtCase = document.getElementById("otherAgencyDiv1");
+        if (select.value == 18) {
+            otherCourtCase.style.display = "block"; // Show the div containing the text box and label
+            textBox.style.display = "block"; // Show the text box
+        } else {
+            otherCourtCase.style.display = "none"; // Hide the div
+        }
+    }
+
+    function showInvestigationOtherTextBox() {
+        var select = document.getElementById("InvestigationId");
+        var textBox = document.getElementById("otherTextBox");
+        var otherAgencyDiv = document.getElementById("otherAgencyDiv");
+        if (select.value == 5) {
+            otherAgencyDiv.style.display = "block"; // Show the div containing the text box and label
+            textBox.style.display = "block"; // Show the text box
+        } else {
+            otherAgencyDiv.style.display = "none"; // Hide the div
+        }
+    }
+
+
+   function bindDesignationsCourtCase(id, defaultSelectionValues, RoleTypeId) {
+
+    defaultSelectionValues = typeof defaultSelectionValues !== 'undefined' ? defaultSelectionValues : '';
+    if (defaultSelectionValues == -1 || defaultSelectionValues == 0 || defaultSelectionValues == '-1' || defaultSelectionValues == '') {
+        defaultSelectionValues = '-1';
+    }
+    var obj = new Object();
+        obj.Action = "bindCourt";
+    obj.RoleTypeId = RoleTypeId;
+
+
+    $.ajax({
+        type: 'POST',
+        url: '/DropdownBinder/fillDropdown',
+        data: { Action: obj.Action, RoleTypeId: obj.RoleTypeId },
+        success: function (Data) {
+            var ddl = $('#' + id);
+            ddl.empty();
+            ddl.append($('<option/>', {
+                value: "-1",
+                text: "Choose option "
+            }));
+
+            $.each(Data, function (index, rowData) {
+                if (rowData.id != '@Session["UserNumber"].ToString()') {
+                    ddl.append($('<option/>', {
+                        value: rowData.id,
+                        text: rowData.value
+                    }));
+                }
+
+            });
+            // ddl.val(defaultSelectionValues);
+        },
+        error: function (errorData) {
+            console.log(errorData);
+        }
+    });
+
+}
+
+   function bindDesignationsInvestigationAgency(id, defaultSelectionValues, RoleTypeId) {
+
+    defaultSelectionValues = typeof defaultSelectionValues !== 'undefined' ? defaultSelectionValues : '';
+    if (defaultSelectionValues == -1 || defaultSelectionValues == 0 || defaultSelectionValues == '-1' || defaultSelectionValues == '') {
+        defaultSelectionValues = '-1';
+    }
+    var obj = new Object();
+            obj.Action = "bindInvestigation";
+    obj.RoleTypeId = RoleTypeId;
+
+
+    $.ajax({
+        type: 'POST',
+        url: '/DropdownBinder/fillDropdown',
+        data: { Action: obj.Action, RoleTypeId: obj.RoleTypeId },
+        success: function (Data) {
+            var ddl = $('#' + id);
+            ddl.empty();
+            ddl.append($('<option/>', {
+                value: "-1",
+                text: "Choose option "
+            }));
+
+            $.each(Data, function (index, rowData) {
+                if (rowData.id != '@Session["UserNumber"].ToString()') {
+                    ddl.append($('<option/>', {
+                        value: rowData.id,
+                        text: rowData.value
+                    }));
+                }
+
+            });
+            // ddl.val(defaultSelectionValues);
+        },
+        error: function (errorData) {
+            console.log(errorData);
+        }
+    });
+
+  }
+
+
+
+    function bindDesignationsMarkedOfficer(id, defaultSelectionValues, RoleTypeId) {
+
+        defaultSelectionValues = typeof defaultSelectionValues !== 'undefined' ? defaultSelectionValues : '';
+        if (defaultSelectionValues == -1 || defaultSelectionValues == 0 || defaultSelectionValues == '-1' || defaultSelectionValues == '') {
+            defaultSelectionValues = '-1';
+        }
+        var obj = new Object();
+        obj.Action = "bindAlottingDesignationsSELevel";
+        obj.RoleTypeId = RoleTypeId;
+
+
+        $.ajax({
+            type: 'POST',
+            url: '/DropdownBinder/fillDropdown',
+            data: { Action: obj.Action, RoleTypeId: obj.RoleTypeId },
+            success: function (Data) {
+                var ddl = $('#' + id);
+                ddl.empty();
+                ddl.append($('<option/>', {
+                    value: "-1",
+                    text: "Choose option "
+                }));
+
+                $.each(Data, function (index, rowData) {
+                    if (rowData.id != '@Session["UserNumber"].ToString()') {
+                        ddl.append($('<option/>', {
+                            value: rowData.id,
+                            text: rowData.value
+                        }));
+                    }
+
+                });
+                // ddl.val(defaultSelectionValues);
+            },
+            error: function (errorData) {
+                console.log(errorData);
+            }
+        });
+
+ }
+ function bindDesignationsMarkedOfficerAppeal(id, defaultSelectionValues, RoleTypeId) {
+
+    defaultSelectionValues = typeof defaultSelectionValues !== 'undefined' ? defaultSelectionValues : '';
+    if (defaultSelectionValues == -1 || defaultSelectionValues == 0 || defaultSelectionValues == '-1' || defaultSelectionValues == '') {
+        defaultSelectionValues = '-1';
+    }
+    var obj = new Object();
+    obj.Action = "bindAppealRevisionDesignationsSELevel";
+    obj.RoleTypeId = RoleTypeId;
+
+
+    $.ajax({
+        type: 'POST',
+        url: '/DropdownBinder/fillDropdown',
+        data: { Action: obj.Action, RoleTypeId: obj.RoleTypeId },
+        success: function (Data) {
+            var ddl = $('#' + id);
+            ddl.empty();
+            ddl.append($('<option/>', {
+                value: "-1",
+                text: "Choose option "
+            }));
+
+            $.each(Data, function (index, rowData) {
+                if (rowData.id != '@Session["UserNumber"].ToString()') {
+                    ddl.append($('<option/>', {
+                        value: rowData.id,
+                        text: rowData.value
+                    }));
+                }
+
+            });
+            // ddl.val(defaultSelectionValues);
+        },
+        error: function (errorData) {
+            console.log(errorData);
+        }
+    });
+
+}
+                    function bindDesignationsMarkedOfficerRevision(id, defaultSelectionValues, RoleTypeId) {
+
+    defaultSelectionValues = typeof defaultSelectionValues !== 'undefined' ? defaultSelectionValues : '';
+    if (defaultSelectionValues == -1 || defaultSelectionValues == 0 || defaultSelectionValues == '-1' || defaultSelectionValues == '') {
+        defaultSelectionValues = '-1';
+    }
+    var obj = new Object();
+    obj.Action = "bindAppealRevisionDesignationsSELevel";
+    obj.RoleTypeId = RoleTypeId;
+
+
+    $.ajax({
+        type: 'POST',
+        url: '/DropdownBinder/fillDropdown',
+        data: { Action: obj.Action, RoleTypeId: obj.RoleTypeId },
+        success: function (Data) {
+            var ddl = $('#' + id);
+            ddl.empty();
+            ddl.append($('<option/>', {
+                value: "-1",
+                text: "Choose option "
+            }));
+
+            $.each(Data, function (index, rowData) {
+                if (rowData.id != '@Session["UserNumber"].ToString()') {
+                    ddl.append($('<option/>', {
+                        value: rowData.id,
+                        text: rowData.value
+                    }));
+                }
+
+            });
+            // ddl.val(defaultSelectionValues);
+        },
+        error: function (errorData) {
+            console.log(errorData);
+        }
+    });
+
+}
+    //marked inspection Officer
+
+
+
+
+    function bindInspZone(id, defaultSelectionValues) {
+
+        defaultSelectionValues = typeof defaultSelectionValues !== 'undefined' ? defaultSelectionValues : '';
+        if (defaultSelectionValues == -1 || defaultSelectionValues == 0 || defaultSelectionValues == '-1' || defaultSelectionValues == '') {
+            defaultSelectionValues = '-1';
+        }
+        var obj = new Object();
+        obj.Action = "bindZone";
+
+        $.ajax({
+            type: 'POST',
+            url: '/DropdownBinder/fillDropdown',
+            data: { Action: obj.Action },
+            success: function (Data) {
+                var ddl = $('#' + id);
+                ddl.empty();
+                ddl.append($('<option/>', {
+                    value: "-1",
+                    text: "Choose option "
+                }));
+
+                $.each(Data, function (index, rowData) {
+                    ddl.append($('<option/>', {
+                        value: rowData.id,
+                        text: rowData.value
+                    }));
+                });
+                ddl.val(defaultSelectionValues);
+            },
+            error: function (errorData) {
+                console.log(errorData);
+            }
+        });
+
+    }
+    function bindInspCircle($id, defaultSelectionValues, ZoneId) {
+
+        defaultSelectionValues = typeof defaultSelectionValues !== 'undefined' ? defaultSelectionValues : '';
+        if (defaultSelectionValues == -1 || defaultSelectionValues == 0 || defaultSelectionValues == '-1' || defaultSelectionValues == '') {
+            defaultSelectionValues = '-1';
+        }
+        var obj = new Object();
+        obj.Action = "bindCircle";
+        obj.ZoneId = ZoneId;
+
+        $.ajax({
+            type: 'POST',
+            url: '/DropdownBinder/fillDropdown',
+            data: { Action: obj.Action, ZoneId: obj.ZoneId },
+            success: function (Data) {
+                var ddl = $('#' + $id);
+                ddl.empty();
+                ddl.append($('<option/>', {
+                    value: "-1",
+                    text: "Choose option "
+                }));
+
+                $.each(Data, function (index, rowData) {
+                    ddl.append($('<option/>', {
+                        value: rowData.id,
+                        text: rowData.value
+                    }));
+                });
+                ddl.val(defaultSelectionValues);
+            },
+            error: function (errorData) {
+                console.log(errorData);
+            }
+        });
+
+    }
+
+    function bindInspDivision($id, defaultSelectionValues, ZoneId, CircleId) {
+
+        defaultSelectionValues = typeof defaultSelectionValues !== 'undefined' ? defaultSelectionValues : '';
+        if (defaultSelectionValues == -1 || defaultSelectionValues == 0 || defaultSelectionValues == '-1' || defaultSelectionValues == '') {
+            defaultSelectionValues = '-1';
+        }
+        var obj = new Object();
+        obj.Action = "bindDivision";
+        obj.ZoneId = ZoneId,
+            obj.CircleId = CircleId
+
+        $.ajax({
+            type: 'POST',
+            url: '/DropdownBinder/fillDropdown',
+            data: { Action: obj.Action, ZoneId: obj.ZoneId, CircleId: obj.CircleId },
+            success: function (Data) {
+                var ddl = $('#' + $id);
+                ddl.empty();
+                ddl.append($('<option/>', {
+                    value: "-1",
+                    text: "Choose option "
+                }));
+
+                $.each(Data, function (index, rowData) {
+                    ddl.append($('<option/>', {
+                        value: rowData.id,
+                        text: rowData.value
+                    }));
+                });
+                ddl.val(defaultSelectionValues);
+            },
+            error: function (errorData) {
+                console.log(errorData);
+            }
+        });
+
+    }
+    function bindInspOfficerDesignations(id, defaultSelectionValues, RoleTypeId,ZoneId, CircleId, DivisionId) {
+
+        defaultSelectionValues = typeof defaultSelectionValues !== 'undefined' ? defaultSelectionValues : '';
+        if (defaultSelectionValues == -1 || defaultSelectionValues == 0 || defaultSelectionValues == '-1' || defaultSelectionValues == '') {
+            defaultSelectionValues = '-1';
+        }
+        var obj = new Object();
+        obj.Action = "bindInspectionDesignations";
+        obj.CaseRelatedTo = $("#MarkToInspRoleType option:selected").val(); ;
+        obj.ZoneId = ZoneId;
+        obj.CircleId = CircleId;
+        obj.DivisionId = DivisionId;
+        $.ajax({
+            type: 'POST',
+            url: '/DropdownBinder/fillDropdown',
+            data: obj,
+            success: function (Data) {
+                var ddl = $('#' + id);
+                ddl.empty();
+                ddl.append($('<option/>', {
+                    value: "-1",
+                    text: "Choose option "
+                }));
+
+                $.each(Data, function (index, rowData) {
+                    ddl.append($('<option/>', {
+                        value: rowData.id,
+                        text: rowData.value
+                    }));
+                });
+                // ddl.val(defaultSelectionValues);
+            },
+            error: function (errorData) {
+                console.log(errorData);
+            }
+        });
+
+    }
+    function bindInspUserTypeRoles(id, defaultSelectionValues, mrk1) {
+        defaultSelectionValues = typeof defaultSelectionValues !== 'undefined' ? defaultSelectionValues : '';
+        if (defaultSelectionValues == -1 || defaultSelectionValues == 0 || defaultSelectionValues == '-1' || defaultSelectionValues == '') {
+            defaultSelectionValues = '-1';
+        }
+        var obj = new Object();
+        obj.Action = "bindAllotingofficerDesignations";
+
+        $.ajax({
+            type: 'POST',
+            url: '/DropdownBinder/fillDropdown',
+            data: { Action: obj.Action },
+            success: function (Data) {
+                var ddl = $('#' + id);
+                ddl.empty();
+                ddl.append($('<option/>', {
+                    value: "-1",
+                    text: "Choose option "
+                }));
+
+                $.each(Data, function (index, rowData) {
+                    ddl.append($('<option/>', {
+                        value: rowData.id,
+                        text: rowData.value
+                    }));
+                });
+                ddl.val(defaultSelectionValues);
+
+            },
+            error: function (errorData) {
+                console.log(errorData);
+            }
+        });
+
+    }
+    function bindInspOfficerName(id, defaultSelectionValues, DesignationId,RoleTypeId, ZoneId, CircleId, DivisionId) {
+        defaultSelectionValues = typeof defaultSelectionValues !== 'undefined' ? defaultSelectionValues : '';
+        if (defaultSelectionValues == -1 || defaultSelectionValues == 0 || defaultSelectionValues == '-1' || defaultSelectionValues == '') {
+            defaultSelectionValues = '-1';
+        }
+        $('#InvestigatingOfficerName').empty();
+        $('#InvestigatingOfficerMobile').empty();
+        var obj = new Object();
+        obj.Action = "bindInspOfficerProfile";
+        obj.RoleTypeId = RoleTypeId;
+        obj.ZoneId = ZoneId;
+        obj.CircleId = CircleId;
+        obj.DivisionId = DivisionId;
+        obj.CaseRelatedTo = DesignationId;
+        $.ajax({
+            type: 'POST',
+            url: '/DropdownBinder/fillDropdown',
+            data: obj,
+            success: function (Data) {
+
+                $('#InvestigatingOfficerName').empty();
+                $('#InvestigatingOfficerMobile').empty();
+                var res = Data[0];
+                if (res == null || res == '' || res== undefined)
+                    {
+                    $('#InvestigatingOfficerName').val('');
+                    $('#InvestigatingOfficerMobile').val('');
+
+
+                }
+                else {
+
+                    $('#InvestigatingOfficerName').val(res.value);
+                    $('#InvestigatingOfficerMobile').val(res.id);
+
+                }
+                //$('#InvestigatingOfficerMobile').attr('readonly', 'true');
+                //$('#InvestigatingOfficerName').attr('readonly', 'true');
+            },
+            error: function (errorData) {
+                console.log(errorData);
+            }
+        });
+    }
+
+</script>
+<script>
+    function addDaysToDate(selectedDate) {
+        const date = new Date(selectedDate);
+        if (!isNaN(date)) {
+            date.setMonth(date.getMonth() + 1);
+            const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+            const formattedDate = date.toLocaleDateString('en-US', options);
+            document.getElementById('InvestigatinglastAppointedDate').value = formattedDate;
+            $('#lastupdatedate').show();
+        } else {
+            console.error('Invalid date format');
+        }
+    }
+    function addDaysToDateforfarwardingofficer(selectedDate) {
+        const date = new Date(selectedDate);
+        if (!isNaN(date)) {
+            date.setMonth(date.getMonth() + 1);
+            const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+            const formattedDate = date.toLocaleDateString('en-US', options);
+            document.getElementById('ForwardingOfficerLastDate').value = formattedDate;
+            $('#lastupdateForwardingdate').show();
+        } else {
+            console.error('Invalid date format');
+        }
+    }
+    function ErrorMessagefun(msg, id) {
+        toastr.options = {
+            "closeButton": true,
+            "timeout": 1000,
+            "progressBar": true,
+            "positionClass": "toast-top-right"
+        };
+        toastr.error(msg);
+        $("#" + id).focus();
+    }
+    function ValidatInvestigating() {
+        var MarkToInspRoleType = $("#MarkToInspRoleType").val();
+        if (MarkToInspRoleType == "-1") {
+            ErrorMessagefun("जांच अधिकारी कहाँ से है, चुनें !", "MarkToInspRoleType");
+            return false;
+        }
+        var InvestigatingOfficerDesignation = $("#InvestigatingOfficerDesignation").val();
+        if (InvestigatingOfficerDesignation == "-1") {
+            ErrorMessagefun("अधिकारी पद का नाम, चुनें !", "InvestigatingOfficerDesignation");
+            return false;
+        }
+        var AppointedDate1 = $("#InvestigatingOfficerAppointedDate1").val().trim();
+        if (AppointedDate1 == "") {
+            ErrorMessagefun("जाँच आख्या प्रेषण की तिथि , भरे !", "InvestigatingOfficerAppointedDate1");
+            return false;
+        }
+        var Remark1 = $("#InvestigatingOfficerRemark1").val().trim();
+        if (Remark1 == "") {
+            ErrorMessagefun("टिप्पणी , भरे !", "InvestigatingOfficerRemark1");
+            return false;
+        }
+    }
+    function FunPerusalValidation() {
+        var ForwardOfficerDate1 = $("#txtperusalLetterDate").val();
+        if (ForwardOfficerDate1 == "") {
+            ErrorMessagefun("पत्रावली प्रेषित करने की तिथि चुनें !", "txtperusalLetterDate");
+            return false;
+        }
+        var ForwadingOfficerDesignations = $("#ForwadingOfficerDesignations").val();
+        if (ForwadingOfficerDesignations == "-1") {
+            ErrorMessagefun("पत्रावली प्रेषण हेतु अधिकारी का पदनाम चुनें !", "ForwadingOfficerDesignations");
+            return false;
+        }
+
+        var ForwardingOfficerComment = $("#ForwardingOfficerComment").val();
+        if (ForwardingOfficerComment == "") {
+            ErrorMessagefun("टिप्पणी भरें !", "ForwardingOfficerComment");
+            return false;
+        }
+    }
+</script>
+<script>
+    $(function () {
+        document.getElementById("NumberofCharges").addEventListener("keypress", function (event) {
+            const char = String.fromCharCode(event.keyCode || event.which);
+            const newValue = this.value + char;
+            if (!/^\d+$/.test(char) || Number(newValue) > 100 || newValue.length > 3) {
+                event.preventDefault();
+            }
+        });
+
+        $("#NumberofCharges").change(function () {
+            var value = document.getElementById("NumberofCharges").value;
+            var container = document.getElementById("container");
+            container.innerHTML = "";
+            var num = parseInt(value);
+            if (num > 100) {
+                return false;
+            }
+
+            for (var i = 1; i <= num; i++) {
+                // Create label
+                var label = document.createElement("label");
+                label.innerHTML = "आरोप का विवरण " + i + ":";
+
+                // Create textarea
+                var textarea = document.createElement("textarea");
+                textarea.name = "Vivradh";
+                textarea.className = "form-control col-sm-12"; // Added col-sm-12 class
+                textarea.id = "Vivradh_" + i;
+                textarea.rows = 6;
+
+                // Create a div wrapper for proper spacing
+                var wrapper = document.createElement("div");
+                wrapper.className = "form-group";
+
+                // Append label and textarea to wrapper
+                wrapper.appendChild(label);
+                wrapper.appendChild(textarea);
+
+                // Append wrapper to container
+                container.appendChild(wrapper);
+            }
+        });
+    });
+
+    function filechange1() {
+        var fileInput = $("#ChargeSheetAttachment")[0];
+        if (fileInput.files.length > 0) {
+            var file = fileInput.files[0];
+            var allowedFileTypes = ["application/pdf"];
+            if (allowedFileTypes.indexOf(file.type) === -1) {
+                showErrorNotification("कृपया केवल PDF फ़ाइल अपलोड करें!.");
+                fileInput.value = ""; // Clear the file input
+                return false;
+            }
+            var maxSizeInBytes = 5 * 1024 * 1024; // 5 MB limit (adjust as needed)
+            if (file.size > maxSizeInBytes) {
+                showErrorNotification("फ़ाइल का Size 5 MB की स्वीकृत सीमा से अधिक है। कृपया एक छोटी फ़ाइल चुनें.");
+                fileInput.value = ""; // Clear the file input
+                return false;
+            }
+        }
+    }
+
+    function SaveAaropDetails(event) {
+
+        var button = $(event); // Use `event` directly as `this` from onclick
+        button.prop("disabled", true).text("Loading..."); // Disable button and show loading text
+
+        var valid = true;
+        var ChargeSheetNumber = $("#ChargeSheetNumber").val().trim();
+        var ChargeSheetAttachment = $("#ChargeSheetAttachment").val();
+        var DateOfIssueChargeSheet = $("#DateOfIssueChargeSheet").val();
+        var NumberofCharges = $("#NumberofCharges").val();
+
+        if (ChargeSheetNumber == "") {
+            ErrorMessagefun("आरोप पत्र संख्या भरें !", "ChargeSheetNumber");
+            button.prop("disabled", false).text("सेव करें"); // Re-enable button
+            return false;
+        }
+        if (ChargeSheetAttachment == "") {
+            ErrorMessagefun("आरोप पत्र अपलोड करें !", "ChargeSheetAttachment");
+            button.prop("disabled", false).text("सेव करें");
+            return false;
+        }
+        if (DateOfIssueChargeSheet == "") {
+            ErrorMessagefun("आरोप पत्र निर्गत की तिथि भरें !", "DateOfIssueChargeSheet");
+            button.prop("disabled", false).text("सेव करें");
+            return false;
+        }
+        if (NumberofCharges == "") {
+            ErrorMessagefun("आरोपों की संख्या भरें !", "NumberofCharges");
+            button.prop("disabled", false).text("सेव करें");
+            return false;
+        }
+
+        var errorMessage = document.getElementById("error-message");
+        errorMessage.textContent = "";
+
+        var inputs = document.querySelectorAll('textarea[name="Vivradh"]');
+        inputs.forEach(function (input) {
+            if (input.value.trim() === "") {
+                errorMessage.textContent = "All text fields must be filled.";
+                input.style.border = "1px solid red";
+                valid = false;
+            } else {
+                input.style.border = "";
+            }
+        });
+
+        if (!valid) {
+            button.prop("disabled", false).text("सेव करें");
+            return false;
+        }
+
+        let VivradhArr = [];
+        $("textarea[name='Vivradh']").each(function () {
+            let description = $(this).val().trim();
+            if (description !== "") {
+                VivradhArr.push({ AaropDescription: description });
+            }
+        });
+
+        let formData = new FormData();
+        formData.append("ComplaintNumber", $("#hiddenComplain_number").val());
+        formData.append("AaropDescriptions", JSON.stringify(VivradhArr));
+        formData.append("ChargeSheetNumber", ChargeSheetNumber);
+        formData.append("ChargeSheetAttachmentDoc", $("#ChargeSheetAttachment")[0].files[0]);
+        formData.append("DateOfIssueChargeSheet", DateOfIssueChargeSheet);
+        formData.append("NumberofCharges", NumberofCharges);
+        formData.append("ComplainantName", $("input[type='text'][name='ComplainantName']").val());
+        formData.append("InspEmailId", $("input[type='text'][id='InvestigatingOfficerName']").val());
+        $.ajax({
+            url: "/ComplaintSE/AddComplaintdAarop",
+            type: "POST",
+            contentType: false,
+            processData: false,
+            data: formData,
+            success: function (response) {
+                toastr.options = {
+                    closeButton: true,
+                    timeOut: 1000,
+                    progressBar: true,
+                    positionClass: "toast-top-right"
+                };
+                toastr.success(response);
+
+                setTimeout(function () {
+                    window.location.reload();
+                }, 2000);
+            },
+            error: function () {
+                toastr.options = {
+                    closeButton: true,
+                    timeOut: 1000,
+                    progressBar: true,
+                    positionClass: "toast-top-right"
+                };
+                toastr.error('एरर!');
+            },
+            complete: function () {
+                button.prop("disabled", false).text("सेव करें"); // Re-enable button
+            }
+        });
+    }
+
+</script>
+<script>
+    $('#btnSubmit').click(function () {
+        if (!Validate()) {
+            return false;
+        }
+    })
+
+    function filechange() {
+        var fileInput = $("#FileUpload")[0];
+        if (fileInput.files.length > 0) {
+            var file = fileInput.files[0];
+            var allowedFileTypes = ["application/pdf"];
+            if (allowedFileTypes.indexOf(file.type) === -1) {
+                showErrorNotification("Only PDF files are allowed.");
+                fileInput.value = ""; // Clear the file input
+                return false;
+            }
+            var maxSizeInBytes = 5 * 1024 * 1024; // 5 MB limit (adjust as needed)
+            if (file.size > maxSizeInBytes) {
+                showErrorNotification("File size exceeds the allowed limit of 5MB. Please choose a smaller file.");
+                fileInput.value = ""; // Clear the file input
+                return false;
+            }
+        }
+    }
+
+    function showErrorNotification(msg) {
+        toastr.options = {
+            "closeButton": true,
+            "timeout": 1000,
+            "progressBar": true,
+            "positionClass": "toast-top-right"
+        }
+        toastr.error(msg);
+    }
+
+
+    function Validate() {
+        var ComplaintMarkedRemarkSubject = $("#txtComplaintMarkedRemarkSubject").val().trim();
+        if (ComplaintMarkedRemarkSubject == "") {
+            showErrorNotification("टिप्पणी का विषय , भरें ");
+            $("#txtComplaintMarkedRemarkSubject").focus();
+            return false;
+        }
+
+        var ComplaintMarkedRemarkDescription = $("#txtComplaintMarkedRemarkDescription").val().trim();
+        if (ComplaintMarkedRemarkDescription == "") {
+            showErrorNotification("टिप्पणी का विवरण , भरें ");
+            $("#txtComplaintMarkedRemarkDescription").focus();
+            return false;
+        }
+
+        return true;
+    }
+
+    function ValidateFinalStatus() {
+        var FinalOfficeMemorandumNo = $("#FinalOfficeMemorandumNo").val().trim();
+        if (FinalOfficeMemorandumNo == "") {
+            showErrorNotification("कार्यालय ज्ञाप संख्या , भरें");
+            $("#FinalOfficeMemorandumNo").focus();
+            return false;
+        }
+        var FinalDate = $("#FinalDate").val().trim();
+        if (FinalDate == "") {
+            showErrorNotification("अंतिम तिथि , भरें");
+            $("#FinalDate").focus();
+            return false;
+        }
+
+        var FinalAttatchmentDoc = $("#FinalAttatchmentDoc").val().trim();
+        if (FinalAttatchmentDoc == "") {
+            showErrorNotification("दस्तावेज अपलोड , करें");
+            $("#FinalAttatchmentDoc").focus();
+            return false;
+        }
+        var FinalRemarks = $("#txtFinalRemarks").val().trim();
+        if (FinalRemarks == "") {
+            showErrorNotification("टिप्पणी जोड़ें");
+            $("#txtFinalRemarks").focus();
+            return false;
+        }
+        return true;
+    }
+
+    function AgainforwardValidate() {
+        var LetterNumber = $("#LetterNumber").val().trim();
+        if (LetterNumber == "") {
+            showErrorNotification("पत्रांक संख्या , भरें");
+            $("#LetterNumber").focus();
+            return false;
+        }
+        var LetterDate = $("#LetterDate").val().trim();
+        if (LetterDate == "") {
+            showErrorNotification("दिनांक , भरें");
+            $("#LetterDate").focus();
+            return false;
+        }
+        var AttatchmentDoc = $("#AttatchmentDoc").val().trim();
+        if (AttatchmentDoc == "") {
+            showErrorNotification("दस्तावेज अपलोड , करें");
+            $("#AttatchmentDoc").focus();
+            return false;
+        }
+
+        return true;
+    }
+
+    function ValidateRevision() {
+        var FileNumber = $("#txtFileNumber1").val().trim();
+        if (FileNumber == "") {
+            showErrorNotification("पुनरीक्षण पत्रावली संख्या , भरें");
+            $("#txtFileNumber1").focus();
+            return false;
+        }
+        var ForwadingOfficerUserNumber = $("#RevisionForwadingOfficerDesignations").val().trim();
+        if (ForwadingOfficerUserNumber == "-1") {
+            showErrorNotification("पुनरीक्षण पत्रावली प्रेषण हेतु अधिकारी का पदनाम , भरें");
+            $("#RevisionForwadingOfficerDesignations").focus();
+            return false;
+        }
+
+        var Attatchhment = $("#Attachment1").val().trim();
+        if (Attatchhment == "") {
+            showErrorNotification("दस्तावेज अपलोड , करें");
+            $("#Attachment1").focus();
+            return false;
+        }
+        var Desctioption = $("#txtDesctioption1").val().trim();
+        if (Desctioption == "") {
+            showErrorNotification("टिप्पणी , करें");
+            $("#txtDesctioption1").focus();
+            return false;
+        }
+        return true;
+    }
+
+    function ValidateAppeal() {
+        var FileNumber = $("#txtFileNumber2").val().trim();
+        if (FileNumber == "") {
+            showErrorNotification("अपील पत्रावली संख्या , भरें");
+            $("#txtFileNumber2").focus();
+            return false;
+        }
+        var ForwadingOfficerUserNumber = $("#AppealForwadingOfficerDesignations").val().trim();
+        if (ForwadingOfficerUserNumber == "-1") {
+            showErrorNotification("अपील पत्रावली प्रेषण हेतु अधिकारी का पदनाम , भरें");
+            $("#AppealForwadingOfficerDesignations").focus();
+            return false;
+        }
+
+        var Attatchhment = $("#Attachment2").val().trim();
+        if (Attatchhment == "") {
+            showErrorNotification("दस्तावेज अपलोड , करें");
+            $("#Attachment2").focus();
+            return false;
+        }
+        var Desctioption = $("#txtDesctioption2").val().trim();
+        if (Desctioption == "") {
+            showErrorNotification("टिप्पणी , करें");
+            $("#txtDesctioption1").focus();
+            return false;
+        }
+        return true;
+    }
+
+    function ValidateFinalRevisionResult() {
+        var FinalOfficeMemorandumNo = $("#FinalOfficeMemorandumNo1").val().trim();
+        if (FinalOfficeMemorandumNo == "") {
+            showErrorNotification("कार्यालय ज्ञाप संख्या , भरें");
+            $("#FinalOfficeMemorandumNo1").focus();
+            return false;
+        }
+        var FinalDate = $("#FinalDate1").val().trim();
+        if (FinalDate == "") {
+            showErrorNotification("अंतिम तिथि , भरें");
+            $("#FinalDate1").focus();
+            return false;
+        }
+
+        var FinalAttatchment = $("#FinalAttatchment1").val().trim();
+        if (FinalAttatchment == "") {
+            showErrorNotification("दस्तावेज अपलोड , करें");
+            $("#FinalAttatchment1").focus();
+            return false;
+        }
+        var FinalStatus = $("#FinalStatus1").val().trim();
+        if (FinalStatus == "") {
+            showErrorNotification("स्टेटस , करें");
+            $("#txtDesctioption1").focus();
+            return false;
+        }
+
+        var FinalRemarks = $("#txtFinalRemarks1").val().trim();
+        if (FinalRemarks == "") {
+            showErrorNotification("टिप्पणी , करें");
+            $("#txtFinalRemarks1").focus();
+            return false;
+        }
+        return true;
+    }
+
+    function ValidateFinalAppealResult() {
+        var FinalOfficeMemorandumNo = $("#FinalOfficeMemorandumNo2").val().trim();
+        if (FinalOfficeMemorandumNo == "") {
+            showErrorNotification("कार्यालय ज्ञाप संख्या , भरें");
+            $("#FinalOfficeMemorandumNo2").focus();
+            return false;
+        }
+        var FinalDate = $("#FinalDate2").val().trim();
+        if (FinalDate == "") {
+            showErrorNotification("अंतिम तिथि , भरें");
+            $("#FinalDate2").focus();
+            return false;
+        }
+
+        var FinalAttatchment = $("#FinalAttatchment2").val().trim();
+        if (FinalAttatchment == "") {
+            showErrorNotification("दस्तावेज अपलोड , करें");
+            $("#FinalAttatchment2").focus();
+            return false;
+        }
+
+        var FinalRemarks = $("#txtFinalRemarks2").val().trim();
+        if (FinalRemarks == "") {
+            showErrorNotification("टिप्पणी , करें");
+            $("#txtFinalRemarks2").focus();
+            return false;
+        }
+        return true;
+    }
+
+    function ValidateCourtCase() {
+        var courtId = $("#CourtCaseDrop").val().trim();
+        if (courtId == "-1") {
+            showErrorNotification("कोर्ट का नाम, भरें");
+            $("#CourtCaseDrop").focus();
+            return false;
+        }
+        var OtherCourt = $("#otherTextBox1").val().trim();
+        if (otherTextBox1 == "") {
+            showErrorNotification("अन्य कोर्ट का नाम, भरें");
+            $("#otherTextBox1").focus();
+            return false;
+        }
+        var CaseType = $("#CaseType").val()
+        if (CaseType == "-1") {
+            showErrorNotification("याचिका , चुने");
+            $("#CaseType").focus();
+            return false;
+        }
+        var CaseNo = $("#CaseNo").val()
+        if (CaseNo == "") {
+            showErrorNotification("संख्या, भरें");
+            $("#CaseNo").focus();
+            return false;
+        }
+        var ddlYears = $("#ddlYears").val()
+        if (ddlYears == "-1") {
+            showErrorNotification("वर्ष,  चुने");
+            $("#ddlYears").focus();
+            return false;
+        }
+        var CourtCaseAttatchment = $("#CourtCaseAttatchment").val()
+        if (CourtCaseAttatchment == "") {
+            showErrorNotification("मा० न्यायालय द्वारा पारित आदेश का विवरण, चुने");
+            $("#CourtCaseAttatchment").focus();
+            return false;
+        }
+        return true;
+    }
+    function ValidateInvestigation() {
+        var InvestigationId = $("#InvestigationId").val().trim();
+        if (InvestigationId == "-1") {
+            showErrorNotification("एजेंसी का नाम, भरें");
+            $("#InvestigationId").focus();
+            return false;
+        }
+        var Attachment = $("#InvestigationAttachment").val().trim();
+        if (Attachment == "") {
+            showErrorNotification("केवल PDF फ़ाइल अपलोड करें,");
+            $("#InvestigationAttachment").focus();
+            return false;
+        }
+
+        var Remark = $("#Remark").val().trim();
+        if (Remark == "") {
+            showErrorNotification("टिप्पणी , भरें");
+            $("#otherTextBox1").focus();
+            return false;
+        }
+        return true;
+    }
+
+    $(function () {
+        $("#CaseType").change(function () {
+            var CaseType = $(this).val();
+            if (CaseType == "Writ") {
+                $("#CaseNolabel").text('याचिका संख्या');
+                $("#CaseTypeuploadlabel").text('याचिका में मा० न्यायालय द्वारा पारित आदेश का विवरण');
+            }
+            //else if (CaseType == "Contempt") {
+            //    $("#CaseNolabel").text('अवमानना संख्या');
+            //    $("#CaseTypeuploadlabel").text('अवमानना में मा० न्यायालय द्वारा पारित आदेश का विवरण');
+            //}
+            else {
+                $("#CaseNolabel").text('याचिका');
+                $("#CaseTypeuploadlabel").text('अपलोड डॉक्यूमेंट');
+            }
+        });
+    });
+
+
+    $(function () {
+        $("#InvestigationId").change(function () {
+            var CaseType = $(this).val();
+            if (CaseType == "1") {
+                $("#Investigationuploadlevel").text('ED द्वारा प्रकरण में अधतन कृत कार्यवाही का विवरण');
+            }
+            else if (CaseType == "2") {
+                $("#Investigationuploadlevel").text('CBI द्वारा प्रकरण में अधतन कृत कार्यवाही का विवरण');
+            }
+            else if (CaseType == "3") {
+                $("#Investigationuploadlevel").text('SIT द्वारा प्रकरण में अधतन कृत कार्यवाही का विवरण');
+            }
+            else if (CaseType == "4") {
+                $("#Investigationuploadlevel").text('EOW द्वारा प्रकरण में अधतन कृत कार्यवाही का विवरण');
+            }
+            else {
+                $("#Investigationuploadlevel").text('अपलोड डॉक्यूमेंट');
+            }
+        });
+    });
+</script>
+
+</div>

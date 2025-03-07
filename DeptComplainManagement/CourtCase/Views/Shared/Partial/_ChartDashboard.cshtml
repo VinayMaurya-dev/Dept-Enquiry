@@ -1,0 +1,182 @@
+﻿@{
+    var financialEnquiry = ViewBag.financialEnquiry;
+    var NonfinancialEnquiry = ViewBag.NonfinancialEnquiry;
+    var Level1 = ViewBag.Level1;
+    var Level2 = ViewBag.Level2;
+    var Level3 = ViewBag.Level3;
+    var Level4 = ViewBag.Level4;
+}
+<style>
+    #chartdiv {
+        width: 100%;
+        height: 422px;
+    }
+
+    #chartdivLevel {
+        width: 100%;
+        height: 422px;
+    }
+
+    g[aria-labelledby="id-66-title"] {
+        display: none;
+    }
+
+    g[aria-labelledby="id-154-title"] {
+        display: none;
+    }
+</style>
+<!-- Resources -->
+<script src="~/HomeChartJS/core.js"></script>
+<script src="~/HomeChartJS/charts.js"></script>
+<script src="~/HomeChartJS/animated.js"></script>
+<script>
+
+    am4core.ready(function () {
+        am4core.useTheme(am4themes_animated);
+
+        // Create chart instance
+        var chart = am4core.create("chartdiv", am4charts.PieChart);
+        //chart._logo.dispose()
+        // Add and configure Series
+        var pieSeries = chart.series.push(new am4charts.PieSeries());
+        pieSeries.dataFields.value = "litres";
+        pieSeries.dataFields.category = "country";
+        chart.innerRadius = am4core.percent(30);
+        pieSeries.slices.template.stroke = am4core.color("#fff");
+        pieSeries.slices.template.strokeWidth = 2;
+        pieSeries.slices.template.strokeOpacity = 1;
+        pieSeries.slices.template.cursorOverStyle = [
+            {
+                "property": "cursor",
+                "value": "pointer"
+            }
+        ];
+
+        pieSeries.alignLabels = false;
+        pieSeries.labels.template.bent = true;
+        pieSeries.labels.template.radius = 3;
+        pieSeries.labels.template.padding(0, 0, 0, 0);
+        pieSeries.ticks.template.disabled = true;
+
+        var shadow = pieSeries.slices.template.filters.push(new am4core.DropShadowFilter);
+        shadow.opacity = 0;
+
+        var hoverState = pieSeries.slices.template.states.getKey("hover");
+        var hoverShadow = hoverState.filters.push(new am4core.DropShadowFilter);
+        hoverShadow.opacity = 0.7;
+        hoverShadow.blur = 5;
+
+        // Add a legend
+        chart.legend = new am4charts.Legend();
+
+        // Bind ViewBag data to the chart
+          chart.data = [
+              { "country": "Pending(Financial)", "litres": @financialEnquiry, "color": am4core.color("#d99605") },
+              { "country": "Pending(Non-Financial)", "litres": @NonfinancialEnquiry, "color": am4core.color("#ffc107") }
+        ];
+
+        // Apply slice colors
+        pieSeries.slices.template.propertyFields.fill = "color";
+    });
+</script>
+<script>
+    am4core.ready(function () {
+        am4core.useTheme(am4themes_animated);
+
+        // Create chart instance
+        var chart = am4core.create("chartdivLevel", am4charts.PieChart);
+
+        // Add and configure Series
+        var pieSeries = chart.series.push(new am4charts.PieSeries());
+        pieSeries.dataFields.value = "litres";  // Using count instead of percentage
+        pieSeries.dataFields.category = "country";
+        chart.innerRadius = am4core.percent(30);
+
+        pieSeries.slices.template.stroke = am4core.color("#fff");
+        pieSeries.slices.template.strokeWidth = 2;
+        pieSeries.slices.template.strokeOpacity = 1;
+        pieSeries.slices.template.cursorOverStyle = [
+            {
+                "property": "cursor",
+                "value": "pointer"
+            }
+        ];
+
+        pieSeries.alignLabels = false;
+        pieSeries.labels.template.bent = true;
+        pieSeries.labels.template.radius = 3;
+        pieSeries.labels.template.padding(0, 0, 0, 0);
+        pieSeries.ticks.template.disabled = true;
+
+        var shadow = pieSeries.slices.template.filters.push(new am4core.DropShadowFilter);
+        shadow.opacity = 0;
+
+        var hoverState = pieSeries.slices.template.states.getKey("hover");
+        var hoverShadow = hoverState.filters.push(new am4core.DropShadowFilter);
+        hoverShadow.opacity = 0.7;
+        hoverShadow.blur = 5;
+
+        // Add a legend
+        chart.legend = new am4charts.Legend();
+
+        // Bind ViewBag data to the chart
+        var data = [
+            { "country": "Level-1", "litres": @Level1, "color": am4core.color("#203f77") },
+            { "country": "Level-2", "litres": @Level2, "color": am4core.color("#d99605") },
+            { "country": "Level-3", "litres": @Level3, "color": am4core.color("#149e62") },
+            { "country": "Level-4", "litres": @Level4, "color": am4core.color("#af3cb8") }
+        ];
+        chart.data = data;
+
+        // Apply slice colors
+        pieSeries.slices.template.propertyFields.fill = "color";
+
+        // Modify labels to show counts (litres) instead of percentages
+        pieSeries.labels.template.text = "{category}: {value.value}";  // Shows count instead of percentage
+     
+    });
+</script>
+ 
+
+<div class="app-main__inner">
+    <div id="accordion1Graph" class="accordion-wrapper mb-3">
+        <div class="card">
+            <div id="headingGraph" class="card-header">
+                <button type="button" data-toggle="collapse" data-target="#collapsegraph"
+                        aria-expanded="true" aria-controls="collapseOne"
+                        class="text-left m-0 p-0 btn btn-link btn-block">
+                    <h5 class="m-0 p-0 card-title"><i class="float-right pe-7s-angle-down-circle fa-1x" style="color:black;"></i>ग्राफ के अनुसार कुल लंबित जाँच </h5>
+                </button>
+            </div>
+            <div data-parent="#accordion1Graph" id="collapsegraph" aria-labelledby="headingGraph"
+                 class="collapse show">
+                <div class="card-body">
+                    <div class="media">
+                        <div class="media-body">
+                            <div class="mt-2">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="login-inner-form">
+                                            <div class="details" style="min-height: 400px !important;">
+                                                <div class="card-title text-center h6">Pending Enquiry(Financial/Non-financial)</div>
+                                                <div id="chartdiv"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <div class="login-inner-form">
+                                            <div class="details" style="min-height: 400px !important;">
+                                                <div class="card-title text-center h6">Level Wise Total Pending Enquiry</div>
+                                                <div id="chartdivLevel"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

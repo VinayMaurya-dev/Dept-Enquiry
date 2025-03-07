@@ -1,0 +1,175 @@
+﻿@model CourtCase.Models.UserLogin
+
+@{
+    ViewBag.Title = "UserLoginList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+ 
+
+<div class="app-main__inner">
+
+    <div class="app-page-title app-page-title-simple">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div>
+                    <div class="page-title-head center-elem">
+                        <span class="d-inline-block pr-2">
+                            <i class="lnr-apartment opacity-6"></i>
+                        </span>
+                        <span class="d-inline-block">User Login Report</span>
+                    </div>
+                    <div class="page-title-subheading opacity-10">
+                        <nav class="" aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <button type="button" onclick="history.back()" value="BACK" class="btn btn-primary mybackbutton"><i class="fa fa-arrow-left" aria-hidden="true"> Back</i></button>
+                                </li>
+
+                                <li class="active breadcrumb-item" aria-current="page">
+                                    User List
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="tab-content">
+        <div class="main-card mb-3 card">
+            <div class="card-header">
+                <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
+                    Login Report
+                </div>
+            </div>  
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table style="width: 100%;" id="scr-vtr-dynamic" class="example">
+                        <thead>
+                            <tr> 
+                                <th>Zone</th>
+                                <th>Circle</th>
+                                <th>Division</th>
+                                <th>Designation</th>
+                                <th>Role Type</th>
+                                <th>Mobile No</th>
+                                <th>Email Id</th>
+                                <th>Status</th>
+                                <th>Action</th>
+
+                            </tr>
+                        </thead>
+                        <tbody> 
+                            @if (ViewBag.list != null)
+                            {
+                                foreach (var item in ViewBag.list)
+                                {
+                            <tr>
+                              
+                                <td>@item.ZoneName</td>
+                                <td>@item.CircleName</td>
+                                <td>@item.DivisionName</td>
+                                <td>@item.DesignationName</td>
+                                <td>@item.RoleName</td>
+                                <td>
+                                    <div id="tdMobilNo-@item.Id">@item.MobileNo</div> 
+                                    <input type="text" id="inputMobile-@item.Id" value="@item.MobileNo" class="d-none" maxlength="10">
+                                </td>
+                                <td> 
+                                    <div id="tdEmail-@item.Id">@item.EmailId</div>
+                                    <input type="text" id="inputEmail-@item.Id" value="@item.EmailId" class="d-none">
+                                </td>
+                                <td>
+                                    @if (@item.Status == "Active")
+                                    {
+                                        <button class="btn btn-success">@item.Status</button>
+                                    }
+                                    else
+                                    {
+                                        <button class="btn btn-danger">@item.Status</button>
+                                    }
+                                </td>
+                                <td>
+                                    <button class="btn btn-info" onclick="toggleEdit(@item.Id)">
+                                        <i class="fa fa-edit" id="edit-icon-@item.Id"></i>
+                                        <i class="fa fa-check d-none" id="update-icon-@item.Id"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>  
+
+<script>
+    function toggleEdit(userNumber) {
+        var editIcon = $("#edit-icon-" + userNumber);
+        var updateIcon = $("#update-icon-" + userNumber);
+        var mobileDiv = $("#tdMobilNo-" + userNumber);
+        var emailDiv = $("#tdEmail-" + userNumber);
+        var inputMobile = $("#inputMobile-" + userNumber);
+        var inputEmail = $("#inputEmail-" + userNumber);
+
+
+        if (editIcon.is(":visible")) {
+            editIcon.addClass("d-none");
+            updateIcon.removeClass("d-none"); 
+            mobileDiv.addClass("d-none");
+            emailDiv.addClass("d-none");
+            inputMobile.removeClass("d-none");
+            inputEmail.removeClass("d-none");
+        }
+
+        else {
+            var newMobile = inputMobile.val();
+            var newEmail = inputEmail.val();
+            var formData = {
+                UserNumber: userNumber,
+                MobileNo: newMobile,
+                EmailId: newEmail 
+            };
+
+            $.ajax({
+                url: '/Admin/UpdateUserProfile',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(formData),
+                success: function (response) {
+                    if (response && response.Msg) { 
+                        var Msg = response.Msg;
+                        var Status = response.SR; 
+                        mobileDiv.text(newMobile);
+                        emailDiv.text(newEmail);
+
+                        mobileDiv.removeClass("d-none");
+                        emailDiv.removeClass("d-none");
+                        inputMobile.addClass("d-none");
+                        inputEmail.addClass("d-none");
+
+                        editIcon.removeClass("d-none");
+                        updateIcon.addClass("d-none"); 
+
+                        if (Status === 1) {
+                            toastr.success(Msg);
+                        }
+                        else if (Status === 0) {
+                            toastr.error(Msg);
+                        } 
+                    } else {
+                        toastr.error("Unexpected error occurred. Please try again.");
+                    }
+                },
+                error: function (xhr, status, error) {
+                    toastr.error("Error updating user info.");
+                }
+            });
+        }
+    }
+</script>

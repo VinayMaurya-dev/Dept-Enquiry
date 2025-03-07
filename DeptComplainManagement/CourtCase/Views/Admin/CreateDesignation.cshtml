@@ -1,0 +1,252 @@
+﻿@model CourtCase.Models.Designation
+    @{
+        ViewBag.Title = "CreateDesignation";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <div class="app-main__inner">
+        <div class="app-page-title app-page-title-simple">
+            <div class="page-title-wrapper">
+                <div class="page-title-heading">
+                    <div>
+                        <div class="page-title-head center-elem">
+                            <span class="d-inline-block pr-2">
+                                <i class="lnr-apartment opacity-6"></i>
+                            </span>
+                            <span class="d-inline-block">    Create Designation </span>
+                        </div>
+                        <div class="page-title-subheading opacity-10">
+                            <nav class="" aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item">
+                                        <button type="button" onclick="history.back()" value="BACK" class="btn btn-primary mybackbutton"><i class="fa fa-arrow-left" aria-hidden="true"> Back</i></button>
+                                    </li>
+
+                                    <li class="active breadcrumb-item" aria-current="page">
+                                        Create Designation 
+                                    </li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div> 
+        <div class="tab-content">
+
+            <div class="main-card mb-3 card">
+                <div class="card-body">
+                    @*<h5 class="card-title">Add Designation</h5><br />*@
+                    <input type="hidden" value="@Model.DesignationId" id="hiddenDesignationId" />
+
+                    <div class="form-row" id="caseTypeDiv">
+                        <div class="col-md-12">
+                            <div class="form-row">
+                                <div class="col-md-4 mb-3">
+                                    <label for="validationCustomUsername">Role Type Name</label>
+                                    <div class="input-group">
+                                        @*@Html.DropDownListFor(model => model.ZoneId, ViewBag.ZoneName as SelectList,"Select Zone",
+                                        new { @class = "form-control",@id= "txtZoneName" })
+                                          <span id="ZoneIdError"></span>*@
+                                        <select class="form-control" id="MarkToRoleType" name="MarkToRoleType"></select>
+
+                                    </div>
+                                    <span id="RoleTypeIdError"></span>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="exampleAddress" class="">Designation Name</label>
+                                    <div class="input-group">
+                                        <input type="text" value="@Model.DesignationName" id="txtDesignationName" class="form-control" placeholder="Enter Designation" />
+
+
+                                    </div>
+                                    <span id="DesignationNameError"></span>
+                                    <div class="col-md-4 col-sm-4">
+
+                                        <div class="row float-sm-left" style="margin-top:22px!important">
+                                            <input type="submit" id="btnSubmit" value="@ViewBag.BtnName" class="btn-pill btn-shadow btn-success btn" onclick="return SaveUpdateDesignationRecord()">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
+                <div class="card order-card" style="margin:-18px;padding:10px;">
+                    @*<input type="hidden" value="@Model.ZoneId" id="hiddenZoneId" />*@
+                    <div class="card-block">
+                        <table class="table table-bordered" style="margin-top:0px !important;text-align:center;" id="caseTypeDiv">
+                            <tr>
+                                <th>
+                                    Sr No
+                                </th>
+                                <th>
+                                    Designation Id
+                                </th>
+                                <th>
+                                    Designation Name
+                                </th>
+                                <th>
+                                    Level Type 
+                                </th>
+
+                                <th>
+                                    Action
+                                </th>
+
+                            </tr>
+
+                            @if (Model.Table != null)
+
+                            {
+                                int i = 0;
+                                foreach (System.Data.DataRow data in Model.Table.Rows)
+                                {
+                                    i++;
+                                    <tr>
+                                        <td>
+                                            @i
+                                        </td>
+                                        <td>
+                                            @data["DesignationId"]
+                                        </td>
+                                        <td>
+                                            @data["DesignationName"]
+                                        </td>
+                                        <td>
+                                            @data["LevelType"]
+                                        </td>
+                                        <td>
+
+                                            <a href="/Admin/CreateDesignation?DesignationId=@data["DesignationId"]" class="btn-pill btn-shadow btn-primary btn"> Edit</a>
+
+                                        </td>
+
+
+                                    </tr>
+
+                                }
+                            }
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $('#ReportLI').addClass("mm-active");
+            $('#ReportUL').addClass("mm-show");
+            $('#DesignationMaster').addClass("mm-active");
+            $('#AdminDashboard').removeClass("mm-active");
+
+              var val1 = ('@TempData["RoleTypeId"]');
+            bindUserTypeRoles('MarkToRoleType',val1);
+
+
+
+            $("#MarkToRoleType")(function () {
+                bindZone('MarkToRoleType', -1);
+
+            });
+
+        });
+
+
+
+        function bindUserTypeRoles(id, defaultSelectionValues) {
+            defaultSelectionValues = typeof defaultSelectionValues !== 'undefined' ? defaultSelectionValues : '';
+            if (defaultSelectionValues == -1 || defaultSelectionValues == 0 || defaultSelectionValues == '-1' || defaultSelectionValues == '') {
+                defaultSelectionValues = '-1';
+            }
+            var obj = new Object();
+            obj.Action = "bindRolesType";
+
+            $.ajax({
+                type: 'POST',
+                url: '/DropdownBinder/fillDropdown',
+                data: { Action: obj.Action },
+                success: function (Data) {
+                    var ddl = $('#' + id);
+                    ddl.empty();
+                    ddl.append($('<option/>', {
+                        value: "-1",
+                        text: "Choose option "
+                    }));
+
+                    $.each(Data, function (index, rowData) {
+                        ddl.append($('<option/>', {
+                            value: rowData.id,
+                            text: rowData.value
+                        }));
+                    });
+                    ddl.val(defaultSelectionValues);
+                },
+                error: function (errorData) {
+                    console.log(errorData);
+                }
+            });
+
+        }
+
+        function Validate() {
+            var RoleTypeId = document.getElementById("MarkToRoleType").selectedIndex;
+            
+            if (RoleTypeId ==0) {
+                $("#RoleTypeIdError").text("Please Select The Role Type Name");
+                $("#RoleTypeIdError").css("color", "red");
+                $("#RoleTypeId").focus();
+                return false;
+            }
+            else {
+                $("#RoleTypeIdError").text("");
+            }
+            var DesignationName = $("#txtDesignationName").val();
+            if (DesignationName == "") {
+                $("#DesignationNameError").text("Please Enter The Designation Name");
+                $("#DesignationNameError").css("color", "red");
+                $("#txtDesignationName").focus();
+                return false;
+            }
+            else {
+                $("#DesignationNameError").text("");
+            }
+
+            
+
+            return true;
+        }
+
+        function SaveUpdateDesignationRecord() {
+            debugger;
+            if (!Validate()) {
+
+                return false;
+            }
+            var obj = {
+
+                DesignationId: $("#hiddenDesignationId").val(),
+                DesignationName: $("#txtDesignationName").val(),
+                RoleTypeId: $("#MarkToRoleType").val(),
+
+            }
+            $.post("/Admin/SaveUpdateDesignationRecord", obj, function (Res) {
+                if (Res != "") {
+                    alert(Res);
+                    window.location.href = "/Admin/CreateDesignation";
+                }
+                else {
+                    alert("Something Went wrong.");
+                    window.location.href = "/Admin/CreateDesignation";
+                    window.location.href = "/Admin/CreateDesignation";
+                }
+            });
+        }
+    </script>

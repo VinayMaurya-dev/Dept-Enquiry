@@ -1,0 +1,214 @@
+﻿@{
+    var PreliminaryCase = 0;
+    var DepartmentalCase =0;
+    var Total = 0;
+    System.Data.DataSet ds = ((System.Data.DataSet)Model);
+    System.Data.DataTable dt0 = new System.Data.DataTable();
+    //System.Data.DataTable dt1 = new System.Data.DataTable();
+    //System.Data.DataTable dt2 = new System.Data.DataTable();
+    if (ds.Tables.Count > 0)
+    {
+        dt0 = ds.Tables[0];
+        //dt1 = ds.Tables[1];
+        //dt2 = ds.Tables[2];
+        //PreliminaryCase = Convert.ToInt32(ds.Tables[0].Rows[0]["PreReceivedComplaint"]);
+        //DepartmentalCase = Convert.ToInt32(ds.Tables[0].Rows[0]["DeptReceivedComplaint"]);
+        //Total = PreliminaryCase + DepartmentalCase;
+    }
+}
+<style>
+    .icon-wrapper {
+        width: 54px !important;
+        height: 54px !important;
+        margin: 0 auto !important;
+        position: relative !important;
+        overflow: visible !important;
+    }
+
+    .btn .badge-dot.badge-dot-sm {
+        width: 10px !important;
+        height: 10px !important;
+        border-width: 1px !important;
+    }
+
+    .btn .badge-dot {
+        position: absolute !important;
+        border: #fff solid 2px !important;
+        top: -2px !important;
+        right: 7px !important;
+    }
+</style>
+
+<div class="dropdown">
+
+    <button type="button" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown"
+            class="p-0 mr-2 btn btn-link">
+        <span class="icon-wrapper icon-wrapper-alt rounded-circle">
+            <span class="icon-wrapper-bg bg-danger" style="border-radius:50%;"></span>
+            <i class="icon text-danger icon-anim-pulse ion-android-notifications"></i>
+            @if (Total > 0)
+            {
+                <span class="badge badge-dot badge-dot-sm badge-danger">Notifications</span>
+            }
+
+        </span>
+    </button>
+    <div tabindex="-1" role="menu" aria-hidden="true"
+         class="dropdown-menu-xl rm-pointers dropdown-menu dropdown-menu-right">
+        <div class="dropdown-menu-header mb-0">
+            <div class="dropdown-menu-header-inner bg-deep-blue">
+                <div class="menu-header-image opacity-1" style="background-image: url('assets/images/dropdown-header/city3.jpg');"></div>
+                <div class="menu-header-content text-dark">
+                    <h5 class="menu-header-title">
+                        प्राप्त शिकायतें
+                    </h5>
+                    <h6 class="menu-header-subtitle">आपके पास <b>@Total</b> अपठित संदेश हैं</h6>
+                </div>
+            </div>
+        </div>
+        <ul class="tabs-animated-shadow tabs-animated nav nav-justified tabs-shadow-bordered p-3">
+            <li class="nav-item">
+                <a role="tab" class="nav-link active" data-toggle="tab" href="#tab-messages-header">
+                    <span>Preliminary (<b>@PreliminaryCase</b>)</span>
+
+                </a>
+            </li>
+            <li class="nav-item">
+                <a role="tab" class="nav-link" data-toggle="tab" href="#tab-events-header">
+                    <span>Deapartmental (<b>@DepartmentalCase</b>)</span>
+                </a>
+            </li>
+            <li class="nav-item" hidden>
+                <a role="tab" class="nav-link" data-toggle="tab" href="#tab-errors-header">
+                    <span>System Errors</span>
+                </a>
+            </li>
+        </ul>
+        @*<div class="tab-content">
+            <div class="tab-pane active" id="tab-messages-header" role="tabpanel">
+                <div class="scroll-area-sm">
+                    <div class="scrollbar-container">
+                        <div class="p-3">
+                            <div class="notifications-box">
+                                <div class="vertical-time-simple vertical-without-time vertical-timeline vertical-timeline--one-column">
+                                    <div class="vertical-timeline-item dot-danger vertical-timeline-element">
+                                        <div>
+                                            <ul class="todo-list-wrapper list-group list-group-flush">
+
+                                                @if (dt1 != null && dt1.Rows.Count > 0)
+                                                {
+                                                    int index = 0;
+                                                    foreach (System.Data.DataRow row in dt1.Rows)
+                                                    {
+                                                        string colorClass = "bg-danger";
+
+
+                                                        if (dt1.Rows[0].ToString() == "0")
+                                                        {
+                                                            colorClass = "bg-warning";
+                                                        }
+
+
+                                                        <li class="list-group-item">
+                                                            <div class="todo-indicator @colorClass"></div>
+                                                            <div class="widget-content p-0">
+                                                                <a class="dropdown-item" href="@row["UrlPath"].ToString()">
+                                                                    <div class="widget-content-wrapper" style="margin-left:-28px;">
+                                                                        <div class="widget-content-left mr-2">
+
+                                                                            <img src="~/assets/images/CM.jpg" class="msg-avatar" alt="user avatar" style="height:50px;" />
+
+                                                                        </div>
+                                                                        <div class="widget-content-left">
+                                                                            <div class="widget-heading">
+                                                                                @row["ComplaintType"].ToString()
+                                                                                <div class="badge badge-warning ml-2" style="color:white;">Pending</div>
+                                                                            </div>
+                                                                            <div class="widget-subheading"><i> @row["NameofPersonnel"].ToString() </i></div>
+                                                                        </div>
+                                                                        <div class="widget-content-right">
+                                                                            <i>@Convert.ToDateTime(row["EntryDate"]).ToString("MMM dd, yyyy")</i>
+                                                                        </div>
+                                                                    </div>
+                                                                </a>
+                                                            </div>
+                                                        </li>
+                                                    }
+                                                }
+
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <ul class="nav flex-column">
+                    <li class="nav-item-divider nav-item"></li>
+                    <li class="nav-item-btn text-center nav-item">
+                        <a href="/ComplaintInspection/PreliminiaryReceivedComplaints" class="btn-shadow btn-wide btn-pill btn btn-focus btn-sm">View Latest Changes</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="tab-pane" id="tab-events-header" role="tabpanel">
+                <div class="scroll-area-sm">
+                    <div class="scrollbar-container">
+                        <div class="p-3">
+                            <div class="vertical-without-time vertical-timeline vertical-timeline--animate vertical-timeline--one-column">
+                                <div class="vertical-timeline-item vertical-timeline-element">
+                                    <div>
+                                        <ul class="todo-list-wrapper list-group list-group-flush">
+
+                                            @if (dt2 != null && dt2.Rows.Count > 0)
+                                            {
+                                                foreach (System.Data.DataRow row in dt1.Rows)
+                                                {
+                                                    <li class="list-group-item">
+                                                        <div class="todo-indicator bg-warning"></div>
+                                                        <div class="widget-content p-0">
+                                                            <a class="dropdown-item" href="@row["UrlPath"].ToString()">
+                                                                <div class="widget-content-wrapper" style="margin-left:-28px;">
+                                                                    <div class="widget-content-left mr-2">
+
+                                                                        <img src="~/assets/images/CM.jpg" class="msg-avatar" alt="user avatar" style="height:50px;" />
+
+                                                                    </div>
+                                                                    <div class="widget-content-left">
+                                                                        <div class="widget-heading">
+                                                                            @row["ComplaintType"].ToString()
+                                                                            <div class="badge badge-warning ml-2" style="color:white;">Pending</div>
+                                                                        </div>
+                                                                        <div class="widget-subheading"><i> @row["NameofPersonnel"].ToString() </i></div>
+                                                                    </div>
+                                                                    <div class="widget-content-right">
+                                                                        <i>@Convert.ToDateTime(row["EntryDate"]).ToString("MMM dd, yyyy")</i>
+                                                                    </div>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                    </li>
+                                                }
+                                            }
+                                        </ul>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <ul class="nav flex-column">
+                    <li class="nav-item-divider nav-item"></li>
+                    <li class="nav-item-btn text-center nav-item">
+                        <a  href="/ComplaintInspection/ReceivedComplaints" class="btn-shadow btn-wide btn-pill btn btn-focus btn-sm">View Latest Changes</a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>*@
+
+    </div>
+</div>

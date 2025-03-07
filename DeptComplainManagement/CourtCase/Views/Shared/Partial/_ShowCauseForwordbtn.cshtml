@@ -1,0 +1,16 @@
+﻿@if (Model.CurrentStatus == Session["UserNumber"]?.ToString())
+{
+    var allowedUserNumbers = new[] { "10008", "10011", "10017", "10014", "10016", "10018", "10020" };
+
+    string userNumber = Session["UserNumber"]?.ToString();
+    if (allowedUserNumbers.Contains(userNumber))
+    {
+        string buttonText = userNumber == "10011"
+            ? "अधिकारी को अग्रसारित करे"
+            : "उच्च अधिकारी को अग्रसारित करे";
+
+        <button type="button" class="btn btn-pill btn-shadow btn-danger m-1" id="higherofficerbtn">
+            @buttonText
+        </button>
+    }
+}

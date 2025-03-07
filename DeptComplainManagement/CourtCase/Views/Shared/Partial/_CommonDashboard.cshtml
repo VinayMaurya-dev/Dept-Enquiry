@@ -1,0 +1,639 @@
+﻿<style>
+    .widget-title {
+        font-size: large;
+    }
+</style>
+@{
+
+    System.Data.DataSet ds = ((System.Data.DataSet)Model);
+    System.Data.DataTable dt0 = new System.Data.DataTable();
+    if (ds.Tables.Count > 0)
+    {
+        dt0 = ds.Tables[0];
+    }
+}
+@{
+    var allowedUserNumbers = new[] { "10001", "10008", "10011", "10017", "10014", "10016", "10018", "10020","10012" };
+}
+
+@if (allowedUserNumbers.Contains(Session["UserNumber"].ToString()))
+{
+
+    <div class="app-main__inner">
+        <div id="accordion" class="accordion-wrapper mb-3">
+            <div class="card">
+                <div id="headingOne" class="card-header">
+                    <button type="button" data-toggle="collapse" data-target="#collapseOne"
+                            aria-expanded="true" aria-controls="collapseOne"
+                            class="text-left m-0 p-0 btn btn-link btn-block">
+                        <h5 class="m-0 p-0 card-title">Total Registered Enquiry Reports/कुल पंजीकृत जाँच रिपोर्ट<i class="float-right pe-7s-angle-down-circle fa-1x" style="color:black;"></i></h5>
+                    </button>
+                </div>
+                <div data-parent="#accordion" id="collapseOne" aria-labelledby="headingOne"
+                     class="collapse show">
+                    <div class="card-body">
+                        <div class="media">
+                            <div class="media-body">
+                                <div class="mt-2">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <a href="/Reports/TotalEnquiry" style="text-decoration-line:none;" id="InitialComplaintLink">
+                                                <div class="card mb-3 widget-chart widget-chart2 bg-focus text-left" style="background: linear-gradient(45deg, #0760a1, #00264c) !important;">
+                                                    <div class="widget-chart-content text-white">
+                                                        <div class="widget-chart-flex">
+                                                            <div class="widget-title">Total Enquiry</div>
+                                                        </div>
+                                                        <div class="widget-chart-flex">
+                                                            <div class="widget-numbers">
+                                                                @dt0.Rows[0]["TotalDepartmenatalCase"]
+                                                            </div>
+                                                            <div class="widget-description ml-auto text-white">
+                                                                <i class="pe-7s-note2" style="font-size:xx-large;"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <a href="/Reports/ClosedEnquiryList" style="text-decoration-line:none;" id="InitialComplaintLink">
+                                                <div class="card mb-3 widget-chart widget-chart2 bg-focus text-left" style="background: linear-gradient(300deg, #6c1717, #ce1616) !important;">
+                                                    <div class="widget-chart-content text-white">
+                                                        <div class="widget-chart-flex">
+                                                            <div class="widget-title">Closed Enquiry</div>
+                                                        </div>
+                                                        <div class="widget-chart-flex">
+                                                            <div class="widget-numbers">
+                                                                @dt0.Rows[0]["ClosedEnquiry"]
+                                                            </div>
+                                                            <div class="widget-description ml-auto text-white">
+                                                                <i class="pe-7s-note2" style="font-size:xx-large;"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <a href="/Reports/DepartmentalDashboard" style="text-decoration-line:none;" id="InitialComplaintLink">
+                                                <div class="card mb-3 widget-chart widget-chart2 bg-focus text-left" style="background: linear-gradient(45deg, #e98f32, #dbbb13) !important;">
+                                                    <div class="widget-chart-content text-white">
+                                                        <div class="widget-chart-flex">
+                                                            <div class="widget-title">Total Pending Enquiry</div>
+
+                                                        </div>
+                                                        <div class="widget-chart-flex">
+                                                            <div class="widget-numbers">
+                                                                @dt0.Rows[0]["TotalPendingDepartmenatalCase"]
+                                                            </div>
+                                                            <div class="widget-description ml-auto text-white">
+                                                                <i class="pe-7s-note2" style="font-size:xx-large;"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <a href="/Reports/PendingComplaintAtEnquiryOfficer" style="text-decoration-line:none;" id="InitialComplaintLink">
+                                                <div class="card mb-3 widget-chart widget-chart2 bg-focus text-left" style="background: linear-gradient(45deg, #8b0a14, #c93d64) !important;">
+                                                    <div class="widget-chart-content text-white">
+                                                        <div class="widget-chart-flex">
+                                                            <div class="widget-title">Pendency for Decision at Enquiry Officer</div>
+                                                        </div>
+                                                        <div class="widget-chart-flex">
+                                                            <div class="widget-numbers">
+                                                                @dt0.Rows[0]["PendingCompAtEnqOfficer"]
+                                                            </div>
+                                                            <div class="widget-description ml-auto text-white">
+                                                                <i class="pe-7s-note2" style="font-size:xx-large;"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <a href="/Reports/Financial_NonfinancialWiseComplaintList?Id=1" style="text-decoration-line:none;" id="InitialComplaintLink">
+                                                <div class="card mb-3 widget-chart widget-chart2 bg-focus text-left" style="background: linear-gradient(45deg, #15d46a, #1d7916) !important;">
+                                                    <div class="widget-chart-content text-white">
+                                                        <div class="widget-chart-flex">
+                                                            <div class="widget-title">Financial</div>
+                                                        </div>
+                                                        <div class="widget-chart-flex">
+                                                            <div class="widget-numbers">
+                                                                @dt0.Rows[0]["Financial"]
+                                                            </div>
+                                                            <div class="widget-description ml-auto text-white">
+                                                                <i class="pe-7s-note2" style="font-size:xx-large;"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <a href="/Reports/Financial_NonfinancialWiseComplaintList?Id=2" style="text-decoration-line:none;" id="InitialComplaintLink">
+                                                <div class="card mb-3 widget-chart widget-chart2 bg-focus text-left" style="background: linear-gradient(101deg, #d7c543, #675b04) !important;">
+                                                    <div class="widget-chart-content text-white">
+                                                        <div class="widget-chart-flex">
+                                                            <div class="widget-title">Non Financial</div>
+                                                        </div>
+                                                        <div class="widget-chart-flex">
+                                                            <div class="widget-numbers">
+                                                                @dt0.Rows[0]["NonFinancial"]
+                                                            </div>
+                                                            <div class="widget-description ml-auto text-white">
+                                                                <i class="pe-7s-note2" style="font-size:xx-large;"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <a href="/Reports/ChargeSheetWiseComplaints" style="text-decoration-line:none;" id="InitialComplaintLink">
+                                                <div class="card mb-3 widget-chart widget-chart2 bg-focus text-left" style="background: linear-gradient(45deg, #b703b0, #69036a) !important;">
+                                                    <div class="widget-chart-content text-white">
+                                                        <div class="widget-chart-flex">
+                                                            <div class="widget-title">Total Charge Sheet  Issued</div>
+                                                        </div>
+                                                        <div class="widget-chart-flex">
+                                                            <div class="widget-numbers">
+                                                                @dt0.Rows[0]["ChargeSheetNo"]
+                                                            </div>
+                                                            <div class="widget-description ml-auto text-white">
+                                                                <i class="pe-7s-note2" style="font-size:xx-large;"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <a href="/Reports/PendingRemarkatHigherOfficer" style="text-decoration-line:none;" id="InitialComplaintLink">
+                                                <div class="card mb-3 widget-chart widget-chart2 bg-focus text-left" style="background: linear-gradient(45deg, #b74f03, #eb6a0f) !important;">
+                                                    <div class="widget-chart-content text-white">
+                                                        <div class="widget-chart-flex">
+                                                            <div class="widget-title">Pendency at Higher Officer</div>
+                                                        </div>
+                                                        <div class="widget-chart-flex">
+                                                            <div class="widget-numbers">
+                                                                @dt0.Rows[0]["PendingComplaint_HO"]
+                                                            </div>
+                                                            <div class="widget-description ml-auto text-white">
+                                                                <i class="pe-7s-note2" style="font-size:xx-large;"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <a href="/Reports/EmployeeWiseComplaint" style="text-decoration-line:none;" id="InitialComplaintLink">
+                                                <div class="card mb-3 widget-chart widget-chart2 bg-focus text-left" style="background: linear-gradient(45deg, #17686c, #0f6189) !important;">
+                                                    <div class="widget-chart-content text-white">
+                                                        <div class="widget-chart-flex">
+                                                            <div class="widget-title">Employee Wise Enquiry</div>
+                                                        </div>
+                                                        <div class="widget-chart-flex">
+                                                            <div class="widget-numbers">
+                                                                @dt0.Rows[0]["EmployeeWiseComplaint"]
+                                                            </div>
+                                                            <div class="widget-description ml-auto text-white">
+                                                                <i class="pe-7s-note2" style="font-size:xx-large;"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <a href="/Reports/DesignationWiseComplaint" style="text-decoration-line:none;" id="InitialComplaintLink">
+                                                <div class="card mb-3 widget-chart widget-chart2 bg-focus text-left" style="background: linear-gradient(45deg, #27b3bc, #0f8889) !important;">
+                                                    <div class="widget-chart-content text-white">
+                                                        <div class="widget-chart-flex">
+                                                            <div class="widget-title">Designation Wise Enquiry</div>
+                                                        </div>
+                                                        <div class="widget-chart-flex">
+                                                            <div class="widget-numbers">
+                                                                @dt0.Rows[0]["DesignationWiseComplaint"]
+                                                            </div>
+                                                            <div class="widget-description ml-auto text-white">
+                                                                <i class="pe-7s-note2" style="font-size:xx-large;"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <a href="/Reports/SuspensionDashboard" style="text-decoration-line:none;" id="InitialComplaintLink">
+                                                <div class="card mb-3 widget-chart widget-chart2 bg-focus text-left" style="background: linear-gradient(275deg, #0a8b71, #1c5755) !important;">
+                                                    <div class="widget-chart-content text-white">
+                                                        <div class="widget-chart-flex">
+                                                            <div class="widget-title">Employee Suspension Details</div>
+                                                        </div>
+                                                        <div class="widget-chart-flex">
+                                                            <div class="widget-numbers">
+                                                                @dt0.Rows[0]["SuspensionCount"]
+                                                            </div>
+                                                            <div class="widget-description ml-auto text-white">
+                                                                <i class="pe-7s-note2" style="font-size:xx-large;"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <a href="/Reports/PendingComplaintsBasedontheDuration" style="text-decoration-line:none;" id="InitialComplaintLink">
+                                                <div class="card mb-3 widget-chart widget-chart2 bg-focus text-left" style="background: linear-gradient(226deg, #db322c, #ed8509) !important;">
+                                                    <div class="widget-chart-content text-white">
+                                                        <div class="widget-chart-flex">
+                                                            <div class="widget-title">Enquiry Report Received But file Pending in Complaint Section</div>
+                                                        </div>
+                                                        <div class="widget-chart-flex">
+                                                            <div class="widget-numbers">
+                                                                @dt0.Rows[0]["PendingComplaintsBasedontheDuration"]
+                                                            </div>
+                                                            <div class="widget-description ml-auto text-white">
+                                                                <i class="pe-7s-note2" style="font-size:xx-large;"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <a href="/Reports/CourtCaseDashboard" style="text-decoration-line:none;" id="InitialComplaintLink">
+                                                <div class="card mb-3 widget-chart widget-chart2 bg-focus text-left" style="background: linear-gradient(275deg, #0a8b71, #1c5755) !important; ">
+                                                    <div class="widget-chart-content text-white">
+                                                        <div class="widget-chart-flex">
+                                                            <div class="widget-title">Court Cases</div>
+                                                        </div>
+                                                        <div class="widget-chart-flex">
+                                                            <div class="widget-numbers">
+                                                                @dt0.Rows[0]["TotalCourtCaseComplaint"]
+                                                            </div>
+                                                            <div class="widget-description ml-auto text-white">
+                                                                <i class="pe-7s-note2" style="font-size:xx-large;"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <a href="/Reports/InvestigationDashboard" style="text-decoration-line:none;" id="InitialComplaintLink">
+                                                <div class="card mb-3 widget-chart widget-chart2 bg-focus text-left" style="background: linear-gradient(90deg, #6c6217, #ce5116) !important;">
+                                                    <div class="widget-chart-content text-white">
+                                                        <div class="widget-chart-flex">
+                                                            <div class="widget-title">Investigation by Other Agency</div>
+                                                        </div>
+                                                        <div class="widget-chart-flex">
+                                                            <div class="widget-numbers">
+                                                                @dt0.Rows[0]["TotalInvestigationComplaint"]
+                                                            </div>
+                                                            <div class="widget-description ml-auto text-white">
+                                                                <i class="pe-7s-note2" style="font-size:xx-large;"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="app-main__inner">
+        <div id="accordion4" class="accordion-wrapper mb-3">
+            <div class="card">
+                <div id="headingOne4" class="card-header">
+                    <button type="button" data-toggle="collapse" data-target="#collapseOne4"
+                            aria-expanded="true" aria-controls="collapseOne"
+                            class="text-left m-0 p-0 btn btn-link btn-block">
+                        <h5 class="m-0 p-0 card-title">Total Show Cause Notice/कुल कारण बताओ नोटिस<i class="float-right pe-7s-angle-down"></i></h5>
+                    </button>
+                </div>
+                <div data-parent="#accordion4" id="collapseOne4" aria-labelledby="headingOne4"
+                     class="collapse show">
+                    <div class="card-body">
+                        <div class="media">
+
+                            <div class="media-body">
+                                <div class="mt-2">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <a href="/Reports/ShowCauseNoticeList" style="text-decoration-line:none;" id="InitialComplaintLink">
+                                                <div class="card mb-3 widget-chart widget-chart2 bg-focus text-left" style="background: linear-gradient(102deg, #2e1272, #1666ce) !important">
+                                                    <div class="widget-chart-content text-white">
+                                                        <div class="widget-chart-flex">
+                                                            <div class="widget-title">Total</div>
+                                                        </div>
+                                                        <div class="widget-chart-flex">
+                                                            <div class="widget-numbers">
+                                                                @dt0.Rows[0]["TotalShowCauseNotice"]
+                                                            </div>
+                                                            <div class="widget-description ml-auto text-white">
+                                                                <i class="pe-7s-note2" style="font-size:xx-large;"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <a href="/Reports/ClosedShowCauseNoticeList" style="text-decoration-line:none;" id="InitialComplaintLink">
+                                                <div class="card mb-3 widget-chart widget-chart2 bg-focus text-left" style="background:linear-gradient(97deg, #0a500c, #68d731) !important;">
+                                                    <div class="widget-chart-content text-white">
+                                                        <div class="widget-chart-flex">
+                                                            <div class="widget-title">Closed</div>
+                                                        </div>
+                                                        <div class="widget-chart-flex">
+                                                            <div class="widget-numbers">
+                                                                @dt0.Rows[0]["ClosedShowCauseNotice"]
+                                                            </div>
+                                                            <div class="widget-description ml-auto text-white">
+                                                                <i class="pe-7s-note2" style="font-size:xx-large;"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <a href="/Reports/PendingShowCauseNoticeList" style="text-decoration-line:none;" id="InitialComplaintLink">
+                                                <div class="card mb-3 widget-chart widget-chart2 bg-focus text-left" style="background: linear-gradient(300deg, #e18f14, #d9a50b) !important;">
+                                                    <div class="widget-chart-content text-white">
+                                                        <div class="widget-chart-flex">
+                                                            <div class="widget-title">Pending</div>
+                                                        </div>
+                                                        <div class="widget-chart-flex">
+                                                            <div class="widget-numbers">
+                                                                @dt0.Rows[0]["PendingShowCauseNotice"]
+                                                            </div>
+                                                            <div class="widget-description ml-auto text-white">
+                                                                <i class="pe-7s-note2" style="font-size:xx-large;"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <a href="/Reports/PendencyHigherOfficerShowCauseNoticeList" style="text-decoration-line:none;" id="InitialComplaintLink">
+                                                <div class="card mb-3 widget-chart widget-chart2 bg-focus text-left" style="background: linear-gradient(300deg, #ce5116, #ba16ce) !important;">
+                                                    <div class="widget-chart-content text-white">
+                                                        <div class="widget-chart-flex">
+                                                            <div class="widget-title">Pendency at Higher Level</div>
+                                                        </div>
+                                                        <div class="widget-chart-flex">
+                                                            <div class="widget-numbers">
+                                                                @dt0.Rows[0]["PendencyHigherOfficerLevel"]
+                                                            </div>
+                                                            <div class="widget-description ml-auto text-white">
+                                                                <i class="pe-7s-note2" style="font-size:xx-large;"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="app-main__inner">
+        <div id="accordion2" class="accordion-wrapper mb-3">
+            <div class="card">
+                <div id="headingOne2" class="card-header">
+                    <button type="button" data-toggle="collapse" data-target="#collapseOne2"
+                            aria-expanded="true" aria-controls="collapseOne"
+                            class="text-left m-0 p-0 btn btn-link btn-block">
+                        <h5 class="m-0 p-0 card-title">Total Revision Enquiry/कुल पुनरीक्षण जाँच<i class="float-right pe-7s-angle-down-circle fa-1x" style="color:black;"></i></h5>
+                    </button>
+                </div>
+                <div data-parent="#accordion2" id="collapseOne2" aria-labelledby="headingOne2"
+                     class="collapse show">
+                    <div class="card-body">
+                        <div class="media">
+
+                            <div class="media-body">
+                                <div class="mt-2">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <a href="/Reports/RevisionEnquiryList" style="text-decoration-line:none;" id="InitialComplaintLink">
+                                                <div class="card mb-3 widget-chart widget-chart2 bg-focus text-left" style="background: linear-gradient(102deg, #2e1272, #1666ce) !important">
+                                                    <div class="widget-chart-content text-white">
+                                                        <div class="widget-chart-flex">
+                                                            <div class="widget-title">Total</div>
+                                                        </div>
+                                                        <div class="widget-chart-flex">
+                                                            <div class="widget-numbers">
+                                                                @dt0.Rows[0]["TotalRevisionEnquiry"]
+                                                            </div>
+                                                            <div class="widget-description ml-auto text-white">
+                                                                <i class="pe-7s-note2" style="font-size:xx-large;"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <a href="/Reports/ClosedRevisionEnquiryList" style="text-decoration-line:none;" id="InitialComplaintLink">
+                                                <div class="card mb-3 widget-chart widget-chart2 bg-focus text-left" style="background:linear-gradient(97deg, #0a500c, #68d731) !important;">
+                                                    <div class="widget-chart-content text-white">
+                                                        <div class="widget-chart-flex">
+                                                            <div class="widget-title">Closed</div>
+                                                        </div>
+                                                        <div class="widget-chart-flex">
+                                                            <div class="widget-numbers">
+                                                                @dt0.Rows[0]["ClosedRevisionEnquiry"]
+                                                            </div>
+                                                            <div class="widget-description ml-auto text-white">
+                                                                <i class="pe-7s-note2" style="font-size:xx-large;"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <a href="/Reports/PendingRevisionEnquiryList" style="text-decoration-line:none;" id="InitialComplaintLink">
+                                                <div class="card mb-3 widget-chart widget-chart2 bg-focus text-left" style="background: linear-gradient(300deg, #e18f14, #d9a50b) !important;">
+                                                    <div class="widget-chart-content text-white">
+                                                        <div class="widget-chart-flex">
+                                                            <div class="widget-title">Pending</div>
+                                                        </div>
+                                                        <div class="widget-chart-flex">
+                                                            <div class="widget-numbers">
+                                                                @dt0.Rows[0]["TotalPendingRevisionEnquiry"]
+                                                            </div>
+                                                            <div class="widget-description ml-auto text-white">
+                                                                <i class="pe-7s-note2" style="font-size:xx-large;"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+
+
+                                        <div class="col-md-4">
+                                            <a href="/Reports/DepecdencyRevisionEnquiryList" style="text-decoration-line:none;" id="InitialComplaintLink">
+                                                <div class="card mb-3 widget-chart widget-chart2 bg-focus text-left" style="background: linear-gradient(300deg, #ce5116, #ba16ce) !important;">
+                                                    <div class="widget-chart-content text-white">
+                                                        <div class="widget-chart-flex">
+                                                            <div class="widget-title">Pendency at Higher Level</div>
+                                                        </div>
+                                                        <div class="widget-chart-flex">
+                                                            <div class="widget-numbers">
+                                                                @dt0.Rows[0]["TotalDepedencyPendingRevisionEnquiry"]
+                                                            </div>
+                                                            <div class="widget-description ml-auto text-white">
+                                                                <i class="pe-7s-note2" style="font-size:xx-large;"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="app-main__inner">
+        <div id="accordion1" class="accordion-wrapper mb-3">
+            <div class="card">
+                <div id="headingOne1" class="card-header">
+                    <button type="button" data-toggle="collapse" data-target="#collapseOne1"
+                            aria-expanded="true" aria-controls="collapseOne"
+                            class="text-left m-0 p-0 btn btn-link btn-block">
+                        <h5 class="m-0 p-0 card-title">Total Appeal Enquiry/कुल अपील जाँच<i class="float-right pe-7s-angle-down-circle fa-1x" style="color:black;"></i></h5>
+                    </button>
+                </div>
+                <div data-parent="#accordion1" id="collapseOne1" aria-labelledby="headingOne1"
+                     class="collapse show">
+                    <div class="card-body">
+                        <div class="media">
+
+                            <div class="media-body">
+                                <div class="mt-2">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <a href="/Reports/AppealEnquiryList" style="text-decoration-line:none;" id="InitialComplaintLink">
+                                                <div class="card mb-3 widget-chart widget-chart2 bg-focus text-left" style="background: linear-gradient(102deg, #2e1272, #1666ce) !important">
+                                                    <div class="widget-chart-content text-white">
+                                                        <div class="widget-chart-flex">
+                                                            <div class="widget-title">Total</div>
+                                                        </div>
+                                                        <div class="widget-chart-flex">
+                                                            <div class="widget-numbers">
+                                                                @dt0.Rows[0]["TotalAppealEnquiry"]
+                                                            </div>
+                                                            <div class="widget-description ml-auto text-white">
+                                                                <i class="pe-7s-note2" style="font-size:xx-large;"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <a href="/Reports/ClosedAppealEnquiryList" style="text-decoration-line:none;" id="InitialComplaintLink">
+                                                <div class="card mb-3 widget-chart widget-chart2 bg-focus text-left" style="background:linear-gradient(97deg, #0a500c, #68d731) !important;">
+                                                    <div class="widget-chart-content text-white">
+                                                        <div class="widget-chart-flex">
+                                                            <div class="widget-title">Closed</div>
+                                                        </div>
+                                                        <div class="widget-chart-flex">
+                                                            <div class="widget-numbers">
+                                                                @dt0.Rows[0]["ClosedAppealEnquiry"]
+                                                            </div>
+                                                            <div class="widget-description ml-auto text-white">
+                                                                <i class="pe-7s-note2" style="font-size:xx-large;"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <a href="/Reports/PendingAppealEnquiryList" style="text-decoration-line:none;" id="InitialComplaintLink">
+                                                <div class="card mb-3 widget-chart widget-chart2 bg-focus text-left" style="background: linear-gradient(300deg, #e18f14, #d9a50b) !important;">
+                                                    <div class="widget-chart-content text-white">
+                                                        <div class="widget-chart-flex">
+                                                            <div class="widget-title">Pending</div>
+                                                        </div>
+                                                        <div class="widget-chart-flex">
+                                                            <div class="widget-numbers">
+                                                                @dt0.Rows[0]["TotalPendingAppealEnquiry"]
+                                                            </div>
+                                                            <div class="widget-description ml-auto text-white">
+                                                                <i class="pe-7s-note2" style="font-size:xx-large;"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <a href="/Reports/PendencyAppealEnquiryList" style="text-decoration-line:none;" id="InitialComplaintLink">
+                                                <div class="card mb-3 widget-chart widget-chart2 bg-focus text-left" style="background: linear-gradient(300deg, #0a8b71, #ba16ce) !important;">
+                                                    <div class="widget-chart-content text-white">
+                                                        <div class="widget-chart-flex">
+                                                            <div class="widget-title">Pendency at Higher Level</div>
+                                                        </div>
+                                                        <div class="widget-chart-flex">
+                                                            <div class="widget-numbers">
+                                                                @dt0.Rows[0]["TotalPendecyAppealEnquiry"]
+                                                            </div>
+                                                            <div class="widget-description ml-auto text-white">
+                                                                <i class="pe-7s-note2" style="font-size:xx-large;"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+

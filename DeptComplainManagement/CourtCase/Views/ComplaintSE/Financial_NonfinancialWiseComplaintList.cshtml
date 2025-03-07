@@ -1,0 +1,432 @@
+﻿@using CourtCase.Filters
+@{
+    ViewBag.Title = "Financial_NonfinancialWiseComplaintList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="app-main__inner">
+    <div class="app-page-title app-page-title-simple">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div>
+                    <div class="page-title-head center-elem">
+                        <span class="d-inline-block pr-2">
+                            <i class="lnr-apartment opacity-6"></i>
+                        </span>
+                        <span class="d-inline-block"> वित्तीय / गैर वित्तीय जाँच सूची </span>
+                    </div>
+                    <div class="page-title-subheading opacity-10">
+                        <nav class="" aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <button type="button" onclick="history.back()" value="BACK" class="btn btn-primary mybackbutton"><i class="fa fa-arrow-left" aria-hidden="true"> Back</i></button>
+                                </li> 
+                                <li class="active breadcrumb-item" aria-current="page">
+                                    Financial / Non-financial Enquiry List
+                                </li>
+                            </ol>
+                        </nav>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="main-card mb-3 card">
+        <div class="card-body">
+            <div class="row">
+                <div class="mb-2 col-md-2">
+                    <label class="form-label">दिनांक से</label>
+                    <input type="date" class="form-control form-control-sm" placeholder="YYYY-MM-DD" id="Fromdate" />
+
+                </div>
+                <div class="mb-2 col-md-2">
+                    <label class="form-label">दिनांक तक</label>
+                    <input type="date" class="form-control form-control-sm" placeholder="YYYY-MM-DD" id="todate" />
+                </div>
+                <div class="col-md-3 mb-2">
+                    <div class="position-relative form-group">
+                        <label for="exampleAddress" class="">संस्थित जांच का पदनाम</label><br />
+                        <select class="form-control form-control-sm" id="PreviousComplaintDesignationId" name="PreviousComplaintDesignationId"></select>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-2">
+                    <div class="position-relative form-group">
+                        <label for="exampleAddress" class="">कार्मिक का नाम </label><br />
+                        <input type="text" class="form-control form-control-sm" id="ComplainantName" name="ComplainantName" />
+                    </div>
+                </div>
+                 
+                <div class="mb-3 col-md-2" style="margin-top:25px;">
+                    <button class="btn rounded-pill btn-success" type="button" id="btnSearch">
+                        <i class="fas fa-search"></i> खोजे
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <center>
+
+        <div class="main-card mb-3 card">
+            <div class="card-body">
+                <div id="step-1">
+                    <div class="form-row" id="divDetails">
+                        <div class="table-responsive" style="margin-top:15px;">
+                            @if (Model != null)
+                            {
+                                System.Data.DataSet ds = ((System.Data.DataSet)Model);
+                                System.Data.DataTable dt = new System.Data.DataTable();
+
+                                if (ds.Tables.Count > 0 && ds != null)
+                                {
+                                    dt = ds.Tables[0];
+                                }
+                                <table id="scr-vtr-dynamic" class="example table table-hover table-striped table-bordered mb-0" style="width:100%;">
+                                    <thead>
+                                        <tr>
+                                            @foreach (System.Data.DataColumn col in dt.Columns)
+                                            {
+
+                                                <th style="text-align:center;">@Html.Raw(col.ColumnName)</th>
+                                            }
+                                        </tr>
+
+                                    </thead>
+
+                                    <tbody>
+                                        @foreach (System.Data.DataRow row in dt.Rows)
+                                        {
+
+                                            <tr id="lblRowColor">
+
+                                                @foreach (System.Data.DataColumn column in dt.Columns)
+                                                {
+                                                    var cellValue = row[column].ToString();
+                                                    if (column.ColumnName == "कार्रवाई")
+                                                    {
+                                                        <td>
+                                                            @Html.EncodedActionLink("देखें",
+                                                                "DepartmentalComplaintDetails",
+                                                                "ComplaintSE",
+                                                                new { ComplaintNo = cellValue },
+                                                                new { @class = "btn-transition btn btn-outline btn-primary" },
+                                                                "fa fa-eye"
+                                                            )
+                                                        </td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>@Html.Raw(cellValue)</td>
+                                                    }
+                                                }
+
+                                            </tr>
+
+
+                                        }
+
+                                    </tbody>
+                                </table>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </center>
+</div>
+<script>
+    $(document).ready(function () {
+
+        $('#zoneddl,#circleddl,#ddldivision').hide();
+
+        $("#ComplaintRelatedTo").change(function () {
+            var mrk = $(this).val().trim();
+            if (mrk == "HQ") {
+                $('#zoneddl,#circleddl,#ddldivision').hide();
+                $("#ComplaintRelatedZoneId").val('-1').trigger('change');
+                $("#ComplaintRelatedCircleId").val('-1').trigger('change');
+                $("#ComplaintRelatedDivisionId").val('-1').trigger('change');
+            }
+            else if (mrk == "Z") {
+                $('#circleddl,#ddldivision').hide();
+                $('#zoneddl').show();
+                bindZone('ComplaintRelatedZoneId', -1);
+                $("#ComplaintRelatedCircleId").val('-1').trigger('change');
+                $("#ComplaintRelatedDivisionId").val('-1').trigger('change');
+            }
+            else if (mrk == "C") {
+                $('#ddldivision').hide();
+                $('#zoneddl,#circleddl').show();
+                bindZone('ComplaintRelatedZoneId', -1);
+                bindCircle('ComplaintRelatedCircleId', -1, -1);
+                $("#ComplaintRelatedDivisionId").val('-1').trigger('change');
+            }
+            else if (mrk == "D") {
+                $('#zoneddl,#circleddl,#ddldivision').show();
+                bindZone('ComplaintRelatedZoneId', -1);
+                bindCircle('ComplaintRelatedCircleId', -1, -1);
+                bindDivision('ComplaintRelatedDivisionId', -1, -1, -1);
+            }
+            else {
+                $('#zoneddl,#circleddl,#ddldivision').hide();
+            }
+            BindComplaintDesignation('ComplainRelatedDesignationId', -1, mrk);
+
+
+        });
+        $("#ComplaintRelatedZoneId").change(function () {
+            var zone = $(this).val();
+            bindCircle("ComplaintRelatedCircleId", -1, zone);
+        });
+
+        $("#ComplaintRelatedCircleId").change(function () {
+            var selectedCircle = $('#ComplaintRelatedCircleId').val();
+            var zone = $("#ComplaintRelatedZoneId").val();
+            bindDivision("ComplaintRelatedDivisionId", -1, zone, selectedCircle);
+
+        });
+        BindComplaintDesignation('PreviousComplaintDesignationId', -1);
+        function BindComplaintDesignation(ids, defaultSelectionValues, RelatedTo) {
+            // Validate and set default selection values
+            if (['-1', '0', '', null, undefined].includes(defaultSelectionValues)) {
+                defaultSelectionValues = '-1';
+            }
+
+            const idArray = ids.split(',');
+
+            var obj = new Object();
+            obj.Action = "bindCompDesignationsNew";
+            obj.CaseRelatedTo = RelatedTo;
+            $.ajax({
+                type: 'POST',
+                url: '/DropdownBinder/fillDropdown',
+                data: { obj: obj },
+                success: function (Data) {
+                    idArray.forEach(id => {
+                        const ddl = $('#' + id.trim());
+                        ddl.empty(); // Clear the existing options
+
+                        ddl.append($('<option/>', {
+                            value: "-1",
+                            text: "Choose option"
+                        }));
+
+                        Data.forEach(rowData => {
+                            ddl.append($('<option/>', {
+                                value: rowData.id,
+                                text: rowData.value
+                            }));
+                        });
+
+                        if (defaultSelectionValues !== '-1') {
+                            ddl.val(defaultSelectionValues);
+                        }
+                    });
+                },
+                error: function (errorData) {
+                    console.error('Error occurred:', errorData);
+                }
+            });
+        }
+        function BindComplaintRelatedTo(ids, defaultSelectionValues = '-1') {
+            // Ensure defaultSelectionValues is correctly assigned
+            if (['-1', '0', '', null, undefined].includes(defaultSelectionValues)) {
+                defaultSelectionValues = '-1';
+            }
+
+            // Parse the provided `ids` string into an array
+            const idArray = ids.split(',');
+
+            // Object to send with the AJAX request
+            const obj = { Action: "bindDepartmentalRoles" };
+            $.ajax({
+                type: 'POST',
+                url: '/DropdownBinder/fillDropdown',
+                data: obj,
+                success: function (Data) {
+                    idArray.forEach(id => {
+                        const ddl = $('#' + id.trim());
+                        ddl.empty();
+                        ddl.append($('<option/>', {
+                            value: "-1",
+                            text: "Choose option"
+                        }));
+
+                        // Populate dropdown with data
+                        Data.forEach(rowData => {
+                            ddl.append($('<option/>', {
+                                value: rowData.id,
+                                text: rowData.value
+                            }));
+                        });
+
+                        // Set default value if applicable
+                        if (defaultSelectionValues !== '-1') {
+                            ddl.val(defaultSelectionValues);
+                        }
+                    });
+                },
+                error: function (errorData) {
+                    console.error("Error occurred while binding dropdown:", errorData);
+                }
+            });
+        }
+        function bindZone(id, defaultSelectionValues) {
+
+            defaultSelectionValues = typeof defaultSelectionValues !== 'undefined' ? defaultSelectionValues : '';
+            if (defaultSelectionValues == -1 || defaultSelectionValues == 0 || defaultSelectionValues == '-1' || defaultSelectionValues == '') {
+                defaultSelectionValues = '-1';
+            }
+            var obj = new Object();
+            obj.Action = "bindZone";
+
+            $.ajax({
+                type: 'POST',
+                url: '/DropdownBinder/fillDropdown',
+                data: { Action: obj.Action },
+                success: function (Data) {
+                    var ddl = $('#' + id);
+                    ddl.empty();
+                    ddl.append($('<option/>', {
+                        value: "-1",
+                        text: "Choose option "
+                    }));
+
+                    $.each(Data, function (index, rowData) {
+                        ddl.append($('<option/>', {
+                            value: rowData.id,
+                            text: rowData.value
+                        }));
+                    });
+                    ddl.val(defaultSelectionValues);
+                },
+                error: function (errorData) {
+                    console.log(errorData);
+                }
+            });
+
+        }
+        function bindCircle(id, defaultSelectionValues, ZoneId) {
+
+            defaultSelectionValues = typeof defaultSelectionValues !== 'undefined' ? defaultSelectionValues : '';
+            if (defaultSelectionValues == -1 || defaultSelectionValues == 0 || defaultSelectionValues == '-1' || defaultSelectionValues == '') {
+                defaultSelectionValues = '-1';
+            }
+            var obj = new Object();
+            obj.Action = "bindCircle";
+            obj.ZoneId = ZoneId;
+
+            $.ajax({
+                type: 'POST',
+                url: '/DropdownBinder/fillDropdown',
+                data: { Action: obj.Action, ZoneId: obj.ZoneId },
+                success: function (Data) {
+                    var ddl = $('#' + id);
+                    ddl.empty();
+                    ddl.append($('<option/>', {
+                        value: "-1",
+                        text: "Choose option "
+                    }));
+
+                    $.each(Data, function (index, rowData) {
+                        ddl.append($('<option/>', {
+                            value: rowData.id,
+                            text: rowData.value
+                        }));
+                    });
+                    ddl.val(defaultSelectionValues);
+                },
+                error: function (errorData) {
+                    console.log(errorData);
+                }
+            });
+
+        }
+        function bindDivision(id, defaultSelectionValues, ZoneId, CircleId) {
+
+            defaultSelectionValues = typeof defaultSelectionValues !== 'undefined' ? defaultSelectionValues : '';
+            if (defaultSelectionValues == -1 || defaultSelectionValues == 0 || defaultSelectionValues == '-1' || defaultSelectionValues == '') {
+                defaultSelectionValues = '-1';
+            }
+            var obj = new Object();
+            obj.Action = "bindDivision";
+            obj.ZoneId = ZoneId,
+                obj.CircleId = CircleId
+
+            $.ajax({
+                type: 'POST',
+                url: '/DropdownBinder/fillDropdown',
+                data: { Action: obj.Action, ZoneId: obj.ZoneId, CircleId: obj.CircleId },
+                success: function (Data) {
+                    var ddl = $('#' + id);
+                    ddl.empty();
+                    ddl.append($('<option/>', {
+                        value: "-1",
+                        text: "Choose option "
+                    }));
+
+                    $.each(Data, function (index, rowData) {
+                        ddl.append($('<option/>', {
+                            value: rowData.id,
+                            text: rowData.value
+                        }));
+                    });
+                    ddl.val(defaultSelectionValues);
+                },
+                error: function (errorData) {
+                    console.log(errorData);
+                }
+            });
+        }
+        $("#btnSearch").click(function () {
+
+            var Fromdate = $("#Fromdate").val();
+            var todate = $("#todate").val();
+            var PreviousComplaintDesignationId = $("#PreviousComplaintDesignationId").val();
+            var ComplainantName = $("#ComplainantName").val();
+            var Id = '@ViewBag.Id';
+            var formData = {
+                Id:'@ViewBag.Id',
+                Fromdate: Fromdate,
+                todate: todate,
+                PreviousComplaintDesignationId: PreviousComplaintDesignationId,
+                ComplainantName: ComplainantName,
+            };
+
+            $.post("/ComplaintSE/Financial_NonfinancialWiseComplaintList", formData, function (response) {
+
+                var htmlNew = response;
+                $("#divDetails").html($(htmlNew).find("#divDetails").html());
+
+                // Clear and destroy previous DataTable before initializing a new one
+                if ($.fn.DataTable.isDataTable('.example')) {
+                    $('.example').DataTable().clear().destroy();
+                }
+
+                // Initialize the DataTable after replacing the content
+                new DataTable('.example', { // Fixed the selector to match the table
+                    layout: {
+                        topStart: {
+                            buttons: [
+                                'print',
+                                {
+                                    extend: 'excel',
+                                    exportOptions: {
+                                        columns: ':visible'
+                                    }
+                                },
+                                'colvis'
+                            ]
+                        }
+                    }
+                });
+
+            });
+        });
+    });
+</script>
+

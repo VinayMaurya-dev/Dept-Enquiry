@@ -1,0 +1,927 @@
+﻿@model CourtCase.Models.ShowCauseNoticCls
+@{
+    ViewBag.Title = "CauseNoticeListData";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    System.Data.DataSet ds = ((System.Data.DataSet)ViewBag.data);
+    System.Data.DataTable dt = new System.Data.DataTable();
+    System.Data.DataTable ft = new System.Data.DataTable();
+    System.Data.DataTable finalstatus = new System.Data.DataTable();
+
+    if (ds != null && ds.Tables.Count > 0)
+    {
+        dt = ds.Tables[0];
+        ft = ds.Tables[1];
+        finalstatus = ds.Tables[2];
+
+    }
+}
+
+<style>
+    bold {
+        font-weight: bold;
+    }
+
+    .pe-7s-angle-down {
+        font-weight: 800;
+        font-size: 25px;
+    }
+
+
+    .accordion-wrapper {
+        border: none !important;
+    }
+
+    .toast-top-right {
+        top: 12px;
+    }
+</style>
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+<div class="app-main__inner">
+    <div class="app-page-title app-page-title-simple">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div>
+                    <div class="page-title-head center-elem">
+                        <span class="d-inline-block pr-2">
+                            <i class="lnr-apartment opacity-6"></i>
+                        </span>
+                        <span class="d-inline-block">Show Cause Notice Details</span>
+                    </div>
+                    <div class="page-title-subheading opacity-10">
+                        <nav class="" aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <button type="button" onclick="history.back()" value="BACK" class="btn btn-primary mybackbutton"><i class="fa fa-arrow-left" aria-hidden="true"> Back</i></button>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <a href="javascript:void(0)" onclick="window.history.back();">
+                                        कारण बताओ नोटिस सूची
+                                    </a>
+                                </li>
+
+                                <li class="active breadcrumb-item" aria-current="page">
+                                    कारण बताओ नोटिस का विवरण
+                                </li>
+                            </ol>
+                        </nav>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="main-card mb-3 card">
+
+        <div class="card-body">
+            <div class="vertical-without-time vertical-timeline--animate vertical-timeline--one-column" id="divPublicDepartment">
+                <div class="vertical-timeline-item vertical-timeline-element">
+                    <div>
+                        <span class="vertical-timeline-element-icon bounce-in">
+                            <i class="badge badge-dot badge-dot-xl badge-success"> </i>
+                        </span>
+                        <div class="vertical-timeline-element-content bounce-in">
+                            <h4 class="timeline-title">कारण बताओ नोटिस का विवरण</h4>
+                            @Html.HiddenFor(m => m.ShowcauseNumber, new { @class = "form-control", @readonly = "true" })
+                            <div class="form-row">
+                                <div class="col-md-4 mb-3">
+                                    <div class="position-relative form-group">
+                                        <label for="exampleAddress" class="">
+                                            निर्गत करने वाले अधिकारी का नाम
+                                        </label><br />
+                                        @Html.TextBoxFor(m => m.IssuingAuthorityName, new { @class = "form-control", @readonly = "true", @style = "font-size:14px" })
+
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="position-relative form-group">
+                                        <label for="exampleAddress" class="">
+                                            कार्मिक का नाम
+                                        </label><br />
+                                        @Html.TextBoxFor(m => m.ComplainantName, new { @class = "form-control", @readonly = "true" })
+
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3" id="divComplainantName">
+                                    <div class="position-relative form-group">
+                                        <label for="exampleAddress" class=""> वर्तमान कार्यालय</label><br />
+                                        @Html.TextBoxFor(m => m.NoticeRelatedTo, new { @class = "form-control", @readonly = "true" })
+                                    </div>
+
+                                </div>
+
+
+
+                                @if (Model.NoticeRelatedTo == "Zone")
+
+                                {
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">वर्तमान  ज़ोन </label>
+                                            @Html.TextBoxFor(m => m.NoticeRelatedZoneName, new { @class = "form-control", @readonly = "true" })
+
+                                        </div>
+
+                                    </div>
+                                }
+                                else if (Model.NoticeRelatedTo == "Circle")
+                                {
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">वर्तमान  ज़ोन </label>
+                                            @Html.TextBoxFor(m => m.NoticeRelatedZoneName, new { @class = "form-control", @readonly = "true" })
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">वर्तमान  सर्किल </label>
+                                            @Html.TextBoxFor(m => m.NoticeRelatedCircleName, new { @class = "form-control", @readonly = "true" })
+
+
+                                        </div>
+
+                                    </div>
+                                }
+                                else if (Model.NoticeRelatedTo == "Division")
+
+                                {
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">वर्तमान  ज़ोन</label>
+                                            @Html.TextBoxFor(m => m.NoticeRelatedZoneName, new { @class = "form-control", @readonly = "true" })
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">वर्तमान  सर्किल </label>
+                                            @Html.TextBoxFor(m => m.NoticeRelatedCircleName, new { @class = "form-control", @readonly = "true" })
+
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">वर्तमान  डिवीज़न </label>
+                                            @Html.TextBoxFor(m => m.NoticeRelatedDesignationName, new { @class = "form-control", @readonly = "true" })
+
+                                        </div>
+
+                                    </div>
+                                }
+                                <div class="col-md-4 mb-3">
+                                    <div class="position-relative form-group">
+                                        <label for="exampleAddress" class="">वर्तमान पदनाम</label><br />
+                                        @Html.TextBoxFor(m => m.NoticeRelatedDesignationName, new { @class = "form-control", @readonly = "true" })
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="position-relative form-group">
+                                        <label>निर्गत पत्रांक संख्या</label>
+                                        @Html.TextBoxFor(m => m.IssueletterNumber, new { @class = "form-control", @readonly = "true" })
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+                                    <div class="position-relative form-group">
+                                        <label>निर्गत करने की  तिथि</label>
+                                        @Html.TextBoxFor(m => m.IssueletterDate, new { @class = "form-control", @readonly = "true" })
+
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="position-relative form-group">
+                                        <label>जवाब प्रस्तुत करने की अंतिम तिथि</label>
+                                        @Html.TextBoxFor(m => m.LastdateforSubmission, new { @class = "form-control", @readonly = "true" })
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="position-relative form-group">
+                                        <label for="validationCustom05">अपलोड किया गया डॉक्यूमेंट (निर्गत करने वाले अधिकारी का पत्र) &nbsp; </label>
+                                        @if (Model.AttachmentPath != null && Model.AttachmentPath != "")
+                                        {
+                                            <a href="@Model.AttachmentPath.Replace("~","")" target="_blank" class="mb-2 mr-2">  <img src="~/assets/pdf/pdf3.png" style="height:50px;" /></a>
+                                        }
+                                        else
+                                        {
+                                            <a href="javascript:void(0);" target="_blank" class="mb-2 mr-2  disabled">  <img src="~/assets/pdf/pdf3.png" style="height:50px;" /></a>
+                                        }
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 mb-3">
+                                    <div class="position-relative form-group">
+                                        <label for="validationCustomUsername">
+                                            विवरण
+                                        </label>
+                                        @Html.TextAreaFor(m => m.NoticeDetails, new { @class = "form-control", @style = "resize:none;", @rows = "5", @lang = "hi", @readonly = "true" })
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="card-footer d-flex flex-wrap justify-content-between align-items-center px-0 pt-0 pb-3">
+
+            <div class="px-4 pt-3"></div>
+            <div class="px-4 pt-3 d-flex flex-wrap">
+
+                <button type="button" class="btn btn-pill btn-shadow btn-primary m-1" id="reminderbtn">
+                    अनुस्मारक जोड़े
+                </button>
+                <button type="button" class="btn btn-pill btn-shadow btn-info m-1" id="Answerbtn">
+                    जवाब आ गया
+                </button>
+                <button type="button" class="btn btn-pill btn-shadow btn-danger m-1" id="higherofficerbtn">
+                    उच्च अधिकारी को अग्रसारित करे
+                </button>
+                <button type="button" class="btn btn-pill btn-shadow btn-success m-1" id="addFinalStatusShowcausebtn">
+                    अंतिम परिणाम जोड़े
+                </button>
+
+            </div>
+
+        </div>
+    </div>
+    <div class="main-card mb-3 card mb-3" id="reminderdiv">
+        <div class="card-body">
+            <div class="vertical-without-time vertical-timeline--animate vertical-timeline--one-column">
+                <div class="vertical-timeline-item vertical-timeline-element">
+                    <div>
+                        <span class="vertical-timeline-element-icon bounce-in">
+                            <i class="badge badge-dot badge-dot-xl badge-success"> </i>
+                        </span>
+                        <div class="vertical-timeline-element-content bounce-in">
+                            <br />
+                            @using (Html.BeginForm("ShowAnushMarkDetails", "ComplaintSE", FormMethod.Post, new { encType = "multipart/form-data", @onsubmit = "return ValidateAnushMark()" }))
+                            {
+
+                                @Html.HiddenFor(m => m.ShowcauseNumber, new { @class = "form-control", @readonly = "true" })
+                                <div class="form-row ">
+                                    <div class="col-md-12 mb-3">
+                                        <div class="position-relative form-group">
+                                            <input type="hidden" name="Flag" class="form-control" id="Flag" />
+                                            <input type="text" name="ActionName" class="form-control" id="ActionName" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">
+                                                डॉक्यूमेंट अपलोड करें
+                                            </label>
+                                            @Html.TextBoxFor(model => model.AnushMarkAttachment, new { @type = "file", @class = "form-control", @onchange = "return filechange();", @id = "AnushMarkAttachment" })
+                                            <span style="color:red;font-family:Cambria;font-weight:bolder;">केवल PDF फ़ाइल अपलोड करें!</span>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">
+                                                विवरण
+                                            </label>
+                                            @Html.TextAreaFor(m => m.AnushMarkDescription, new { @class = "form-control", @style = "resize:none;", @rows = "8", @lang = "hi", @id = "AnushMarkDescription" })
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="card-footer d-flex flex-wrap justify-content-between align-items-center px-0 pt-0 pb-3">
+                                    <div class="px-4 pt-3">
+
+                                    </div>
+                                    <div class="px-4 pt-3">
+
+                                        <button type="submit" class="btn btn-primary" id="btnSubmit">
+                                            सेव करें
+                                        </button>
+
+                                        <button type="button" class="btn btn-danger" onclick="$('#reminderdiv').hide()">
+                                            बंद करें
+                                        </button>
+                                    </div>
+                                </div>
+
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="main-card mb-3 card mb-3" id="higherofficerdiv">
+        <div class="card-body">
+            <div class="vertical-without-time vertical-timeline--animate vertical-timeline--one-column">
+                <div class="vertical-timeline-item vertical-timeline-element">
+                    <div>
+                        <span class="vertical-timeline-element-icon bounce-in">
+                            <i class="badge badge-dot badge-dot-xl badge-success"> </i>
+                        </span>
+                        <div class="vertical-timeline-element-content bounce-in">
+                            <br />
+                            @using (Html.BeginForm("ShowHigherOfficerDetails", "ComplaintSE", FormMethod.Post, new { encType = "multipart/form-data", @onsubmit = "return ValidateHigherOfficer()" }))
+                            {
+
+                                @Html.HiddenFor(m => m.ShowcauseNumber, new { @class = "form-control", @readonly = "true" })
+                                <div class="form-row ">
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">अधिकारी का पदनाम  </label>
+                                            <select class="dropdown form-control" id="ForwadingHigherOfficerOfficer" name="ShowCauseForwordingOfficer"></select>
+                                        </div> 
+                                    </div>
+                                    <div class="col-md-12 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">
+                                                विवरण
+                                            </label>
+                                            @Html.TextAreaFor(m => m.ShowcauseForwordingDescription, new { @class = "form-control", @style = "resize:none;", @rows = "8", @lang = "hi", @id = "ShowcauseForwordingDescription" })
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="card-footer d-flex flex-wrap justify-content-between align-items-center px-0 pt-0 pb-3">
+                                    <div class="px-4 pt-3">
+
+                                    </div>
+                                    <div class="px-4 pt-3">
+
+                                        <button type="submit" class="btn btn-primary">
+                                            सेव करें
+                                        </button>
+
+                                        <button type="button" class="btn btn-danger" onclick="$('#higherofficerdiv').hide()">
+                                            बंद करें
+                                        </button>
+                                    </div>
+                                </div>
+
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-3" id="FinalStatusShowcausediv">
+        @using (Html.BeginForm("AddFinalStatusShowCause", "ComplaintSE", FormMethod.Post, new { encType = "multipart/form-data", @onsubmit = "return ValidateShowcauseFinalstatus()" }))
+        {
+            @Html.HiddenFor(m => m.ShowcauseNumber);
+
+            <div class="card-body">
+                <div class="form-row ">
+                    <div class="col-md-4 mb-3">
+                        <div class="position-relative form-group">
+                            <label for="validationCustomUsername">
+                                कार्यालय ज्ञाप संख्या
+                            </label>
+                            @Html.TextBoxFor(m => m.FinalOfficeMemorandumNo, new { @class = "form-control", @id = "FinalOfficeMemorandumNo" })
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="position-relative form-group">
+                            <label for="validationCustomUsername">
+                                अंतिम तिथि
+                            </label>
+                            @Html.TextBoxFor(m => m.FinalDate, new { @class = "form-control", @type = "date", @id = "showcasueFinalDate" })
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="position-relative form-group">
+                            <label for="validationCustomUsername">
+                                अपलोड डॉक्यूमेंट
+                            </label>
+                            @Html.TextBoxFor(model => model.FinalAttatchment, new { @type = "file", @class = "form-control", @onchange = "return filechangeFinalStatus();", @id = "ShowCausefinalstatusFinalAttatchment" })
+                            <span style="color:red;font-family:Cambria;font-weight:bolder;">केवल PDF फ़ाइल अपलोड करें!</span>
+
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="position-relative form-group">
+                            <label for="validationCustomUsername">
+                                स्टेटस
+                            </label>
+                            @Html.DropDownList("FinalStatus",
+     new List<SelectListItem>
+     {
+         new SelectListItem { Text = "Close", Value = "Close" }
+     },
+     new { @class = "form-control", id = "FinalStatus1" })
+
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <div class="position-relative form-group">
+                            <label for="validationCustomUsername">
+                                टिप्पणी जोड़ें
+                            </label>
+                            @Html.TextAreaFor(m => m.FinalDescription, new { @class = "form-control", @style = "resize:none;", @rows = "5", @lang = "hi", @id = "ShowCauseFinalDescription" })
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-footer d-flex flex-wrap justify-content-between align-items-center px-0 pt-0 pb-3">
+                    <div class="px-4 pt-3">
+
+                    </div>
+                    <div class="px-4 pt-3">
+
+                        <button type="submit" class="btn btn-primary">
+                            सेव करें
+                        </button>
+
+                        <button type="button" class="btn btn-danger" onclick="$('#FinalStatusShowcausediv').hide()">
+                            बंद करें
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div>
+        @if (dt != null && dt.Rows.Count > 0)
+        {
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+
+                string collapseId = $"collapsefour_{i}";
+                string headingId = $"headingfour_{i}";
+                string dataTarget = $"#{collapseId}";
+                <div class="main-card mb-3 card">
+                    <div class="card-body">
+
+                        <div id="accordion4" class="accordion-wrapper mb-3">
+                            <div class="card mb-3">
+                                <div id="@headingId" class="card-header">
+                                    <button type="button" data-toggle="collapse" data-target="@dataTarget"
+                                            aria-expanded="false" aria-controls="@collapseId"
+                                            class="text-left m-0 p-0 btn btn-link btn-block">
+                                        <h5 class="m-0 p-0">
+                                            दिनांक @dt.Rows[i]["EntryDate"].ToString()<b> को @dt.Rows[i]["ActionName"]</b>
+                                            <i class="float-right pe-7s-angle-down"></i>
+                                        </h5>
+                                    </button>
+                                </div>
+                                <div id="@collapseId" data-parent="#accordion4" aria-labelledby="@headingId">
+                                    <div class="card-body">
+                                        <div class="media">
+                                            <div class="media-body">
+                                                @*<div class="float-right text-muted small">@dt.Rows[i]["RemarkOnDate"].ToString()</div>*@
+                                                <div class="mt-2">
+                                                    <div class="form-row">
+                                                        <div class="col-md-12 mb-3">
+                                                            <div class="position-relative form-group">
+                                                                <label for="validationCustom05">अपलोड किया गया डॉक्यूमेंट </label><br />
+                                                                @if (Model.AttachmentPath != null && Model.AttachmentPath != "")
+                                                                {
+                                                                    <a href="@Model.AttachmentPath.Replace("~","")" target="_blank" class="mb-2 mr-2">  <img src="~/assets/pdf/pdf3.png" style="height:50px;" /></a>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <a href="javascript:void(0);" target="_blank" class="mb-2 mr-2  disabled">  <img src="~/assets/pdf/pdf3.png" style="height:50px;" /></a>
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12 mb-3">
+                                                            <div class="position-relative form-group">
+                                                                <label>टिप्पणी का विवरण</label>
+                                                                <textarea class="form-control" style="resize:none;" rows="8" readonly>@Html.Raw(dt.Rows[i]["AnushMarkDescription"].ToString())</textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+
+    </div>
+
+
+    <div>
+        @if (ft != null && ft.Rows.Count > 0)
+        {
+            for (int i = 0; i < ft.Rows.Count; i++)
+            {
+
+                string collapseId = $"collapsefour_{i}";
+                string headingId = $"headingfour_{i}";
+                string dataTarget = $"#{collapseId}";
+                <div class="main-card mb-3 card">
+                    <div class="card-body">
+
+                        <div id="accordion4" class="accordion-wrapper mb-3">
+                            <div class="card mb-3">
+                                <div id="@headingId" class="card-header">
+                                    <button type="button" data-toggle="collapse" data-target="@dataTarget"
+                                            aria-expanded="false" aria-controls="@collapseId"
+                                            class="text-left m-0 p-0 btn btn-link btn-block">
+                                        <h5 class="m-0 p-0">
+                                            @ft.Rows[i]["ForwordingOfficerBy"] द्वारा <b>@ft.Rows[i]["ForwordingOfficerTo"]</b>  दिनांक @ft.Rows[i]["Entrydate"].ToString() को अग्रसारित किया <i class="float-right pe-7s-angle-down"></i>
+                                        </h5>
+                                    </button>
+                                </div>
+                                <div id="@collapseId" data-parent="#accordion4" aria-labelledby="@headingId">
+                                    <div class="card-body">
+                                        <div class="media">
+                                            <div class="media-body">
+                                                @*<div class="float-right text-muted small">@dt.Rows[i]["RemarkOnDate"].ToString()</div>*@
+                                                <div class="mt-2">
+                                                    <div class="form-row">
+                                                        <div class="col-md-4 mb-3">
+                                                            <div class="position-relative form-group">
+                                                                <label>अधिकारी का पदनाम</label>
+                                                                <input type="text" class="form-control" readonly value="@ft.Rows[i]["ForwordingOfficerTo"].ToString()" />
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12 mb-3">
+                                                            <div class="position-relative form-group">
+                                                                <label>टिप्पणी का विवरण</label>
+                                                                <textarea class="form-control" style="resize:none;" rows="8" readonly>@Html.Raw(ft.Rows[i]["ShowcauseForwordingDescription"].ToString())</textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+
+    </div>
+
+    <div>
+        @if (finalstatus != null && finalstatus.Rows.Count > 0)
+        {
+            for (int i = 0; i < finalstatus.Rows.Count; i++)
+            {
+
+                string collapseId = "collapsesix" + i;
+                string headingId = "headingsix" + i;
+                string dataTarget = "#" + collapseId;
+                <div class="main-card mb-3 card">
+                    <div class="card-body">
+                        <div class="vertical-without-time vertical-timeline--animate vertical-timeline--one-column">
+                            <div class="vertical-timeline-item vertical-timeline-element">
+                                <span class="vertical-timeline-element-icon bounce-in">
+                                    <i class="badge badge-dot badge-dot-xl badge-success"> </i>
+                                </span>
+                                <div class="vertical-timeline-element-content bounce-in">
+                                    <h3 class="timeline-title">अंतिम स्टेटस</h3>
+                                    <br />
+                                    <div id="accordion2" class="accordion-wrapper mb-3">
+
+
+                                        <div class="card mb-3">
+                                            <div id="@headingId" class="card-header">
+                                                <button type="button" data-toggle="collapse" data-target="@dataTarget"
+                                                        aria-expanded="false" aria-controls="@collapseId"
+                                                        class="text-left m-0 p-0 btn btn-link btn-block">
+                                                    <h5 class="m-0 p-0">
+                                                        <b> अंतिम स्टेटस देखे</b>
+                                                        <i class="float-right pe-7s-angle-down"></i>
+                                                    </h5>
+                                                </button>
+                                            </div>
+                                            <div id="@collapseId" data-parent="#accordion2" aria-labelledby="@headingId">
+                                                <div class="card-body">
+                                                    <div class="form-row ">
+                                                        <div class="col-md-4 mb-3">
+                                                            <div class="position-relative form-group">
+                                                                <label for="validationCustomUsername">
+                                                                    कार्यालय ज्ञाप संख्या
+                                                                </label>
+                                                                <input type="text" class="form-control" readonly="readonly" value="@finalstatus.Rows[i]["FinalOfficeMemorandumNo"].ToString()" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4 mb-3">
+                                                            <div class="position-relative form-group">
+                                                                <label for="validationCustomUsername">
+                                                                    अंतिम तिथि
+                                                                </label>
+                                                                <input type="text" class="form-control" readonly="readonly" value="@finalstatus.Rows[i]["FinalDate"].ToString()" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4 mb-3">
+                                                            <div class="position-relative form-group">
+                                                                <label for="validationCustomUsername">
+                                                                    अपलोड किया गया दस्तावेज़
+                                                                </label>
+                                                                <a href="@finalstatus.Rows[i]["FinalAttatchment"].ToString()" target="_blank" class="mb-2 mr-2">
+                                                                    <img src="~/assets/pdf/pdf3.png" style="height:50px;" />
+                                                                </a>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4 mb-3">
+                                                            <div class="position-relative form-group">
+                                                                <label for="validationCustomUsername">
+                                                                    जांच स्थिति
+                                                                </label>
+                                                                <input type="text" class="form-control" readonly="readonly" value="@finalstatus.Rows[i]["FinalStatus"].ToString()" />
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12 mb-3">
+                                                            <div class="position-relative form-group">
+                                                                <label for="validationCustomUsername">
+                                                                    टिप्पणी
+                                                                </label>
+                                                                <textarea class="form-control" style="resize:none;" rows="5" readonly>@finalstatus.Rows[i]["FinalDescription"].ToString()</textarea>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            }
+        }
+
+
+
+    </div>
+</div>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        var msg = '@TempData["msg"]';
+        if (msg == "Update") {
+            toastr.options = {
+                "closeButton": true,
+                "timeout": 1000,
+                "progressBar": true,
+                "positionClass": "toast-top-right"
+            }
+            toastr.success('डेटा सफलतापूर्वक अपडेट हो गया!');
+        }
+        else if (msg == "error") {
+            toastr.options = {
+                "closeButton": true,
+                "timeout": 1000,
+                "progressBar": true,
+                "positionClass": "toast-top-right"
+            }
+            toastr.error('एरर!');
+        }
+        else if (msg == "inserted") {
+            toastr.options = {
+                "closeButton": true,
+                "timeout": 1000,
+                "progressBar": true,
+                "positionClass": "toast-top-right"
+            }
+            toastr.success('डेटा सफलतापूर्वक सेव हो गया!');
+        }
+
+        $('#reminderdiv').hide();
+        $('#higherofficerdiv').hide();
+        $('#FinalStatusShowcausediv').hide();
+        bindDesignationsMarkedOfficer('ForwadingHigherOfficerOfficer', -1, -1);
+        $('#reminderbtn,#Answerbtn').click(function () {
+            const myDiv = document.getElementById('reminderdiv');
+            var currentID = $(this).attr("id");
+            if (myDiv.style.display === 'none') {
+                myDiv.style.display = 'block';
+                $("#ActionName").empty();
+                if (currentID === 'reminderbtn') {
+                    $("#ActionName").val('कारण बताओ नोटिस प्रस्तुत करने हेतु कार्मिक को प्रेषित अनुस्मारक पत्र का विवरण')
+                    $("#Flag").val('1');
+                }
+                else if (currentID === 'Answerbtn') {
+                    $("#ActionName").val('कारण बताओ नोटिस प्रस्तुत करने हेतु कार्मिक द्वारा प्राप्त जवाब का विवरण');
+                    $("#Flag").val('2');
+                }
+                $("#ActionName").prop("readonly", true);
+            } else {
+                myDiv.style.display = 'none';
+            }
+        });
+
+
+        $('#higherofficerbtn').click(function () {
+            const myDiv = document.getElementById('higherofficerdiv');
+
+
+            if (myDiv.style.display === 'none') {
+                myDiv.style.display = 'block';
+            } else {
+                myDiv.style.display = 'none';
+            }
+            $('#reminderdiv').hide();
+        });
+
+        $('#addFinalStatusShowcausebtn').click(function () {
+            const myDiv = document.getElementById('FinalStatusShowcausediv');
+            if (myDiv.style.display === 'none') {
+                myDiv.style.display = 'block';
+            } else {
+                myDiv.style.display = 'none';
+            }
+            $('#reminderdiv').hide();
+            $('#higherofficerdiv').hide();
+        });
+    });
+
+       function bindDesignationsMarkedOfficer(id, defaultSelectionValues, RoleTypeId) {
+
+       defaultSelectionValues = typeof defaultSelectionValues !== 'undefined' ? defaultSelectionValues : '';
+       if (defaultSelectionValues == -1 || defaultSelectionValues == 0 || defaultSelectionValues == '-1' || defaultSelectionValues == '') {
+           defaultSelectionValues = '-1';
+       }
+       var obj = new Object();
+       obj.Action = "bindAlottingDesignationsSELevel";
+       obj.RoleTypeId = RoleTypeId;
+
+
+       $.ajax({
+           type: 'POST',
+           url: '/DropdownBinder/fillDropdown',
+           data: { Action: obj.Action, RoleTypeId: obj.RoleTypeId },
+           success: function (Data) {
+               var ddl = $('#' + id);
+               ddl.empty();
+               ddl.append($('<option/>', {
+                   value: "-1",
+                   text: "Choose option "
+               }));
+
+               $.each(Data, function (index, rowData) {
+                   if (rowData.id != '@Session["UserNumber"].ToString()') {
+                       ddl.append($('<option/>', {
+                           value: rowData.id,
+                           text: rowData.value
+                       }));
+                   }
+
+               });
+               // ddl.val(defaultSelectionValues);
+           },
+           error: function (errorData) {
+               console.log(errorData);
+           }
+       });
+
+}
+</script>
+<script>
+    function showErrorNotification(msg) {
+        toastr.options = {
+            "closeButton": true,
+            "timeout": 1000,
+            "progressBar": true,
+            "positionClass": "toast-top-right"
+        }
+        toastr.error(msg);
+    }
+    function filechange() {
+        var fileInput = $("#AnushMarkAttachment")[0];
+        if (fileInput.files.length > 0) {
+            var file = fileInput.files[0];
+            var allowedFileTypes = ["application/pdf"];
+            if (allowedFileTypes.indexOf(file.type) === -1) {
+                showErrorNotification("Only PDF files are allowed.");
+                fileInput.value = ""; // Clear the file input
+                return false;
+            }
+            var maxSizeInBytes = 5 * 1024 * 1024; // 5 MB limit (adjust as needed)
+            if (file.size > maxSizeInBytes) {
+                showErrorNotification("File size exceeds the allowed limit of 5MB. Please choose a smaller file.");
+                fileInput.value = ""; // Clear the file input
+                return false;
+            }
+        }
+    }
+
+    function filechangeFinalStatus() {
+        var fileInput = $("#ShowCausefinalstatusFinalAttatchment")[0];
+        if (fileInput.files.length > 0) {
+            var file = fileInput.files[0];
+            var allowedFileTypes = ["application/pdf"];
+            if (allowedFileTypes.indexOf(file.type) === -1) {
+                showErrorNotification("Only PDF files are allowed.");
+                fileInput.value = ""; // Clear the file input
+                return false;
+            }
+            var maxSizeInBytes = 5 * 1024 * 1024; // 5 MB limit (adjust as needed)
+            if (file.size > maxSizeInBytes) {
+                showErrorNotification("File size exceeds the allowed limit of 5MB. Please choose a smaller file.");
+                fileInput.value = ""; // Clear the file input
+                return false;
+            }
+        }
+    }
+    function ValidateAnushMark() {
+        var AnushMarkAttachment = $("#AnushMarkAttachment").val().trim();
+        if (AnushMarkAttachment == "") {
+            showErrorNotification("दस्तावेज अपलोड , करें");
+            $("#AnushMarkAttachment").focus();
+            return false;
+        }
+
+
+        var AnushMarkDescription = $("#AnushMarkDescription").val().trim();
+        if (AnushMarkDescription == "") {
+            showErrorNotification("टिप्पणी , करें");
+            $("#AnushMarkDescription").focus();
+            return false;
+        }
+        return true;
+    }
+
+    function ValidateHigherOfficer() {
+        var ForwadingHigherOfficerOfficer = $("#ForwadingHigherOfficerOfficer").val().trim();
+        if (ForwadingHigherOfficerOfficer == "-1") {
+            showErrorNotification("उच्च अधिकारी अधिकारी का पदनाम ,भरे");
+            $("#ForwadingHigherOfficerOfficer").focus();
+            return false;
+        }
+
+
+        var ShowcauseForwordingDescription = $("#ShowcauseForwordingDescription").val().trim();
+        if (ShowcauseForwordingDescription == "") {
+            showErrorNotification("टिप्पणी , करें");
+            $("#ShowcauseForwordingDescription").focus();
+            return false;
+        }
+        return true;
+    }
+
+    function ValidateShowcauseFinalstatus() {
+        var FinalOfficeMemorandumNo = $("#FinalOfficeMemorandumNo").val().trim();
+        if (FinalOfficeMemorandumNo == "") {
+            showErrorNotification("कार्यालय ज्ञाप संख्या ,भरे");
+            $("#FinalOfficeMemorandumNo").focus();
+            return false;
+        }
+        var showcasueFinalDate = $("#showcasueFinalDate").val().trim();
+        if (showcasueFinalDate == "") {
+            showErrorNotification("अंतिम तिथि ,भरे");
+            $("#showcasueFinalDate").focus();
+            return false;
+        }
+
+        var ShowCausefinalstatusFinalAttatchment = $("#ShowCausefinalstatusFinalAttatchment").val().trim();
+        if (ShowCausefinalstatusFinalAttatchment == "") {
+            showErrorNotification("दस्तावेज अपलोड , करें");
+            $("#ShowCausefinalstatusFinalAttatchment").focus();
+            return false;
+        }
+
+        var ShowCauseFinalDescription = $("#ShowCauseFinalDescription").val().trim();
+        if (ShowCauseFinalDescription == "") {
+            showErrorNotification("टिप्पणी , करें");
+            $("#ShowCauseFinalDescription").focus();
+            return false;
+        }
+        return true;
+    }
+</script>
+
+
+

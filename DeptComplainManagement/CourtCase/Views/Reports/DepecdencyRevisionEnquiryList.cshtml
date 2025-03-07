@@ -1,0 +1,115 @@
+﻿@using CourtCase.Filters
+@{
+    ViewBag.Title = "DepecdencyRevisionEnquiryList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="app-main__inner">
+    <div class="app-page-title app-page-title-simple">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div>
+                    <div class="page-title-head center-elem">
+                        <span class="d-inline-block pr-2">
+                            <i class="lnr-apartment opacity-6"></i>
+                        </span>
+                        <span class="d-inline-block">Pending Revision Enquiry List</span>
+                    </div>
+                    <div class="page-title-subheading opacity-10">
+                        <nav class="" aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <button type="button" onclick="history.back()" value="BACK" class="btn btn-primary mybackbutton"><i class="fa fa-arrow-left" aria-hidden="true"> Back</i></button>
+                                </li>
+
+                                <li class="active breadcrumb-item" aria-current="page">
+                                    लम्बित जांच सूची
+                                </li>
+                            </ol>
+                        </nav>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="main-card mb-3 card">
+        <div class="card-body">
+            <div id="step-1">
+                <div class="form-row">
+                    <div class="table-responsive" style="margin-top:15px;">
+                        @if (Model != null)
+                        {
+                            System.Data.DataSet ds = ((System.Data.DataSet)Model);
+                            System.Data.DataTable dt = new System.Data.DataTable();
+
+                            if (ds.Tables.Count > 0 && ds != null)
+                            {
+                                dt = ds.Tables[0];
+                            }
+                            <table id="scr-vtr-dynamic" class="example table table-hover table-striped table-bordered mb-0" style="width:100%;">
+                                <thead>
+                                    <tr>
+                                        @foreach (System.Data.DataColumn col in dt.Columns)
+                                        {
+
+                                            <th>@Html.Raw(col.ColumnName)</th>
+                                        }
+                                    </tr>
+
+                                </thead>
+
+                                <tbody>
+                                    @foreach (System.Data.DataRow row in dt.Rows)
+                                    {
+
+                                        <tr id="lblRowColor">
+
+                                            @foreach (System.Data.DataColumn column in dt.Columns)
+                                            {
+                                                var cellValue = row[column].ToString();
+                                                if (column.ColumnName == "कार्रवाई")
+                                                {
+                                                    <td>
+                                                        @Html.EncodedActionLink(
+                                                            "देखें",
+                                                            "DepartmentalComplaintDetails",
+                                                            "Reports",
+                                                            new { ComplaintNo = cellValue },
+                                                            new { @class = "btn-transition btn btn-outline btn-gradient-danger" },
+                                                            "fa fa-eye"
+                                                        )
+                                                    </td>
+                                                }
+                                                else if (column.ColumnName == "स्थिति")
+                                                {
+                                                    <td>
+                                                        <span class="badge badge-danger">
+                                                            @Html.Raw(cellValue)
+                                                        </span>
+                                                    </td>
+                                                }
+
+                                                else
+                                                {
+                                                    <td>@Html.Raw(cellValue)</td>
+                                                }
+                                            }
+
+                                        </tr>
+
+
+                                    }
+
+                                </tbody>
+                            </table>
+                        }
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+

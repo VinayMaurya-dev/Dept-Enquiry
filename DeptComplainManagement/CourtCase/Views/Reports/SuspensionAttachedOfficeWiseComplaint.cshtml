@@ -1,0 +1,119 @@
+﻿@using CourtCase.Filters
+@{
+    ViewBag.Title = "SuspensionAttachedOfficeWiseComplaint";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="app-main__inner">
+    <div class="app-page-title app-page-title-simple">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div>
+                    <div class="page-title-head center-elem">
+                        <span class="d-inline-block pr-2">
+                            <i class="lnr-apartment opacity-6"></i>
+                        </span>
+                        <span class="d-inline-block">कर्मचारी संबद्ध कार्यालय के अनुसार निलंबित शिकायत की संख्या</span>
+                    </div>
+                    <div class="page-title-subheading opacity-10">
+                        <nav class="" aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <button type="button" onclick="history.back()" value="BACK" class="btn btn-primary mybackbutton"><i class="fa fa-arrow-left" aria-hidden="true"> Back</i></button>
+                                </li>
+
+                                <li class="active breadcrumb-item" aria-current="page">
+                                    शिकायत की संख्या
+                                </li>
+                            </ol>
+                        </nav>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <center>
+
+        <div class="main-card mb-3 card">
+            <div class="card-body">
+                <div id="step-1">
+                    <div class="form-row" id="divDetails">
+                        <div class="table-responsive" style="margin-top:15px;">
+                            @if (Model != null)
+                            {
+                                System.Data.DataSet ds = ((System.Data.DataSet)Model);
+                                System.Data.DataTable dt = new System.Data.DataTable();
+
+                                if (ds.Tables.Count > 0 && ds != null)
+                                {
+                                    dt = ds.Tables[0];
+                                }
+                                <table id="scr-vtr-dynamic" class="example table table-hover table-striped table-bordered mb-0" style="width:100%;">
+                                    <thead>
+                                        <tr>
+                                            @foreach (System.Data.DataColumn col in dt.Columns)
+                                            {
+
+                                                if (col.ColumnName != "RoleTypeId")
+                                                {
+                                                    <th style="text-align:center;">@Html.Raw(col.ColumnName)</th>
+                                                }
+                                            }
+                                        </tr>
+
+                                    </thead>
+
+                                    <tbody>
+                                        @foreach (System.Data.DataRow row in dt.Rows)
+                                        {
+
+                                            <tr id="lblRowColor">
+                                                @foreach (System.Data.DataColumn column in dt.Columns)
+                                                {
+                                                    var cellValue = row[column].ToString();
+
+                                                    if (column.ColumnName == "RoleTypeId")
+                                                    {
+                                                        continue;
+                                                    }
+
+                                                    if (column.ColumnName == "शिकायत की संख्या")
+                                                    {
+                                                        var RoleTypeId = row["RoleTypeId"].ToString();
+
+                                                <td style="text-align:center;">
+                                                    @Html.EncodedActionLink(
+                                                    cellValue,
+                                                    "SuspensionAttachedOfficeWiseComplaintList",
+                                                    "Reports",
+                                                    new { RoleId = RoleTypeId },
+                                                    new { @class = "btn-transition btn btn-outline-info" },
+                                                    ""
+                                                    )
+                                                </td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td style="text-align:center;">@Html.Raw(cellValue)</td>
+                                                    }
+                                                }
+                                            </tr>
+
+
+                                        }
+
+                                    </tbody>
+                                </table>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </center>
+</div>
+

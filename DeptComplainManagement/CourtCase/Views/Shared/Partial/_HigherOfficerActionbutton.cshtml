@@ -1,0 +1,44 @@
+﻿@if (Model.ComplainCurrentStatus == Session["UserNumber"]?.ToString())
+{
+    var allowedHearingUserNumbers = new[] { "10011", "10017", "10014", "10016", "10018", "10020" };
+    var allowedUserNumbers = new[] { "10011" };
+
+    if (allowedHearingUserNumbers.Contains(Session["UserNumber"].ToString()))
+    {
+        if (Model.IsHearingAdded == false)
+        {
+            <button type="button" class="btn btn-pill btn-shadow btn-warning addHearing" id="hearingrepresentationbtn">
+                सुनवाई हेतु प्रस्तुत करे
+            </button>
+        }
+        if (Model.HearingCount < 2 && Model.IsHearingAdded == true && Model.IsHearingRepresentationAdded == false)
+        {
+            <button type="button" class="btn btn-pill btn-shadow btn-warning addHearing" id="hearingreminderbtn">
+                सुनवाई अनुस्मारक प्रस्तुत करे
+            </button>
+        }
+
+        if (Model.IsHearingAdded == true && Model.IsHearingRepresentationAdded == false)
+        {
+            <button type="button" class="btn btn-pill btn-shadow btn-warning addHearing" id="hearingreceiptbtn">
+                सुनवाई /अभ्यावेदन प्रस्तुत करे
+            </button>
+        }
+    }
+    if (allowedUserNumbers.Contains(Session["UserNumber"].ToString()))
+    {
+        <button type="button" class="btn btn-pill btn-shadow btn-primary" id="addforwardingofficerObjection">
+            आपत्ति सहित अधिकारी को अग्रेषित करे
+        </button>
+
+        <button type="button" class="btn btn-pill btn-shadow btn-primary" id="addforwardingofficerDecision">
+            निर्णय सहित अधिकारी को अग्रेषित करे
+        </button>
+    }
+    else
+    {
+        <button type="button" class="btn btn-pill btn-shadow btn-primary" id="addforwardingofficer">
+            उच्च अधिकारी को अग्रेषित करे
+        </button>
+    }
+}

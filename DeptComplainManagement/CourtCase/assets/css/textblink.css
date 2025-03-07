@@ -1,0 +1,59 @@
+﻿#loading-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5000;
+    background: rgba(0, 0, 0, 0.95);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    #loading-wrapper .spinner-border {
+        width: 5rem;
+        height: 5rem;
+        color: #225de4;
+    }
+
+.spinner-border {
+    display: inline-block;
+    width: 2rem;
+    height: 2rem;
+    vertical-align: text-bottom;
+    border: .25em solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    -webkit-animation: spinner-border .75s linear infinite;
+    animation: spinner-border .75s linear infinite;
+}
+.blink {
+    animation: blinker 1.5s linear infinite;
+    color: red;
+    font-size: 1.2em;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+@keyframes blinker {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.2;
+        transform: scale(1.1);
+    }
+}
+
+/* Optional: Stop blinking on hover */
+.blink:hover {
+    animation: none;
+    color: darkred;
+}
+input[type='checkbox'] {
+    transform: scale(1.5);
+    margin: 10px;
+}

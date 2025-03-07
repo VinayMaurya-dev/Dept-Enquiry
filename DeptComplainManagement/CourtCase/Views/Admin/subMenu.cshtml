@@ -1,0 +1,225 @@
+﻿@model CourtCase.Models.MenuViewModel
+@{
+    ViewBag.Title = "subMenu";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+} 
+<div class="app-main__inner">
+    <div class="app-page-title app-page-title-simple">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div>
+                    <div class="page-title-head center-elem">
+                        <span class="d-inline-block pr-2">
+                            <i class="lnr-apartment opacity-6"></i>
+                        </span>
+                        <span class="d-inline-block">Create Sub Menu </span>
+                    </div>
+                    <div class="page-title-subheading opacity-10">
+                        <nav class="" aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <button type="button" onclick="history.back()" value="BACK" class="btn btn-primary mybackbutton"><i class="fa fa-arrow-left" aria-hidden="true"> Back</i></button>
+                                </li>
+
+                                <li class="active breadcrumb-item" aria-current="page">
+                                    Sub Menu
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="tab-content">
+        <div class="main-card mb-3 card">
+            <div class="card-body">
+                <div class="form-row">
+                    @Html.HiddenFor(m => m.SubMenuId, new { @class = "form-control" })
+                    <div class="col-md-3 mb-2">
+                        <label for="">Menu Name</label>
+                        <div class="input-group">
+                            <select class="form-control" id="ddlMainMenu">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <label for="">Sub Menu Name</label>
+                        <div class="input-group">
+                            @Html.TextBoxFor(m => m.SubMenuName, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <label for="">Controller Name</label>
+                        <div class="input-group">
+                            @Html.TextBoxFor(m => m.SubController, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <label for="">Action Name</label>
+                        <div class="input-group">
+                            @Html.TextBoxFor(m => m.SubAction, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <label for="">Menu URL</label>
+                        <div class="input-group">
+                            @Html.TextBoxFor(m => m.SubURL, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-3 mt-2">
+                        <div class=" form-group" style="margin-top:22px!important">
+                            <input type="submit" id="btnSubmit" value="Save" class="btn btn-info">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
+            <div class="card order-card" style="margin:-18px;padding:10px;">
+                <div class="card-block">
+                    <table style="width: 100%;" id="scr-vtr-dynamic" class="example">
+                        <thead>
+                            <tr>
+                                <th>Sr No</th>
+                                <th>Menu Name</th> 
+                                <th>Sub Menu Name</th>
+                                <th>Controller Name</th>
+                                <th>Action Name</th>
+                                <th>Menu URL</th>
+                                <th>Update</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.Table != null)
+                            {
+                                int i = 0;
+                                foreach (System.Data.DataRow data in Model.Table.Rows)
+                                {
+                                    i++;
+                                    <tr>
+                                        <td>@i</td>
+                                        <td>@data["MenuName"]</td> 
+                                        <td>@data["SubMenuName"]</td>
+                                        <td>@data["ControllerName"]</td>
+                                        <td>@data["ActionName"]</td>
+                                        <td>@data["URL"]</td>
+
+                                        <td>
+                                            <a href="/Admin/subMenu?SubMenuId=@data["SubMenuId"]" class="btn btn-info">Edit</a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        BindMainMenu("ddlMainMenu","-1");
+    });
+    function BindMainMenu(id, defaultSelectionValues) {
+
+        defaultSelectionValues = typeof defaultSelectionValues !== 'undefined' ? defaultSelectionValues : '';
+        if (defaultSelectionValues == -1 || defaultSelectionValues == 0 || defaultSelectionValues == '-1' || defaultSelectionValues == '') {
+            defaultSelectionValues = '-1';
+        }
+        var obj = new Object();
+        obj.Action = "ddlMainMenu";  
+        $.ajax({
+            type: 'POST',
+            url: '/DropdownBinder/fillDropdown',
+            data: { Action: obj.Action},
+            success: function (Data) {
+                var ddl = $('#' + id);
+                ddl.empty();
+                ddl.append($('<option/>', {
+                    value: "-1",
+                    text: "Choose option "
+                }));
+
+                $.each(Data, function (index, rowData) {
+                    ddl.append($('<option/>', {
+                        value: rowData.id,
+                        text: rowData.value
+                    }));
+                });
+                // ddl.val(defaultSelectionValues);
+            },
+            error: function (errorData) {
+                console.log(errorData);
+            }
+        });
+
+    }
+</script>
+<script>
+
+    $(document).ready(function () {
+        $("#btnSubmit").click(function () {
+            var MainMenuId =   $("#ddlMainMenu").val().trim();
+            var SubMenuId =     $("#SubMenuId").val().trim();
+            var SubMenuName =   $("#SubMenuName").val().trim();
+            var SubController = $("#SubController").val().trim();
+            var SubAction =     $("#SubAction").val().trim();
+            var SubURL =       $("#SubURL").val().trim();  
+            if (MainMenuId == "-1") {
+                GetMsg("Select Menu Name !");
+                return false;
+            }
+            if (SubMenuName == "") {
+                GetMsg("Enter Sub Menu Name !");
+                return false;
+            }
+            if (SubController == "") {
+                GetMsg("Enter Controller Name !");
+                return false;
+            }
+            if (SubAction == "") {
+                GetMsg("Enter Action Name !");
+                return false;
+            }
+            if (SubURL == "") {
+                GetMsg("Enter URL !");
+                return false;
+            } 
+            $.post("/Admin/SubMenuMasterUpdate",
+                {
+                    MainMenuId: MainMenuId,
+                    SubMenuId: SubMenuId,
+                    SubMenuName: SubMenuName,
+                    SubController: SubController,
+                    SubAction: SubAction,
+                    SubURL: SubURL 
+                },
+                function (response) {
+                    if (response.SR != "0") {
+                        ClearAll();
+                        GetSuccessMsg(response.Msg);
+                        setInterval(function () {
+                            location.reload();
+                        }, 3000);
+                    }
+                    else {
+                        GetSuccessMsg(response.Msg);
+                    }
+                }
+            );
+
+        });
+    });
+    function ClearAll() {
+        $("#ddlMainMenu").val('-1').trigger('change');
+        $("#SubMenuName").val('');
+        $("#SubController").val('');
+        $("#SubAction").val('');
+        $("#SubURL").val(''); 
+    }
+</script>
+

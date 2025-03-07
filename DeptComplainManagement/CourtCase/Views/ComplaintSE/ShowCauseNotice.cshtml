@@ -1,0 +1,609 @@
+﻿@model CourtCase.Models.ShowCauseNoticCls
+@{
+    ViewBag.Title = "ShowCauseNotice";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .toast-top-right {
+        top: 12px;
+    }
+</style>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+<div class="app-main__inner">
+    <div class="app-page-title app-page-title-simple">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div>
+                    <div class="page-title-head center-elem">
+                        <span class="d-inline-block pr-2">
+                            <i class="lnr-apartment opacity-6"></i>
+                        </span>
+                        <span class="d-inline-block">Show Cause Notice</span>
+                    </div>
+                    <div class="page-title-subheading opacity-10">
+                        <nav class="" aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <button type="button" onclick="history.back()" value="BACK" class="btn btn-primary mybackbutton"><i class="fa fa-arrow-left" aria-hidden="true"> Back</i></button>
+                                </li>
+
+                                <li class="active breadcrumb-item" aria-current="page">
+                                    कारण बताओ नोटिस का विवरण
+                                </li>
+                            </ol>
+                        </nav>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="main-card mb-3 card">
+        <div class="card-body">
+            @using (Html.BeginForm("ShowCauseNotice", "ComplaintSE", FormMethod.Post, new { encType = "multipart/form-data" }))
+            {
+                <div class="vertical-without-time vertical-timeline--animate vertical-timeline--one-column">
+                    <div class="vertical-timeline-item vertical-timeline-element">
+                        <div>
+                            <span class="vertical-timeline-element-icon bounce-in">
+                                <i class="badge badge-dot badge-dot-xl badge-success"> </i>
+                            </span>
+                            <div class="float-right text-muted small"><span style="color:red;" class="blink"><i class="fa fa-warning"></i>All fields Mandatory</span></div>
+                            <div class="vertical-timeline-element-content bounce-in">
+                                <h3 class="timeline-title">कारण बताओ नोटिस का विवरण</h3>
+
+                                <br />
+
+                                <div class="form-row">
+
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="exampleAddress" class="">
+                                                निर्गत करने वाले अधिकारी का नाम
+                                            </label><br />
+
+                                            <select class="form-control" id="IssuingAuthorityName" name="IssuingAuthorityName">
+                                                <option value="-1">Choose Option</option>
+                                                <option value="Managing Director,  U.P. Jal Nigam (Rural)">Managing Director,  U.P. Jal Nigam (Rural)</option>
+                                                <option value="Finance Director, U.P. Jal Nigam (Rural)">Finance Director, U.P. Jal Nigam (Rural)</option>
+                                                <option value="Chief Engineer(अ-2-1)">Chief Engineer(अ-2-1)</option>
+                                                <option value="Chief Engineer(अ-2-2)">Chief Engineer(अ-2-2)</option>
+                                                <option value="Chief Engineer(अ-3)">Chief Engineer(अ-3)</option>
+                                                <option value="Chief Engineer(अ-4)">Chief Engineer(अ-4)</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="exampleAddress" class="">कार्मिक का नाम @*जिसके विरुद्ध कारण बताओ नोटिस निर्गत किया जा रहा है*@</label><br />
+                                            @Html.TextBoxFor(m => m.ComplainantName, new { @class = "form-control", @lang = "hii" })
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="exampleAddress" class="">वर्तमान कार्यालय </label>
+                                            <select class="form-control" id="ComplaintRelatedTo" name="NoticeRelatedTo"></select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 mb-3" id="zoneddl">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">वर्तमान ज़ोन </label>
+
+                                            <select class="form-control zone" id="ComplaintRelatedZoneId" name="NoticeRelatedZoneId"></select>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-4 mb-3" id="circleddl">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">वर्तमान सर्किल </label>
+                                            <select class="form-control circle" id="ComplaintRelatedCircleId" name="NoticeRelatedCircleId"></select>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-4 mb-3" id="ddldivision">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">वर्तमान डिवीज़न </label>
+                                            <select class="form-control" id="ComplaintRelatedDivisionId" name="NoticeRelatedDivisionId"></select>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="exampleAddress" class="">वर्तमान पदनाम</label><br />
+                                            <select class="form-control" id="ComplainRelatedDesignationId" name="NoticeRelatedDesignationId"></select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="exampleAddress" class="">निर्गत पत्रांक संख्या</label>
+                                            @Html.TextBoxFor(m => m.IssueletterNumber, new { @class = "form-control", @id = "OfficeMemorandumNumber" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">निर्गत करने की  तिथि</label>
+                                            @Html.TextBoxFor(m => m.IssueletterDate, new { @class = "form-control", @data_toggle = "datepicker", @placeholder = "MM/DD/YYYY", @id = "OfficeMemorandumDate", @onchange = "addDaysToDate(this.value)" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">जवाब प्रस्तुत करने की अंतिम तिथि</label>
+                                            @Html.TextBoxFor(m => m.LastdateforSubmission, new { @class = "form-control", @data_toggle = "datepicker", @placeholder = "MM/DD/YYYY", @id = "finalOfficeMemorandumDate", @onchange = "addDaysToDate(this.value)" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustom05">डॉक्यूमेंट अपलोड(निर्गत करने वाले अधिकारी का पत्र)</label>
+
+                                            @Html.TextBoxFor(m => m.Attachment, new { @class = "form-control Attachment", @type = "file", @id = "Attachment", @onchange = "return filechange();" })<br />
+                                            <span style="color:red;font-family:Cambria;font-weight:bolder;">केवल PDF फ़ाइल अपलोड करें!</span>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-12 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">
+                                                नोटिस का विवरण
+                                            </label>
+
+                                            @Html.TextAreaFor(m => m.NoticeDetails, new { @class = "form-control", @onkeypress = "return /[a-z0-9,./ ]/i.test(event.key)", @style = "resize:none;", @rows = "5",@id= "ComplaintDescription" })
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-left">
+                                    <button class="btn-shadow btn-pill btn-wide btn btn-primary" id="btnSubmit">सेव करें</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                   
+                    
+            }
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript"> 
+    $(document).ready(function () { 
+        $('#zoneddl,#circleddl,#ddldivision').hide();
+        BindComplaintRelatedTo('ComplaintRelatedTo', -1);
+        BindComplaintDesignation('ComplainRelatedDesignationId,PreviousComplaintDesignationId', -1);
+        var msg = '@TempData["msg"]';
+        if (msg == "inserted") {
+            toastr.options = {
+                "closeButton": true,
+                "timeout": 1000,
+                "progressBar": true,
+                "positionClass": "toast-top-right"
+            }
+            toastr.success('डेटा सफलतापूर्वक सेव हो गया!');
+        }
+        else if (msg == "error") {
+            toastr.options = {
+                "closeButton": true,
+                "timeout": 1000,
+                "progressBar": true,
+                "positionClass": "toast-top-right"
+            }
+            toastr.error('एरर!');
+        }
+        else if (msg == "uploadeeror") {
+            toastr.options = {
+                "closeButton": true,
+                "timeout": 1000,
+                "progressBar": true,
+                "positionClass": "toast-top-right"
+            }
+            toastr.error('फ़ाइल अपलोड करते समय एरर!');
+        }
+        bindZone('ComplaintRelatedZoneId', -1);
+        bindCircle('ComplaintRelatedCircleId', -1, -1);
+        bindDivision('ComplaintRelatedDivisionId', -1, -1, -1);
+    });
+
+    $("#ComplaintRelatedTo").change(function () {
+        var mrk = $(this).val().trim();
+        if (mrk == "HQ") {
+            $('#zoneddl,#circleddl,#ddldivision').hide();
+            $("#ComplaintRelatedZoneId").val('-1').trigger('change');
+            $("#ComplaintRelatedCircleId").val('-1').trigger('change');
+            $("#ComplaintRelatedDivisionId").val('-1').trigger('change');
+        }
+        else if (mrk == "Z") {
+            $('#circleddl,#ddldivision').hide();
+            $('#zoneddl').show();
+            bindZone('ComplaintRelatedZoneId', -1);
+            $("#ComplaintRelatedCircleId").val('-1').trigger('change');
+            $("#ComplaintRelatedDivisionId").val('-1').trigger('change');
+        }
+        else if (mrk == "C") {
+            $('#ddldivision').hide();
+            $('#zoneddl,#circleddl').show();
+            bindZone('ComplaintRelatedZoneId', -1);
+            bindCircle('ComplaintRelatedCircleId', -1, -1);
+            $("#ComplaintRelatedDivisionId").val('-1').trigger('change');
+        }
+        else if (mrk == "D") {
+            $('#zoneddl,#circleddl,#ddldivision').show();
+            bindZone('ComplaintRelatedZoneId', -1);
+            bindCircle('ComplaintRelatedCircleId', -1, -1);
+            bindDivision('ComplaintRelatedDivisionId', -1, -1, -1);
+        }
+        else {
+            $('#zoneddl,#circleddl,#ddldivision').hide();
+        } 
+        BindComplaintDesignation('ComplainRelatedDesignationId', -1, mrk);
+         
+    });
+    $("#ComplaintRelatedZoneId").change(function () {
+        var zone = $(this).val();
+        bindCircle("ComplaintRelatedCircleId", -1, zone);
+    });
+
+    $("#ComplaintRelatedCircleId").change(function () {
+        var selectedCircle = $('#ComplaintRelatedCircleId').val();
+        var zone = $("#ComplaintRelatedZoneId").val();
+        bindDivision("ComplaintRelatedDivisionId", -1, zone, selectedCircle);
+
+    });
+    $('#btnSubmit').click(function () {
+
+        if (!Validate()) {
+            return false;
+        }
+        else {
+            $('Form').submit();
+        }
+    })
+
+    function filechange() {
+        var fileInput = $("#Attachment")[0];
+        if (fileInput.files.length > 0) {
+            var file = fileInput.files[0];
+            var allowedFileTypes = ["application/pdf"];
+            if (allowedFileTypes.indexOf(file.type) === -1) {
+                showErrorNotification("कृपया केवल PDF फ़ाइल अपलोड करें!.");
+                fileInput.value = ""; // Clear the file input
+                return false;
+            }
+            var maxSizeInBytes = 5 * 1024 * 1024; // 5 MB limit (adjust as needed)
+            if (file.size > maxSizeInBytes) {
+                showErrorNotification("फ़ाइल का Size 5 MB की स्वीकृत सीमा से अधिक है। कृपया एक छोटी फ़ाइल चुनें.");
+                fileInput.value = ""; // Clear the file input
+                return false;
+            }
+        }
+    }
+   function Validate() {
+       var IssuingAuthorityName = $("#IssuingAuthorityName").val();
+       if (IssuingAuthorityName == "-1") {
+           showErrorNotification(" निर्गत करने वाले अधिकारी का नाम , भरे");
+           $("#IssuingAuthorityName").focus();
+            return false;
+        }
+
+        
+
+        var ComplainantName = $("#ComplainantName").val();
+        if (ComplainantName == "") {
+            showErrorNotification("कार्मिक का नाम (जिसके विरुद्ध कारण बताओ नोटिस निर्गत किया जा रहा है)");
+            $("#ComplainantName").focus();
+            return false;
+        }
+
+        var ComplaintRelatedTo = $("#ComplaintRelatedTo").val().trim();
+        if (ComplaintRelatedTo == "-1") {
+            showErrorNotification("वर्तमान कार्यरत कार्यालय , चुनें");
+            $("#ComplaintRelatedTo").focus();
+            return false;
+        }
+        if (ComplaintRelatedTo == "Z") {
+            var ComplaintRelatedZoneId = $("#ComplaintRelatedZoneId").val();
+            if (ComplaintRelatedZoneId == "-1") {
+                showErrorNotification("वर्तमान ज़ोन , चुनें");
+                $("#ComplaintRelatedZoneId").focus();
+                return false;
+            }
+        }
+        if (ComplaintRelatedTo == "C") {
+            var ComplaintRelatedZoneId = $("#ComplaintRelatedZoneId").val();
+            if (ComplaintRelatedZoneId == "-1") {
+                showErrorNotification("वर्तमान ज़ोन , चुनें");
+                $("#ComplaintRelatedZoneId").focus();
+                return false;
+            }
+            var ComplaintRelatedCircleId = $("#ComplaintRelatedCircleId").val();
+            if (ComplaintRelatedCircleId == "-1") {
+                showErrorNotification("वर्तमान सर्किल , चुनें");
+                $("#ComplaintRelatedCircleId").focus();
+                return false;
+            }
+        }
+        if (ComplaintRelatedTo == "D") {
+            var ComplaintRelatedZoneId = $("#ComplaintRelatedZoneId").val();
+            if (ComplaintRelatedZoneId == "-1") {
+                showErrorNotification("वर्तमान ज़ोन , चुनें");
+                $("#ComplaintRelatedZoneId").focus();
+                return false;
+            }
+            var ComplaintRelatedCircleId = $("#ComplaintRelatedCircleId").val();
+            if (ComplaintRelatedCircleId == "-1") {
+                showErrorNotification("वर्तमान सर्किल , चुनें");
+                $("#ComplaintRelatedCircleId").focus();
+                return false;
+            }
+            var ComplaintRelatedDivisionId = $("#ComplaintRelatedDivisionId").val();
+            if (ComplaintRelatedDivisionId == "-1") {
+                showErrorNotification("वर्तमान डिवीज़न , चुनें");
+                $("#ComplaintRelatedDivisionId").focus();
+                return false;
+            }
+        }
+
+        var ComplainRelatedDesignationId = $("#ComplainRelatedDesignationId").val();
+        if (ComplainRelatedDesignationId == "-1") {
+            showErrorNotification("वर्तमान पदनाम , चुनें)");
+            $("#ComplainRelatedDesignationId").focus();
+            return false;
+        }
+        var OfficeMemorandumNumber = $("#OfficeMemorandumNumber").val().trim();
+        if (OfficeMemorandumNumber == "") {
+            showErrorNotification("निर्गत पत्रांक संख्या, डालें)");
+            $("#OfficeMemorandumNumber").focus();
+            return false;
+        }
+         
+        var OfficeMemorandumDate = $("#OfficeMemorandumDate").val();
+        if (OfficeMemorandumDate == "") {
+            showErrorNotification("निर्गत करने की  तिथि, डालें)");
+            $("#OfficeMemorandumDate").focus();
+            return false;
+       } 
+       var finalOfficeMemorandumDate = $("#finalOfficeMemorandumDate").val();
+       if (finalOfficeMemorandumDate == "") {
+           showErrorNotification("जवाब प्रस्तुत करने की अंतिम तिथि, डालें)");
+           $("#finalOfficeMemorandumDate").focus();
+           return false;
+       } 
+
+        var Attachment = $("#Attachment").val();
+        if (Attachment == "") {
+            showErrorNotification("डॉक्यूमेंट अपलोड (नियुक्ति अधिकारी का पत्र)");
+            $("#Attachment").focus();
+            return false;
+        }
+          
+        var ComplaintDescription = $("#ComplaintDescription").val();
+        if (ComplaintDescription == "") {
+            showErrorNotification(" नोटिस का विवरण , डालें");
+            $("#ComplaintDescription").focus();
+            return false;
+        } 
+         
+        return true;
+    }
+    function showErrorNotification(msg) {
+        toastr.options = {
+            "closeButton": true,
+            "timeout": 1000,
+            "progressBar": true,
+            "positionClass": "toast-top-right"
+        }
+        toastr.error(msg);
+    }
+
+    function BindComplaintRelatedTo(ids, defaultSelectionValues = '-1') {
+        // Ensure defaultSelectionValues is correctly assigned
+        if (['-1', '0', '', null, undefined].includes(defaultSelectionValues)) {
+            defaultSelectionValues = '-1';
+        }
+
+        // Parse the provided `ids` string into an array
+        const idArray = ids.split(',');
+
+        // Object to send with the AJAX request
+        const obj = { Action: "bindDepartmentalRoles" }; 
+        $.ajax({
+            type: 'POST',
+            url: '/DropdownBinder/fillDropdown',
+            data: obj,
+            success: function (Data) {
+                idArray.forEach(id => {
+                    const ddl = $('#' + id.trim());
+                    ddl.empty();
+                    ddl.append($('<option/>', {
+                        value: "-1",
+                        text: "Choose option"
+                    }));
+
+                    // Populate dropdown with data
+                    Data.forEach(rowData => {
+                        ddl.append($('<option/>', {
+                            value: rowData.id,
+                            text: rowData.value
+                        }));
+                    });
+
+                    // Set default value if applicable
+                    if (defaultSelectionValues !== '-1') {
+                        ddl.val(defaultSelectionValues);
+                    }
+                });
+            },
+            error: function (errorData) {
+                console.error("Error occurred while binding dropdown:", errorData);
+            }
+        });
+    }
+
+
+    function BindComplaintDesignation(ids, defaultSelectionValues, RelatedTo) {
+        // Validate and set default selection values
+        if (['-1', '0', '', null, undefined].includes(defaultSelectionValues)) {
+            defaultSelectionValues = '-1';
+        }
+         
+        const idArray = ids.split(',');
+         
+        var obj = new Object();
+        obj.Action = "bindCompDesignationsNew"; 
+        obj.CaseRelatedTo = RelatedTo; 
+        $.ajax({
+            type: 'POST',
+            url: '/DropdownBinder/fillDropdown',
+            data: { obj: obj },
+            success: function (Data) {
+                idArray.forEach(id => {
+                    const ddl = $('#' + id.trim());
+                    ddl.empty(); // Clear the existing options
+
+                    ddl.append($('<option/>', {
+                        value: "-1",
+                        text: "Choose option"
+                    }));
+
+                    Data.forEach(rowData => {
+                        ddl.append($('<option/>', {
+                            value: rowData.id,
+                            text: rowData.value
+                        }));
+                    });
+
+                    if (defaultSelectionValues !== '-1') {
+                        ddl.val(defaultSelectionValues);
+                    }
+                });
+            },
+            error: function (errorData) {
+                console.error('Error occurred:', errorData);
+            }
+        });
+    }
+
+    function bindZone(id, defaultSelectionValues) {
+
+        defaultSelectionValues = typeof defaultSelectionValues !== 'undefined' ? defaultSelectionValues : '';
+        if (defaultSelectionValues == -1 || defaultSelectionValues == 0 || defaultSelectionValues == '-1' || defaultSelectionValues == '') {
+            defaultSelectionValues = '-1';
+        }
+        var obj = new Object();
+        obj.Action = "bindZone";
+
+        $.ajax({
+            type: 'POST',
+            url: '/DropdownBinder/fillDropdown',
+            data: { Action: obj.Action },
+            success: function (Data) {
+                var ddl = $('#' + id);
+                ddl.empty();
+                ddl.append($('<option/>', {
+                    value: "-1",
+                    text: "Choose option "
+                }));
+
+                $.each(Data, function (index, rowData) {
+                    ddl.append($('<option/>', {
+                        value: rowData.id,
+                        text: rowData.value
+                    }));
+                });
+                ddl.val(defaultSelectionValues);
+            },
+            error: function (errorData) {
+                console.log(errorData);
+            }
+        });
+
+    }
+    function bindCircle(id, defaultSelectionValues, ZoneId) {
+
+        defaultSelectionValues = typeof defaultSelectionValues !== 'undefined' ? defaultSelectionValues : '';
+        if (defaultSelectionValues == -1 || defaultSelectionValues == 0 || defaultSelectionValues == '-1' || defaultSelectionValues == '') {
+            defaultSelectionValues = '-1';
+        }
+        var obj = new Object();
+        obj.Action = "bindCircle";
+        obj.ZoneId = ZoneId;
+
+        $.ajax({
+            type: 'POST',
+            url: '/DropdownBinder/fillDropdown',
+            data: { Action: obj.Action, ZoneId: obj.ZoneId },
+            success: function (Data) {
+             var ddl = $('#' + id);
+                ddl.empty();
+                ddl.append($('<option/>', {
+                    value: "-1",
+                    text: "Choose option "
+                }));
+
+                $.each(Data, function (index, rowData) {
+                    ddl.append($('<option/>', {
+                        value: rowData.id,
+                        text: rowData.value
+                    }));
+                });
+                ddl.val(defaultSelectionValues);
+            },
+            error: function (errorData) {
+                console.log(errorData);
+            }
+        });
+
+    }
+    function bindDivision(id, defaultSelectionValues, ZoneId, CircleId) {
+
+        defaultSelectionValues = typeof defaultSelectionValues !== 'undefined' ? defaultSelectionValues : '';
+        if (defaultSelectionValues == -1 || defaultSelectionValues == 0 || defaultSelectionValues == '-1' || defaultSelectionValues == '') {
+            defaultSelectionValues = '-1';
+        }
+        var obj = new Object();
+        obj.Action = "bindDivision";
+        obj.ZoneId = ZoneId,
+            obj.CircleId = CircleId
+
+        $.ajax({
+            type: 'POST',
+            url: '/DropdownBinder/fillDropdown',
+            data: { Action: obj.Action, ZoneId: obj.ZoneId, CircleId: obj.CircleId },
+            success: function (Data) {
+                var ddl = $('#' + id);
+                ddl.empty();
+                ddl.append($('<option/>', {
+                    value: "-1",
+                    text: "Choose option "
+                }));
+
+                $.each(Data, function (index, rowData) {
+                    ddl.append($('<option/>', {
+                        value: rowData.id,
+                        text: rowData.value
+                    }));
+                });
+                ddl.val(defaultSelectionValues);
+            },
+            error: function (errorData) {
+                console.log(errorData);
+            }
+        });
+    } 
+</script>
+
+

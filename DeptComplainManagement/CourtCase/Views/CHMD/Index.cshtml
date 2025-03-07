@@ -1,0 +1,279 @@
+﻿@using CourtCase.Filters
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+
+    System.Data.DataSet ds = ((System.Data.DataSet)Model);
+    System.Data.DataTable dt0 = new System.Data.DataTable();
+    if (ds.Tables.Count > 0)
+    {
+        dt0 = ds.Tables[0];
+    }
+
+}
+<style>
+    .widget-title {
+        font-family: 'Century Schoolbook';
+        font-size: 20px;
+    }
+</style>
+@Html.Action("ChartDashboard", "Reports")
+<div class="app-main__inner">
+    <div id="accordion3" class="accordion-wrapper mb-3">
+        <div class="card">
+            <div id="headingOne3" class="card-header">
+                <button type="button" data-toggle="collapse" data-target="#collapseOne3"
+                        aria-expanded="true" aria-controls="collapseOne"
+                        class="text-left m-0 p-0 btn btn-link btn-block">
+                    <h5 class="m-0 p-0 card-title">पदेन जाँच हेतु प्राप्त विभागीय शिकायत <i class="float-right pe-7s-angle-down"></i></h5>
+                </button>
+            </div>
+            <div data-parent="#accordion3" id="collapseOne3" aria-labelledby="headingOne3"
+                 class="collapse show">
+                <div class="card-body">
+                    <div class="media">
+
+                        <div class="media-body">
+                            <div class="mt-2">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="card mb-3 widget-chart widget-chart2  text-left" style="background-image: linear-gradient(to top, #1e3c72 0%, #1e3c72 1%, #2a5298 100%); ">
+
+                                            <div class="widget-chart-content text-white">
+                                                <div class="widget-chart-flex">
+                                                    <div class="widget-title">Total</div>
+                                                </div>
+                                                <div class="widget-chart-flex">
+                                                    <div class="widget-numbers">
+                                                        @Html.EncodedActionLink(
+                                                 dt0.Rows[0]["TotalDepComplain"].ToString
+                                                 (),
+                                                  "DeptInvestigationComplaints",
+                                                "CHMD",
+                                                   new { ComplaintType = "" },
+                                                 new { @class = "text-white" },
+                                                 "")
+                                                    </div>
+                                                    <div class="widget-description ml-auto opacity-7">
+                                                        <i class="pe-7s-note2" style="font-size:xx-large;"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="card mb-3 widget-chart widget-chart2 bg-focus text-left" style="background-image: linear-gradient(-225deg, #e8780b 0%, #c97104 53%, #f7d90c 100%);">
+                                            <div class="widget-chart-content text-white">
+                                                <div class="widget-chart-flex">
+                                                    <div class="widget-title">Pending</div>
+                                                </div>
+                                                <div class="widget-chart-flex">
+                                                    <div class="widget-numbers">
+                                                        @Html.EncodedActionLink(
+                                                 dt0.Rows[0]["TotalDepPendingComplain"].ToString
+                                                 (),
+                                                  "DeptInvestigationComplaints",
+                                                "CHMD",
+                                                 new { ComplaintType = "Pending" },
+                                                 new { @class = "text-white" },
+                                                 "")
+
+                                                    </div>
+                                                    <div class="widget-description ml-auto text-white">
+                                                        <i class="pe-7s-note2" style="font-size:xx-large;"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div id="accordion4" class="accordion-wrapper mb-3">
+        <div class="card">
+            <div id="headingOne4" class="card-header">
+                <button type="button" data-toggle="collapse" data-target="#collapseOne4"
+                        aria-expanded="true" aria-controls="collapseOne4"
+                        class="text-left m-0 p-0 btn btn-link btn-block">
+                    <h5 class="m-0 p-0 card-title">अधिकारी को  अग्रसित की गयी विभागीय शिकायत  <i class="float-right pe-7s-angle-down"></i></h5>
+                </button>
+            </div>
+            <div data-parent="#accordion4" id="collapseOne4" aria-labelledby="headingOne4"
+                 class="collapse show">
+                <div class="card-body">
+                    <div class="media">
+                        <div class="media-body">
+                            <div class="mt-2">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="card mb-3 widget-chart widget-chart2  text-left" style="background-image: linear-gradient(to top, #09203f 0%, #537895 100%);">
+
+                                            <div class="widget-chart-content text-white">
+                                                <div class="widget-chart-flex">
+                                                    <div class="widget-title">Total</div>
+                                                </div>
+                                                <div class="widget-chart-flex">
+                                                    <div class="widget-numbers">
+                                                        @Html.EncodedActionLink(
+                                                dt0.Rows[0]["TotalReceiveDepComplain"].ToString
+                                                (),
+                                                 "DeptComplaintList",
+                                               "CHMD",
+                                                  new { ComplaintType = "" },
+                                                new { @class = "text-white" },
+                                                "")
+                                                    </div>
+                                                    <div class="widget-description ml-auto opacity-7">
+                                                        <i class="pe-7s-note2" style="font-size:xx-large;"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="card mb-3 widget-chart widget-chart2 bg-focus text-left" style="background-image: linear-gradient(258deg, #626202 0%, #b5b506 53%, #c7af0c 100%);">
+                                            <div class="widget-chart-content text-white">
+                                                <div class="widget-chart-flex">
+                                                    <div class="widget-title">Pending</div>
+
+                                                </div>
+                                                <div class="widget-chart-flex">
+                                                    <div class="widget-numbers">
+                                                        @Html.EncodedActionLink(
+                                              dt0.Rows[0]["TotalReceiveDepPendingComplain"].ToString
+                                              (),
+                                               "DeptComplaintList",
+                                             "CHMD",
+                                              new { ComplaintType = "Pending" },
+                                              new { @class = "text-white" },
+                                              "")
+
+                                                    </div>
+                                                    <div class="widget-description ml-auto text-white">
+                                                        <i class="pe-7s-note2" style="font-size:xx-large;"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="col-md-4">
+
+                                        <div class="card mb-3 widget-chart widget-chart2 text-left" style="background-image: linear-gradient(to top, #1f3b62 0%, #5333e5 100%);">
+
+                                            <div class="widget-chart-content text-white">
+                                                <div class="widget-chart-flex">
+                                                    <div class="widget-title">Pending Revision</div>
+                                                </div>
+                                                <div class="widget-chart-flex">
+                                                    <div class="widget-numbers">
+                                                        @Html.EncodedActionLink(
+                                            dt0.Rows[0]["DeptRevisionCompalint"].ToString
+                                            (),
+                                             "RevisionEnquiryList",
+                                           "CHMD",
+                                            new { ComplaintType = "Pending" },
+                                            new { @class = "text-white" },
+                                            "")
+
+                                                    </div>
+                                                    <div class="widget-description ml-auto opcity-5">
+                                                        <i class="pe-7s-note2" style="font-size:xx-large;"></i>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-4">
+
+                                        <div class="card mb-3 widget-chart widget-chart2 bg-success text-left">
+
+                                            <div class="widget-chart-content text-white">
+                                                <div class="widget-chart-flex">
+                                                    <div class="widget-title">Pending Appeal</div>
+                                                </div>
+                                                <div class="widget-chart-flex">
+                                                    <div class="widget-numbers">
+                                                        @Html.EncodedActionLink(
+                                            dt0.Rows[0]["DeptAppealComplaint"].ToString
+                                            (),
+                                             "AppealEnquiryList",
+                                           "CHMD",
+                                            new { ComplaintType = "Pending" },
+                                            new { @class = "text-white" },
+                                            "")
+
+                                                    </div>
+                                                    <div class="widget-description ml-auto opcity-5">
+                                                        <i class="pe-7s-note2" style="font-size:xx-large;"></i>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </a>
+                                    </div>
+
+
+                                    <div class="col-md-4">
+
+                                        <div class="card mb-3 widget-chart widget-chart2 bg-info text-left">
+
+                                            <div class="widget-chart-content text-white">
+                                                <div class="widget-chart-flex">
+                                                    <div class="widget-title">Pending Show Cause</div>
+                                                </div>
+                                                <div class="widget-chart-flex">
+                                                    <div class="widget-numbers">
+                                                        @Html.EncodedActionLink(
+                                            dt0.Rows[0]["PendingShowCauseNotice"].ToString
+                                            (),
+                                             "PendingShowCauseNoticeList",
+                                           "CHMD",
+                                            new { ComplaintType = "Pending" },
+                                            new { @class = "text-white" },
+                                            "")
+
+                                                    </div>
+                                                    <div class="widget-description ml-auto opcity-5">
+                                                        <i class="pe-7s-note2" style="font-size:xx-large;"></i>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </a>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Action("Dashboard", "Reports")

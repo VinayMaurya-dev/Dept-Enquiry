@@ -1,0 +1,94 @@
+﻿@using CourtCase.Filters
+@{
+    ViewBag.Title = "ShowCauseNoticeList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="app-main__inner">
+    <div class="app-page-title app-page-title-simple">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div>
+                    <div class="page-title-head center-elem">
+                        <span class="d-inline-block pr-2">
+                            <i class="lnr-apartment opacity-6"></i>
+                        </span>
+                        <span class="d-inline-block">Show Cause Notice List</span>
+                    </div>
+                    <div class="page-title-subheading opacity-10">
+                        <nav class="" aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <button type="button" onclick="history.back()" value="BACK" class="btn btn-primary mybackbutton"><i class="fa fa-arrow-left" aria-hidden="true"> Back</i></button>
+                                </li>
+
+                                <li class="active breadcrumb-item" aria-current="page">
+                                    कारण बताओ नोटिस सूची
+                                </li>
+                            </ol>
+                        </nav>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="main-card mb-3 card">
+        <div class="card-body">
+            <div id="step-1">
+                <div class="form-row">
+                    <div class="table-responsive" style="margin-top:15px;" id="divDetails">
+                        @if (Model.table != null)
+                        {
+                            <table id="scr-vtr-dynamic" class="example table table-hover table-bordered mb-0" style="width:100%;">
+                                <thead>
+                                    <tr>
+                                        @foreach (System.Data.DataColumn col in Model.table.Columns)
+                                        {
+                                            <th style="text-align:center;">@Html.Raw(col.ColumnName)</th>
+                                        }
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (System.Data.DataRow row in Model.table.Rows)
+                                    {
+                                        <tr>
+                                            @foreach (System.Data.DataColumn column in Model.table.Columns)
+                                            {
+                                                var cellValue = row[column].ToString();
+                                                if (column.ColumnName == "कार्रवाई")
+                                                {
+                                                    <td>
+                                                        @Html.EncodedActionLink(
+                                                            "देखें",
+                                                            "CauseNoticeListData",
+                                                            "Reports",
+                                                            new { ShowcauseNumber = cellValue },
+                                                            new { @class = "btn-transition btn btn-outline btn-primary" },
+                                                            "fa fa-eye"
+                                                        )
+                                                    </td>
+                                                }
+                                                else
+                                                {
+                                                    <td style="text-align:center;">@Html.Raw(cellValue)</td>
+                                                }
+                                            }
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                        else
+                        {
+                            <p>No data available</p>
+                        }
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+

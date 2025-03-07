@@ -1,0 +1,221 @@
+﻿@model CourtCase.Models.ComplaintDetails
+@{
+    ViewBag.Title = "ViewComplaintList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<style>
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    th {
+        background-color: #f4f4f4;
+    }
+
+    .highlight-heading {
+        background-color: #f8d7da;
+        color: #721c24;
+        padding: 10px;
+        border-radius: 5px;
+    }
+</style>
+@{
+    System.Data.DataSet ds = ((System.Data.DataSet)ViewBag.Replies);
+    System.Data.DataTable dt = new System.Data.DataTable();
+    System.Data.DataTable ht = new System.Data.DataTable();
+    System.Data.DataTable ft = new System.Data.DataTable();
+    System.Data.DataTable it = new System.Data.DataTable();
+
+    if (ds.Tables.Count > 0)
+    {
+        dt = ds.Tables[0];
+        ht = ds.Tables[1];
+        ft = ds.Tables[2];
+        it = ds.Tables[3];
+    }
+
+
+}
+<div class="app-main__inner">
+
+    <div class="main-card mb-3 card">
+        <div class="container mt-5">
+            <h5 class="mb-4">शिकायत विवरण</h5>
+            <div class="mb-4">
+                <h5 class="card-title">शिकायत</h5>
+                <div class="form-group">
+                    <label for="complaintSubject">शिकायत का विषय</label>
+                    <textarea class="form-control" id="complaintSubject" rows="2" readonly>@Model.ComplaintSubject</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="complaintDescription">शिकायत का विवरण</label>
+                    <textarea class="form-control" id="complaintDescription" rows="5" readonly>@Model.ComplaintDescription</textarea>
+                </div>
+            </div>
+            @if (dt != null && dt.Rows.Count > 0)
+            {
+                <h5 class="mb-4 highlight-heading">आख्याय</h5>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>दिनांक</th>
+                            <th>आख्या का विषय</th>
+                            <th>आख्या का विवरण</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < dt.Rows.Count; i++)
+                        {
+                            <tr>
+                                <td>@dt.Rows[i]["RemarkOnDate"].ToString()</td>
+                                <td>@dt.Rows[i]["ComplaintMarkedRemarkSubject"].ToString()</td>
+                                <td>@dt.Rows[i]["ComplaintMarkedRemarkDescription"].ToString()</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            @if (ht != null && ht.Rows.Count > 0)
+            {
+                <h5 class="mb-4 highlight-heading">चिह्नित अधिकारी</h5>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>दिनांक</th>
+                            <th>आख्या पत्र किसको भेजी गयी</th>
+                            <th>Zone</th>
+                            <th>Circle</th>
+                            <th>अधिकारी</th>
+                            <th>आख्या पत्र लिखने की तिथि</th>
+                            <th>पत्र नंबर</th>
+                            <th>आख्या</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < ht.Rows.Count; i++)
+                        {
+                            <tr>
+                                <td>@ht.Rows[i]["MarkedOnDate"].ToString()</td>
+                                <td>@ht.Rows[i]["ComplaintMarkToZC"].ToString()</td>
+                                <td>@ht.Rows[i]["ComplaintMarkToZoneName"].ToString()</td>
+                                <td>@ht.Rows[i]["ComplaintMarkToCircleName"].ToString()</td>
+                                <td>@ht.Rows[i]["ComplaintMarkToOfficerName"].ToString()</td>
+                                <td>@ht.Rows[i]["ComplaintMarkedDate"].ToString()</td>
+                                <td>@ht.Rows[i]["ComplaintMarkedNo"].ToString()</td>
+                                <td>@ht.Rows[i]["ComplaintMarkedRemark"].ToString()</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            @if (ft != null && ft.Rows.Count > 0)
+            {
+                <h5 class="mb-4 highlight-heading">अग्रेषित अधिकारी</h5>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>दिनांक</th>
+                            <th>पदनाम</th>
+                            <th>अग्रेषित करने की तिथि</th>
+                            <th>पत्र नंबर</th>
+                            <th>पत्र</th>
+                            <th>टिप्पणी</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < ft.Rows.Count; i++)
+                        {
+                            <tr>
+                                <td>@ft.Rows[i]["ForwardingOfficerDate"].ToString()</td>
+                                <td>@ft.Rows[i]["ForwadingOfficer"].ToString()</td>
+                                <td>@ft.Rows[i]["ForwardingOfficerDate"].ToString()</td>
+                                <td>@ft.Rows[i]["ForwardingOfficerLetterNo"].ToString()</td>
+                                <td>
+                                    @if (ft.Rows[i]["ForwardingOfficerLetter"].ToString() != null && ft.Rows[i]["ForwardingOfficerLetter"].ToString() != "")
+                                    {
+                                        string filePath1 = ft.Rows[i]["ForwardingOfficerLetter"].ToString();
+                                        if (filePath1.StartsWith("~"))
+                                        {
+                                            filePath1 = filePath1.Replace("~", "../");
+                                        }
+                                        <a href="@filePath1" target="_blank" class="btn btn-primary">देखें</a>
+                                        @*<a href="@ft.Rows[i]["ForwardingOfficerLetter"].ToString()" target="_blank" class="btn btn-primary">देखें</a>*@
+                                    }
+                                    else
+                                    {
+                                        <span class="btn btn-primary disabled">देखें</span>
+                                    }
+                                </td>
+                                <td>@ft.Rows[i]["ForwardingOfficerComment"].ToString()</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            @if (it != null && it.Rows.Count > 0)
+            {
+                <h5 class="mb-4 highlight-heading">जांच अधिकारी</h5>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>दिनांक</th>
+                            <th>जांच अधिकारी कहाँ से है</th>
+                            <th>Zone</th>
+                            <th>Circle</th>
+                            <th>अधिकारी</th>
+                            <th>अधिकारी का नाम</th>
+                            <th>अधिकारी का मोबाइल नंबर</th>
+                            <th>अधिकारी को जोड़ने की तिथि</th>
+                            <th>पत्र नंबर</th>
+                            <th>पत्र</th>
+                            <th>आख्या</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < it.Rows.Count; i++)
+                        {
+                            <tr>
+                                <td>@it.Rows[i]["InvestigatingOfficerAppointedDate"].ToString()</td>
+                                <td>@it.Rows[i]["InvestigatingOfficerZCDH"].ToString()</td>
+                                <td>@it.Rows[i]["InvestigatingOfficerZone"].ToString()</td>
+                                <td>@it.Rows[i]["InvestigatingOfficerCircle"].ToString()</td>
+                                <td>@it.Rows[i]["InvestigatingOfficerDesignation"].ToString()</td>
+                                <td>@it.Rows[i]["InvestigatingOfficerName"].ToString()</td>
+                                <td>@it.Rows[i]["InvestigatingOfficerMobile"].ToString()</td>
+                                <td>@it.Rows[i]["InvestigatingOfficerAppointedDate"].ToString()</td>
+                                <td>@it.Rows[i]["InvestigatingOfficerLetterNo"].ToString()</td>
+                                <td>
+                                    @if (it.Rows[i]["InvestigatingOfficerLetter"].ToString() != null && it.Rows[i]["InvestigatingOfficerLetter"].ToString() != "")
+                                    {
+                                        string filePath = it.Rows[i]["InvestigatingOfficerLetter"].ToString();
+                                        if (filePath.StartsWith("~"))
+                                        {
+                                            filePath = filePath.Replace("~", "../");
+                                        }
+                                        <a href="@filePath" target="_blank" class="btn btn-primary">देखें</a>
+                                    }
+                                    else
+                                    {
+                                        <span class="btn btn-primary disabled">देखें</span>
+                                    }
+                                </td>
+                                <td>@it.Rows[i]["InvestigatingOfficerRemark"].ToString()</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+
+    </div>
+    </div>
+   

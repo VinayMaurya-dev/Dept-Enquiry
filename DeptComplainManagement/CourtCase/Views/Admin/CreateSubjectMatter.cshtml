@@ -1,0 +1,249 @@
+﻿@model CourtCase.Models.SubjectMaster 
+@{
+    ViewBag.Title = "CreateSubjectMatter";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<div class="app-main__inner">
+    <div class="app-page-title app-page-title-simple">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div>
+                    <div class="page-title-head center-elem">
+                        <span class="d-inline-block pr-2">
+                            <i class="lnr-apartment opacity-6"></i>
+                        </span>
+                        <span class="d-inline-block">
+                            Create Subject Matter
+                        </span>
+                    </div>
+                    <div class="page-title-subheading opacity-10">
+                        <nav class="" aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a href="/Admin/Index">
+                                        <i aria-hidden="true" class="fa fa-home"></i>
+                                    </a>
+                                </li>
+
+                                <li class="active breadcrumb-item" aria-current="page">
+                                    Create Subject Matter
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+    
+    <div class="tab-content">
+
+        <div class="main-card mb-3 card">
+            <div class="card-body">
+                @*<h5 class="card-title">Add subject Matter</h5><br />*@
+                <input type="hidden" value="@Model.subjectMatterId" id="hiddensubjectMatterId" />
+
+                <div class="form-row" id="caseTypeDiv">
+                    <div class="col-md-12">
+                        <div class="form-row">
+                            <div class="col-md-4 mb-3">
+                                <label for="exampleAddress" class="">Related to</label><br />
+                                <div class="input-group">
+                                    <select class="dropdown form-control" id="RelatedTo" name="RelatedTo" value="@Model.RelatedTo">
+                                        <option value="-1">Choose option</option>
+
+
+                                        @if (@Model.RelatedTo == "Employee")
+                                        {
+                                            <option value="Employee" selected>Employee</option>}
+                                        else
+                                        {
+                                            <option value="Employee">Employee</option>}
+
+                                        @if (@Model.RelatedTo == "Contractor")
+                                        {
+                                            <option value="Contractor" selected>Contractor</option>}
+                                        else
+                                        {
+                                            <option value="Contractor">Contractor</option>}
+
+                                        @if (@Model.RelatedTo == "PIL")
+                                        {
+                                            <option value="PIL" selected>PIL</option>}
+                                        else
+                                        {
+                                            <option value="PIL">PIL</option>}
+                                    </select>
+
+
+                                </div>
+                                <span id="RelatedtoError"></span>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label for="exampleAddress" class="">Subject Matter</label>
+                                <div class="input-group">
+                                    <input type="text" value="@Model.subjectMatter" id="txtsubjectMatter" class="form-control" placeholder="Enter subject Matter" />
+
+
+                                </div>
+                                <span id="subjectMatterError"></span>
+
+
+                                <div class="col-md-4 col-sm-4">
+
+                                    <div class="row float-sm-left" style="margin-top:22px!important">
+                                        <input type="submit" id="btnSubmit" value="@ViewBag.BtnName" class="btn btn-info" onclick="return SaveUpdateSubjectMasterRecord()">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
+            <div class="card order-card" style="margin:-18px;padding:10px;">
+                @*<input type="hidden" value="@Model.ZoneId" id="hiddenZoneId" />*@
+                <div class="card-block">
+                    <table class="table table-bordered" style="margin-top:0px !important;text-align:center;" id="caseTypeDiv">
+                        <tr>
+                            @*<th>
+                                    Sr No
+                                </th>*@
+                            <th>
+                                subject Matter Id
+                            </th>
+                            <th>
+                                subject Matter
+                            </th>
+                            <th>Related To</th>
+                            <th>
+                                Action
+                            </th>
+
+
+
+                        </tr>
+
+                        @if (Model.Table != null)
+
+                        {
+                            int i = 0;
+                            foreach (System.Data.DataRow data in Model.Table.Rows)
+                            {
+                                i++;
+                                <tr>
+                                    @*<td>
+                                            @i
+                                        </td>*@
+                                    <td>
+                                        @data["subjectMatterId"]
+                                    </td>
+                                    <td>
+                                        @data["subjectMatter"]
+                                    </td>
+                                    <td>@data["RelatedTo"]</td>
+                                    <td>
+
+                                        <a href="/Admin/CreateSubjectMatter?subjectMatterId=@data["subjectMatterId"]" class="btn btn-info">Edit</a>
+
+                                    </td>
+
+
+                                </tr>
+
+                            }
+                        }
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    $(document).ready(function () {
+        $('#ReportLI').addClass("mm-active");
+        $('#ReportUL').addClass("mm-show");
+        $('#SujectMatterMaster').addClass("mm-active");
+        $('#AdminDashboard').removeClass("mm-active");
+
+      
+
+    });
+
+    if (typeof jQuery == 'undefined') {
+        console.error('jQuery is not loaded');
+    }
+    else {
+        $(document).ready(function () {
+
+            //addValidationAlpha("txtsubjectMatter");
+        });
+    }
+     @*var val1 = ('@TempData["RelatedTo"]');
+    RelatedTo('RelatedTo', val1);*@
+
+
+    function Validate() {
+        var RelatedTo = document.getElementById("RelatedTo").selectedIndex;
+
+        if (RelatedTo == 0) {
+            $("#RelatedToError").text("Please Select The Related To");
+            $("#RelatedToError").css("color", "red");
+            $("#RelatedTo").focus();
+            return false;
+        }
+        else {
+            $("#RelatedToError").text("");
+        }
+
+        var subjectMatter = $("#txtsubjectMatter").val();
+        if (subjectMatter == "") {
+            $("#subjectMatterError").text("Please Enter The Subject Matter");
+            $("#subjectMatterError").css("color", "red");
+            $("#txtsubjectMatter").focus();
+            return false;
+        }
+        else {
+            $("#subjectMatterError").text("");
+        }
+
+        return true;
+    }
+
+    function SaveUpdateSubjectMasterRecord() {
+        debugger;
+        if (!Validate()) {
+
+            return false;
+        }
+        var obj = {
+
+            subjectMatterId: $("#hiddensubjectMatterId").val(),
+            subjectMatter: $("#txtsubjectMatter").val(),
+            RelatedTo: $("#RelatedTo").val(),
+
+        }
+        $.post("/Admin/SaveUpdateSubjectMasterRecord", obj, function (Res) {
+            if (Res != "") {
+                alert(Res);
+                window.location.href = "/Admin/CreateSubjectMatter";
+            }
+            else {
+                alert("Something Went wrong.");
+                window.location.href = "/Admin/CreateSubjectMatter";
+                window.location.href = "/Admin/CreateSubjectMatter";
+            }
+        });
+    }
+</script>

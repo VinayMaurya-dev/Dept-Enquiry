@@ -1,0 +1,62 @@
+﻿
+@{
+    Layout = null;
+}
+<style>
+
+    .otp-input {
+        width: 40px;
+        text-align: center;
+        margin: 0 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 5px;
+    }
+
+    .is-invalid {
+        border-color: red;
+    }
+
+    .validation-summary {
+        margin-top: 10px;
+    }
+</style>
+<div id="otpForm" class="otp-form-container" style="display: none;">
+    <button type="button" class="back-btn" onclick="showMobileInput()">← Back</button>
+    <div class="otp-container">
+        <p>To log in, enter the code sent to your Mobile number (<span id="mobileDisplay">9999999999</span>)</p>
+        <input type="hidden" id="otp-UserRelaetdTo" name="UserRelaetdTo" />
+        <input type="hidden" id="otp-ZoneId" name="ZoneId" />
+        <input type="hidden" id="otp-CircleId" name="CircleId" />
+        <input type="hidden" id="otp-DivisionId" name="DivisionId" />
+        <div id="otp-code" class="otp-box">
+            <input type="text" id="otp-input-0" maxlength="1" inputmode="numeric" autocomplete="one-time-code" aria-label="OTP Code digit 1" name="otp_input_1" />
+            <input type="text" id="otp-input-1" maxlength="1" inputmode="numeric" autocomplete="one-time-code" aria-label="OTP Code digit 2" name="otp_input_2" />
+            <input type="text" id="otp-input-2" maxlength="1" inputmode="numeric" autocomplete="one-time-code" aria-label="OTP Code digit 3" name="otp_input_3" />
+            <input type="text" id="otp-input-3" maxlength="1" inputmode="numeric" autocomplete="one-time-code" aria-label="OTP Code digit 4" name="otp_input_4" />
+            <input type="text" id="otp-input-4" maxlength="1" inputmode="numeric" autocomplete="one-time-code" aria-label="OTP Code digit 5" name="otp_input_5" />
+            <input type="text" id="otp-input-5" maxlength="1" inputmode="numeric" autocomplete="one-time-code" aria-label="OTP Code digit 6" name="otp_input_6" />
+        </div>
+        <p id="timer" style="color: green; text-align: center; font-size: 16px; margin: 10px 0;"></p>
+        <button type="button" class="verify-btn">Verify</button>
+    </div>
+</div>
+
+<script>
+    let timerInterval; const countdownDuration = 120; function startTimer() { let t = 120; const e = document.getElementById("timer"); e ? (clearInterval(timerInterval), timerInterval = setInterval((() => { t <= 0 ? (clearInterval(timerInterval), e.textContent = "Code expired. Please resend.", e.style.color = "red") : (e.textContent = `Code expires in ${t}s`, t--) }), 1e3)) : console.error("Timer element not found.") } function EmptyOtp() { $(".otp-box input").removeClass("error"), $("#otp-input-0").val(""), $("#otp-input-1").val(""), $("#otp-input-2").val(""), $("#otp-input-3").val(""), $("#otp-input-4").val(""), $("#otp-input-5").val("") } document.addEventListener("DOMContentLoaded", (() => { const t = document.getElementById("otpForm"); if (!t) return void console.error("OTP form element not found."); new MutationObserver((() => { "block" === window.getComputedStyle(t).display && startTimer() })).observe(t, { attributes: !0, attributeFilter: ["style"] }) })), $(document).ready((function () { EmptyOtp(), $(".otp-box input").on("input", (function () { this.value.length === this.maxLength && $(this).next("input").focus() })), $(".verify-btn").on("click", (function () { let t = !0, e = ""; if ($(".otp-box input").each((function () { const n = $(this).val(); !n || isNaN(n) ? (t = !1, $(this).addClass("error")) : ($(this).removeClass("error"), e += n) })), !t) return GetMsg("Please enter a valid 6-digit OTP."), !1; var n = { MobileNo: $("#mobileDisplay").text(), otp_input_1: $("#otp-input-0").val(), otp_input_2: $("#otp-input-1").val(), otp_input_3: $("#otp-input-2").val(), otp_input_4: $("#otp-input-3").val(), otp_input_5: $("#otp-input-4").val(), otp_input_6: $("#otp-input-5").val(), UserRelatedTo: $("#otp-UserRelaetdTo").val(), ZoneId: $("#otp-ZoneId").val(), CircleId: $("#otp-CircleId").val(), DivisionId: $("#otp-DivisionId").val() }; btnloader.load(); $.post("/Home/VerifyOtp", n, (function (o) { if (!o.success) return GetMsg(o.Message), $(".otp-box input").addClass("error"), !1; var e = o.redirectUrl, n = window.location.hostname; if (new URL(e, window.location.origin).hostname !== n) return GetMsg("Invalid redirection URL."), !1; window.location.href = e })).always((function () { btnloader.remove() }));})) })); 
+    var btnloader = { load: function () { $(".verify-btn").append('<span id="loadSpan" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>'), $("#verify-btn").attr("disabled", "disabled") }, remove: function () { $("#loadSpan").remove(), $(".verify-btn").removeAttr("disabled") } };
+</script>
+
+<style>
+    .otp-box input.error {
+        border: 2px solid red;
+    }
+</style>
+
+
+
+
+
+
+
+

@@ -1,0 +1,286 @@
+﻿@using CourtCase.Filters
+@{
+    ViewBag.Title = "NumberOfSampleFilesPostWise";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="app-main__inner">
+    <div class="app-page-title app-page-title-simple">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div>
+                    <div class="page-title-head center-elem">
+                        <span class="d-inline-block pr-2">
+                            <i class="lnr-apartment opacity-6"></i>
+                        </span>
+                        <span class="d-inline-block">उ0प्र0 जल निगम (ग्रामीण) अन्तर्गत शिकायत अनुभाग में प्रचलित पत्रावलियों की संख्या पदवार </span>
+                    </div>
+                    <div class="page-title-subheading opacity-10">
+                        <nav class="" aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <button type="button" onclick="history.back()" value="BACK" class="btn btn-primary mybackbutton"><i class="fa fa-arrow-left" aria-hidden="true"> Back</i></button>
+                                </li>
+
+                                <li class="active breadcrumb-item" aria-current="page">
+                                    पत्रावलियों की संख्या
+                                </li>
+                            </ol>
+                        </nav>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <center>
+
+        <div class="main-card mb-3 card">
+            <div class="card-body">
+                <div id="step-1">
+                    <div class="form-row" id="divDetails">
+                        <div class="table-responsive" style="margin-top:15px;">
+                            @if (Model != null)
+                            {
+                                System.Data.DataSet ds = ((System.Data.DataSet)Model);
+                                if (ds != null && ds.Tables.Count > 0)
+                                {
+                                    System.Data.DataTable dt = ds.Tables[0];
+                                    var excludedColumns = new List<string>
+                                                            {
+                                                  
+                                                 "DesignationId"
+                                         };
+
+                                    var columnTotals = new Dictionary<string, decimal>();
+
+                                    // Calculate column totals, excluding first two columns
+                                    foreach (System.Data.DataColumn column in dt.Columns)
+                                    {
+                                        if (!excludedColumns.Contains(column.ColumnName) && dt.Columns.IndexOf(column) > 1) // Skip the first two columns
+                                        {
+                                            columnTotals[column.ColumnName] = 0;
+                                            foreach (System.Data.DataRow row in dt.Rows)
+                                            {
+                                                if (decimal.TryParse(row[column]?.ToString(), out decimal value))
+                                                {
+                                                    columnTotals[column.ColumnName] += value;
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    <table id="scr-vtr-dynamic" class="example table table-hover table-striped table-bordered mb-0" style="width:100%;">
+                                        <thead>
+                                            <tr>
+                                                <th rowspan="2">क्र०सं</th>
+                                                <th rowspan="2">पदनाम के अनुसार</th>
+                                                <th rowspan="2">उ0प्र0 जल निगम (नगरीय) अन्तर्गत प्रचलित पत्रावलियों की संख्या</th>
+                                                <th rowspan="2">उ0प्र0 जल निगम (ग्रामीण) अन्तर्गत प्रचलित पत्रावलियों की संख्या</th>
+                                                <th rowspan="2">कुल पत्रावलियों की संख्या</th>
+                                                <th colspan="4">अनुशासनिक जाँच संस्थित होने की तिथि से लंबित पत्रावलियों की संख्या</th>
+                                                <th rowspan="2">निलंबित कार्मिको की संख्या</th>
+                                                <th rowspan="2">आरोप पत्र निर्गमन की संख्या</th>
+                                                <th rowspan="2">जाँच आख्या प्राप्त होने की संख्या</th>
+                                                <th rowspan="2">निर्णय हेतु प्रेषित पत्रावलियां </th>
+                                                <th rowspan="2">व्यक्तिगत सुनवाई  एवं अभ्यावेदन प्राप्त होने के  स्तर पर</th>
+                                                <th rowspan="2">निर्णित पत्रावलियां की संख्या</th>
+
+                                            </tr>
+                                            <tr>
+                                                <th>06 माह के भीतर</th>
+                                                <th>06 माह से 01 वर्ष</th>
+                                                <th>01 वर्ष से 02 वर्ष</th>
+                                                <th style="border-right:1px solid white">02 वर्ष से अधिक</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (System.Data.DataRow row in dt.Rows)
+                                            {
+                                                <tr id="lblRowColor">
+                                                    @foreach (System.Data.DataColumn column in dt.Columns)
+                                                    {
+                                                        var columnName = column.ColumnName;
+                                                        var cellValue = row[column]?.ToString();
+
+                                                        if (excludedColumns.Contains(columnName))
+                                                        {
+                                                            continue;
+                                                        }
+
+                                                        
+                                                        var DesignationId = row["DesignationId"]?.ToString();
+                                                        string duration = "";
+                                                        switch (columnName)
+                                                        {
+                                                            case "उ0प्र0 जल निगम (नगरीय) अन्तर्गत प्रचलित पत्रावलियों की संख्या":
+                                                                duration = "Urban";
+                                                                break;
+
+                                                            case "उ0प्र0 जल निगम (ग्रामीण) अन्तर्गत प्रचलित पत्रावलियों की संख्या":
+                                                                duration = "Rural";
+                                                                break;
+                                                            case "कुल प्रचलित पत्रावलियों की संख्या":
+                                                                duration = "TotalSankhya";
+                                                                break;
+
+                                                            case "06 माह के भीतर":
+                                                                duration = "0-6";
+                                                                break;
+
+                                                            case "06 माह से 01 वर्ष":
+                                                                duration = "06-12";
+                                                                break;
+
+                                                            case "01 वर्ष से 02 वर्ष":
+                                                                duration = "12-24";
+                                                                break;
+
+                                                            case "02 वर्ष से अधिक":
+                                                                duration = "24";
+                                                                break;
+
+                                                            case "निलंबित कार्मिको की संख्या":
+                                                                duration = "Suspension";
+                                                                break;
+
+                                                            case "आरोप पत्र निर्गमन की संख्या":
+                                                                duration = "AaropShankya";
+                                                                break;
+
+                                                            case "जाँच आख्या प्राप्त होने की संख्या":
+                                                                duration = "Dateofdispatch";
+                                                                break;
+
+                                                            case "निर्णय हेतु प्रेषित पत्रावलियां":
+                                                                duration = "decicision";
+                                                                break;
+
+                                                            case "व्यक्तिगत सुनवाई एवं अभ्यावेदन प्राप्त होने के स्तर पर":
+                                                                duration = "recivepersonal";
+                                                                break;
+
+                                                            case "निर्णित पत्रावलियां की संख्या":
+                                                                duration = "sankhya1";
+                                                                break;
+
+
+                                                        }
+                                                        if (!string.IsNullOrEmpty(duration))
+                                                        {
+
+
+                                                            if (duration == "decicision")
+                                                            {
+                                                                <td style="text-align:center;">
+                                                                    @Html.EncodedActionLinkWithTwoParams(
+                                             cellValue,
+                                             "NumberofDecisionn",
+                                             "ComplaintSE",
+                                             new { Id = DesignationId },
+                                             new { @class = "btn-transition btn btn-outline-info" },
+                                             "",
+                                             duration)
+                                                                </td>
+                                                            }
+
+                                                            else if (duration == "recivepersonal")
+                                                            {
+                                                                <td style="text-align:center;">
+                                                                    @Html.EncodedActionLinkWithTwoParams(
+                                                                        cellValue,
+                                                                        "GetHearingOfficer",
+                                                                        "ComplaintSE",
+                                                                        new { Id = DesignationId },
+                                                                        new { @class = "btn-transition btn btn-outline-info" },
+                                                                        "",
+                                                                        duration)
+                                                                </td>
+                                                            }
+                                                            else if (duration == "sankhya1")
+                                                            {
+                                                                <td style="text-align:center;">
+                                                                    @Html.EncodedActionLinkWithTwoParams(
+                                                                        cellValue,
+                                                                        "GetClosedShowList",
+                                                                        "ComplaintSE",
+                                                                        new { Id = DesignationId },
+                                                                        new { @class = "btn-transition btn btn-outline-info" },
+                                                                        "",
+                                                                        duration)
+                                                                </td>
+                                                            }
+                                                            else
+                                                            {
+                                                                <td style="text-align:center;">
+                                                                    @Html.EncodedActionLinkWithTwoParams(
+                                                                        cellValue,
+                                                                        "PendingSummaryComplaintAtEnquiryOfficerById",
+                                                                        "ComplaintSE",
+                                                                        new { Id = DesignationId },
+                                                                        new { @class = "btn-transition btn btn-outline-info" },
+                                                                        "",
+                                                                        duration)
+                                                                </td>
+                                                            }
+
+                                                        }
+                                                       else
+                                                        {
+                                                            <td style="text-align:center;">@Html.Raw(cellValue)</td>
+                                                        }
+                                                    }
+                                                </tr>
+                                            }
+                                        </tbody>
+                                        <tfoot>
+                                            <tr style="font-weight:bold;">
+                                                @foreach (System.Data.DataColumn column in dt.Columns)
+                                                {
+                                                    // Skip columns that are in the excludedColumns list
+                                                    if (!excludedColumns.Contains(column.ColumnName))
+                                                    {
+                                                        // Check for the first column
+                                                        if (dt.Columns.IndexOf(column) == 0)
+                                                        {
+                                                            <td></td>
+                                                            <!-- Leave the first column empty in footer -->
+                                                        }
+                                                        // Check for the second column
+                                                        else if (dt.Columns.IndexOf(column) == 1)
+                                                        {
+                                                            <td style="text-align:center;">Total</td>
+                                                            <!-- Write "Total" in the second column -->
+                                                        }
+                                                        // For other columns, display their totals
+                                                        else
+                                                        {
+                                                            var columnTotal = columnTotals.ContainsKey(column.ColumnName) ? columnTotals[column.ColumnName] : 0;
+                                                            <td style="text-align:center;">@Html.Raw(columnTotal)</td>
+                                                             
+                                                        }
+                                                    }
+                                                }
+                                            </tr>
+                                        </tfoot>
+
+                                    </table>
+                                }
+                            }
+                        </div>
+
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </center>
+</div>
+
+
+
+

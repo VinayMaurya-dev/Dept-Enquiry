@@ -1,0 +1,246 @@
+﻿@using CourtCase.Filters
+@{
+    ViewBag.Title = "DepartmentalDashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+
+    System.Data.DataSet ds = ((System.Data.DataSet)Model);
+    System.Data.DataTable dt0 = new System.Data.DataTable();
+    if (ds.Tables.Count > 0)
+    {
+        dt0 = ds.Tables[0];
+    }
+
+}
+<style>
+    .widget-title {
+        font-size: large;
+    }
+</style>
+<div class="app-main__inner">
+    <div class="app-page-title app-page-title-simple">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div>
+                    <div class="page-title-subheading opacity-10">
+                        <nav class="" aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <button type="button" onclick="history.back()" value="BACK" class="btn btn-primary mybackbutton"><i class="fa fa-arrow-left" aria-hidden="true"> Back</i></button>
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="accordion" class="accordion-wrapper mb-3">
+        <div class="card">
+            <div id="headingOne" class="card-header">
+                <button type="button" data-toggle="collapse" data-target="#collapseOne"
+                        aria-expanded="true" aria-controls="collapseOne"
+                        class="text-left m-0 p-0 btn btn-link btn-block">
+                    <h5 class="m-0 p-0 card-title">Court<i class="float-right pe-7s-angle-down"> </i> </h5>
+                </button>
+            </div>
+            <div data-parent="#accordion" id="collapseOne" aria-labelledby="headingOne"
+                 class="collapse show">
+                <div class="card-body">
+                    <div class="media">
+                        <div class="media-body">
+                            <div class="mt-2">
+                                <div class="row"> 
+                                    <div class="col-md-4"> 
+                                        <div class="card mb-3 widget-chart widget-chart2 bg-focus text-left"style="background: linear-gradient(45deg, #2403b3, #490a4a) !important;">
+                                            <div class="widget-chart-content text-white">
+                                                <div class="widget-chart-flex">
+                                                    <div class="widget-title">High Court Lucknow</div> 
+                                                </div>
+                                                <div class="widget-chart-flex">
+                                                    <div class="widget-numbers">
+                                                        @Html.EncodedActionLink(
+                                             dt0.Rows[0]["TotalHighcourtLucknow"].ToString
+                                              (),
+                                              "CourtCaseLucknow",
+                                              "Reports",
+                                              new { CourtId = "14" },
+                                              new { @class = "text-white" },
+                                              "")
+
+
+                                                    </div>
+                                                    <div class="widget-description ml-auto text-white">
+                                                        <i class="pe-7s-note2" style="font-size:xx-large;"> </i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-4">
+
+                                        <div class="card mb-3 widget-chart widget-chart2 bg-focus text-left" style="background: linear-gradient(45deg, #ed46ca, #26031a) !important;">
+                                            <div class="widget-chart-content text-white">
+                                                <div class="widget-chart-flex">
+                                                    <div class="widget-title">High Court Allahabad</div>
+
+                                                </div>
+                                                <div class="widget-chart-flex">
+                                                    <div class="widget-numbers">
+                                                        @Html.EncodedActionLink(
+                                             dt0.Rows[0]["TotalHighcourtAllahabad"].ToString
+                                              (),
+                                              "CourtCaseLucknow",
+                                              "Reports",
+                                              new { CourtId = "13" },
+                                              new { @class = "text-white" },
+                                              "")
+
+
+                                                    </div>
+                                                    <div class="widget-description ml-auto text-white">
+                                                        <i class="pe-7s-note2" style="font-size:xx-large;"> </i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-4">
+
+                                        <div class="card mb-3 widget-chart widget-chart2 bg-focus text-left" style="background: linear-gradient(45deg, #2fc5d7, #26031a) !important;">
+                                            <div class="widget-chart-content text-white">
+                                                <div class="widget-chart-flex">
+                                                    <div class="widget-title">Tribunal</div>
+
+                                                </div>
+                                                <div class="widget-chart-flex">
+                                                    <div class="widget-numbers">
+                                                        @Html.EncodedActionLink(
+                                             dt0.Rows[0]["TotalTribunalCourt"].ToString
+                                              (),
+                                              "CourtCaseLucknow",
+                                              "Reports",
+                                              new { CourtId = "15" },
+                                              new { @class = "text-white" },
+                                              "")
+
+
+                                                    </div>
+                                                    <div class="widget-description ml-auto text-white">
+                                                        <i class="pe-7s-note2" style="font-size:xx-large;"> </i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="col-md-4">
+
+                                        <div class="card mb-3 widget-chart widget-chart2 bg-focus text-left" style="background: linear-gradient(45deg, #d75f2f, #26031a) !important;">
+                                            <div class="widget-chart-content text-white">
+                                                <div class="widget-chart-flex">
+                                                    <div class="widget-title">Supreme Court</div>
+
+                                                </div>
+                                                <div class="widget-chart-flex">
+                                                    <div class="widget-numbers">
+                                                        @Html.EncodedActionLink(
+                                             dt0.Rows[0]["TotalSupermeCourt"].ToString
+                                              (),
+                                              "CourtCaseLucknow",
+                                              "Reports",
+                                              new { CourtId = "16" },
+                                              new { @class = "text-white" },
+                                              "")
+
+
+                                                    </div>
+                                                    <div class="widget-description ml-auto text-white">
+                                                        <i class="pe-7s-note2" style="font-size:xx-large;"> </i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="col-md-4">
+
+                                        <div class="card mb-3 widget-chart widget-chart2 bg-focus text-left" style="background: linear-gradient(45deg, #abd72f, #26031a) !important;">
+                                            <div class="widget-chart-content text-white">
+                                                <div class="widget-chart-flex">
+                                                    <div class="widget-title">Commercial Court</div>
+
+                                                </div>
+                                                <div class="widget-chart-flex">
+                                                    <div class="widget-numbers">
+                                                        @Html.EncodedActionLink(
+                                             dt0.Rows[0]["TotalCommericalCourt"].ToString
+                                              (),
+                                              "CourtCaseLucknow",
+                                              "Reports",
+                                              new { CourtId = "17" },
+                                              new { @class = "text-white" },
+                                              "")
+
+
+                                                    </div>
+                                                    <div class="widget-description ml-auto text-white">
+                                                        <i class="pe-7s-note2" style="font-size:xx-large;"> </i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+
+                                    <div class="col-md-4">
+
+                                        <div class="card mb-3 widget-chart widget-chart2 bg-focus text-left" style="background: linear-gradient(45deg, #8e00efeb, #26031a) !important;">
+                                            <div class="widget-chart-content text-white">
+                                                <div class="widget-chart-flex">
+                                                    <div class="widget-title"> Other </div>
+
+                                                </div>
+                                                <div class="widget-chart-flex">
+                                                    <div class="widget-numbers">
+                                                        @Html.EncodedActionLink(
+                                             dt0.Rows[0]["other"].ToString
+                                              (),
+                                              "CourtCaseLucknow",
+                                              "Reports",
+                                              new { CourtId = "18" },
+                                              new { @class = "text-white" },
+                                              "")
+
+
+                                                    </div>
+                                                    <div class="widget-description ml-auto text-white">
+                                                        <i class="pe-7s-note2" style="font-size:xx-large;"> </i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

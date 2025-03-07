@@ -1,0 +1,1355 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A7D86974-477E-48F1-A156-4813C99D8521}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CourtCase</RootNamespace>
+    <AssemblyName>CourtCase</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress>false</Use64BitIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.TimeProvider, Version=8.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.TimeProvider.8.0.1\lib\net462\Microsoft.Bcl.TimeProvider.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.IdentityModel.Abstractions, Version=8.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Abstractions.8.3.0\lib\net472\Microsoft.IdentityModel.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.JsonWebTokens, Version=8.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.JsonWebTokens.8.3.0\lib\net472\Microsoft.IdentityModel.JsonWebTokens.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Logging, Version=8.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Logging.8.3.0\lib\net472\Microsoft.IdentityModel.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Tokens, Version=8.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Tokens.8.3.0\lib\net472\Microsoft.IdentityModel.Tokens.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="QRCoder, Version=1.6.0.0, Culture=neutral, PublicKeyToken=c4ed5b9ae8358a28, processorArchitecture=MSIL">
+      <HintPath>..\packages\QRCoder.1.6.0\lib\net40\QRCoder.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=8.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.8.3.0\lib\net472\System.IdentityModel.Tokens.Jwt.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Encodings.Web, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encodings.Web.8.0.0\lib\net462\System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Json, Version=8.0.0.5, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Json.8.0.5\lib\net462\System.Text.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.4\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.4\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Data\SessionManager.cs" />
+    <Compile Include="App_Data\Utility.cs" />
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\CapchaController.cs" />
+    <Compile Include="Controllers\CHMDController.cs" />
+    <Compile Include="Controllers\ComplaintAuthorizedController.cs" />
+    <Compile Include="Controllers\ComplaintInspectionController.cs" />
+    <Compile Include="Controllers\ComplaintSEController.cs" />
+    <Compile Include="Controllers\DropdownBinderController.cs" />
+    <Compile Include="Controllers\FunctionsInCommon.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MenuController.cs" />
+    <Compile Include="Controllers\ReportsController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="DAL\DBLayer.cs" />
+    <Compile Include="DAL\SQLHelper.cs" />
+    <Compile Include="Filters\EncryptedActionParameterAttribute.cs" />
+    <Compile Include="Filters\SessionCheck.cs" />
+    <Compile Include="Filters\UrlEncoding.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Admin.cs" />
+    <Compile Include="Models\ComplaintDetails.cs" />
+    <Compile Include="Models\dropdownBinderModel.cs" />
+    <Compile Include="Models\EmailService.cs" />
+    <Compile Include="Models\Master.cs" />
+    <Compile Include="Models\QRCodeHelper.cs" />
+    <Compile Include="Models\Reports.cs" />
+    <Compile Include="Models\ShowCauseNoticCls.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Admin\sounds\sound5.ogg" />
+    <Content Include="APPJS\Am5Chart\Animated.js" />
+    <Content Include="APPJS\Am5Chart\index.js" />
+    <Content Include="APPJS\Am5Chart\percent.js" />
+    <Content Include="APPJS\Am5Chart\xy.js" />
+    <Content Include="APPJS\amcharts5\deps\markerjs2.js" />
+    <Content Include="APPJS\amcharts5\deps\pdfmake.js" />
+    <Content Include="APPJS\amcharts5\deps\xlsx.js" />
+    <Content Include="APPJS\amcharts5\examples\flow-arc-horizontal\index.css" />
+    <Content Include="APPJS\amcharts5\examples\flow-arc-horizontal\index.html" />
+    <Content Include="APPJS\amcharts5\examples\flow-arc-horizontal\index.js" />
+    <Content Include="APPJS\amcharts5\examples\flow-arc-vertical\index.css" />
+    <Content Include="APPJS\amcharts5\examples\flow-arc-vertical\index.html" />
+    <Content Include="APPJS\amcharts5\examples\flow-arc-vertical\index.js" />
+    <Content Include="APPJS\amcharts5\examples\flow-chord-directed\index.css" />
+    <Content Include="APPJS\amcharts5\examples\flow-chord-directed\index.html" />
+    <Content Include="APPJS\amcharts5\examples\flow-chord-directed\index.js" />
+    <Content Include="APPJS\amcharts5\examples\flow-chord-non-ribbon\index.css" />
+    <Content Include="APPJS\amcharts5\examples\flow-chord-non-ribbon\index.html" />
+    <Content Include="APPJS\amcharts5\examples\flow-chord-non-ribbon\index.js" />
+    <Content Include="APPJS\amcharts5\examples\flow-chord\index.css" />
+    <Content Include="APPJS\amcharts5\examples\flow-chord\index.html" />
+    <Content Include="APPJS\amcharts5\examples\flow-chord\index.js" />
+    <Content Include="APPJS\amcharts5\examples\flow-sankey\index.css" />
+    <Content Include="APPJS\amcharts5\examples\flow-sankey\index.html" />
+    <Content Include="APPJS\amcharts5\examples\flow-sankey\index.js" />
+    <Content Include="APPJS\amcharts5\examples\gauge-bands\index.css" />
+    <Content Include="APPJS\amcharts5\examples\gauge-bands\index.html" />
+    <Content Include="APPJS\amcharts5\examples\gauge-bands\index.js" />
+    <Content Include="APPJS\amcharts5\examples\gauge\index.css" />
+    <Content Include="APPJS\amcharts5\examples\gauge\index.html" />
+    <Content Include="APPJS\amcharts5\examples\gauge\index.js" />
+    <Content Include="APPJS\amcharts5\examples\hierarchy-force-directed\index.css" />
+    <Content Include="APPJS\amcharts5\examples\hierarchy-force-directed\index.html" />
+    <Content Include="APPJS\amcharts5\examples\hierarchy-force-directed\index.js" />
+    <Content Include="APPJS\amcharts5\examples\hierarchy-pack\index.css" />
+    <Content Include="APPJS\amcharts5\examples\hierarchy-pack\index.html" />
+    <Content Include="APPJS\amcharts5\examples\hierarchy-pack\index.js" />
+    <Content Include="APPJS\amcharts5\examples\hierarchy-partition\index.css" />
+    <Content Include="APPJS\amcharts5\examples\hierarchy-partition\index.html" />
+    <Content Include="APPJS\amcharts5\examples\hierarchy-partition\index.js" />
+    <Content Include="APPJS\amcharts5\examples\hierarchy-sunburst\index.css" />
+    <Content Include="APPJS\amcharts5\examples\hierarchy-sunburst\index.html" />
+    <Content Include="APPJS\amcharts5\examples\hierarchy-sunburst\index.js" />
+    <Content Include="APPJS\amcharts5\examples\hierarchy-treemap\index.css" />
+    <Content Include="APPJS\amcharts5\examples\hierarchy-treemap\index.html" />
+    <Content Include="APPJS\amcharts5\examples\hierarchy-treemap\index.js" />
+    <Content Include="APPJS\amcharts5\examples\hierarchy-tree\index.css" />
+    <Content Include="APPJS\amcharts5\examples\hierarchy-tree\index.html" />
+    <Content Include="APPJS\amcharts5\examples\hierarchy-tree\index.js" />
+    <Content Include="APPJS\amcharts5\examples\hierarchy-voronoi-treemap\index.css" />
+    <Content Include="APPJS\amcharts5\examples\hierarchy-voronoi-treemap\index.html" />
+    <Content Include="APPJS\amcharts5\examples\hierarchy-voronoi-treemap\index.js" />
+    <Content Include="APPJS\amcharts5\examples\json-pie\index.css" />
+    <Content Include="APPJS\amcharts5\examples\json-pie\index.html" />
+    <Content Include="APPJS\amcharts5\examples\json-pie\index.js" />
+    <Content Include="APPJS\amcharts5\examples\json-xy\index.css" />
+    <Content Include="APPJS\amcharts5\examples\json-xy\index.html" />
+    <Content Include="APPJS\amcharts5\examples\json-xy\index.js" />
+    <Content Include="APPJS\amcharts5\examples\map-animating-along-lines\index.css" />
+    <Content Include="APPJS\amcharts5\examples\map-animating-along-lines\index.html" />
+    <Content Include="APPJS\amcharts5\examples\map-animating-along-lines\index.js" />
+    <Content Include="APPJS\amcharts5\examples\map-clustered-points\index.css" />
+    <Content Include="APPJS\amcharts5\examples\map-clustered-points\index.html" />
+    <Content Include="APPJS\amcharts5\examples\map-clustered-points\index.js" />
+    <Content Include="APPJS\amcharts5\examples\map-day-and-night\index.css" />
+    <Content Include="APPJS\amcharts5\examples\map-day-and-night\index.html" />
+    <Content Include="APPJS\amcharts5\examples\map-day-and-night\index.js" />
+    <Content Include="APPJS\amcharts5\examples\map-globe-rotate-to-country\index.css" />
+    <Content Include="APPJS\amcharts5\examples\map-globe-rotate-to-country\index.html" />
+    <Content Include="APPJS\amcharts5\examples\map-globe-rotate-to-country\index.js" />
+    <Content Include="APPJS\amcharts5\examples\map-globe-with-projected-circles\index.css" />
+    <Content Include="APPJS\amcharts5\examples\map-globe-with-projected-circles\index.html" />
+    <Content Include="APPJS\amcharts5\examples\map-globe-with-projected-circles\index.js" />
+    <Content Include="APPJS\amcharts5\examples\map-with-bubbles\index.css" />
+    <Content Include="APPJS\amcharts5\examples\map-with-bubbles\index.html" />
+    <Content Include="APPJS\amcharts5\examples\map-with-bubbles\index.js" />
+    <Content Include="APPJS\amcharts5\examples\map-zoom-to-country\index.css" />
+    <Content Include="APPJS\amcharts5\examples\map-zoom-to-country\index.html" />
+    <Content Include="APPJS\amcharts5\examples\map-zoom-to-country\index.js" />
+    <Content Include="APPJS\amcharts5\examples\misc-40-charts\index.css" />
+    <Content Include="APPJS\amcharts5\examples\misc-40-charts\index.html" />
+    <Content Include="APPJS\amcharts5\examples\misc-40-charts\index.js" />
+    <Content Include="APPJS\amcharts5\examples\misc-microchart-grid\index.css" />
+    <Content Include="APPJS\amcharts5\examples\misc-microchart-grid\index.html" />
+    <Content Include="APPJS\amcharts5\examples\misc-microchart-grid\index.js" />
+    <Content Include="APPJS\amcharts5\examples\pie-chart\index.css" />
+    <Content Include="APPJS\amcharts5\examples\pie-chart\index.html" />
+    <Content Include="APPJS\amcharts5\examples\pie-chart\index.js" />
+    <Content Include="APPJS\amcharts5\examples\pie-donut-chart\index.css" />
+    <Content Include="APPJS\amcharts5\examples\pie-donut-chart\index.html" />
+    <Content Include="APPJS\amcharts5\examples\pie-donut-chart\index.js" />
+    <Content Include="APPJS\amcharts5\examples\pie-variable-radius\index.css" />
+    <Content Include="APPJS\amcharts5\examples\pie-variable-radius\index.html" />
+    <Content Include="APPJS\amcharts5\examples\pie-variable-radius\index.js" />
+    <Content Include="APPJS\amcharts5\examples\radar-column-iwatch-style\index.css" />
+    <Content Include="APPJS\amcharts5\examples\radar-column-iwatch-style\index.html" />
+    <Content Include="APPJS\amcharts5\examples\radar-column-iwatch-style\index.js" />
+    <Content Include="APPJS\amcharts5\examples\radar-heat-map\index.css" />
+    <Content Include="APPJS\amcharts5\examples\radar-heat-map\index.html" />
+    <Content Include="APPJS\amcharts5\examples\radar-heat-map\index.js" />
+    <Content Include="APPJS\amcharts5\examples\radar-line\index.css" />
+    <Content Include="APPJS\amcharts5\examples\radar-line\index.html" />
+    <Content Include="APPJS\amcharts5\examples\radar-line\index.js" />
+    <Content Include="APPJS\amcharts5\examples\radar-time-line\index.css" />
+    <Content Include="APPJS\amcharts5\examples\radar-time-line\index.html" />
+    <Content Include="APPJS\amcharts5\examples\radar-time-line\index.js" />
+    <Content Include="APPJS\amcharts5\examples\sliced-funnel\index.css" />
+    <Content Include="APPJS\amcharts5\examples\sliced-funnel\index.html" />
+    <Content Include="APPJS\amcharts5\examples\sliced-funnel\index.js" />
+    <Content Include="APPJS\amcharts5\examples\sliced-pictorial-stacked\index.css" />
+    <Content Include="APPJS\amcharts5\examples\sliced-pictorial-stacked\index.html" />
+    <Content Include="APPJS\amcharts5\examples\sliced-pictorial-stacked\index.js" />
+    <Content Include="APPJS\amcharts5\examples\sliced-pyramid\index.css" />
+    <Content Include="APPJS\amcharts5\examples\sliced-pyramid\index.html" />
+    <Content Include="APPJS\amcharts5\examples\sliced-pyramid\index.js" />
+    <Content Include="APPJS\amcharts5\examples\stock-chart-comparing-stocks\data\AAPL_day.js" />
+    <Content Include="APPJS\amcharts5\examples\stock-chart-comparing-stocks\data\AMD_day.js" />
+    <Content Include="APPJS\amcharts5\examples\stock-chart-comparing-stocks\data\AMZN_day.js" />
+    <Content Include="APPJS\amcharts5\examples\stock-chart-comparing-stocks\data\GOOG_day.js" />
+    <Content Include="APPJS\amcharts5\examples\stock-chart-comparing-stocks\data\MSFT_day.js" />
+    <Content Include="APPJS\amcharts5\examples\stock-chart-comparing-stocks\data\NFLX_day.js" />
+    <Content Include="APPJS\amcharts5\examples\stock-chart-comparing-stocks\data\NVDA_day.js" />
+    <Content Include="APPJS\amcharts5\examples\stock-chart-comparing-stocks\data\TSLA_day.js" />
+    <Content Include="APPJS\amcharts5\examples\stock-chart-comparing-stocks\index.css" />
+    <Content Include="APPJS\amcharts5\examples\stock-chart-comparing-stocks\index.html" />
+    <Content Include="APPJS\amcharts5\examples\stock-chart-comparing-stocks\index.js" />
+    <Content Include="APPJS\amcharts5\examples\stock-chart-data-granularity\data\MSFT_day.js" />
+    <Content Include="APPJS\amcharts5\examples\stock-chart-data-granularity\data\MSFT_minute.js" />
+    <Content Include="APPJS\amcharts5\examples\stock-chart-data-granularity\data\MSFT_month.js" />
+    <Content Include="APPJS\amcharts5\examples\stock-chart-data-granularity\data\MSFT_week.js" />
+    <Content Include="APPJS\amcharts5\examples\stock-chart-data-granularity\index.css" />
+    <Content Include="APPJS\amcharts5\examples\stock-chart-data-granularity\index.html" />
+    <Content Include="APPJS\amcharts5\examples\stock-chart-data-granularity\index.js" />
+    <Content Include="APPJS\amcharts5\examples\stock-chart-data-grouping\data\MSFT_day.js" />
+    <Content Include="APPJS\amcharts5\examples\stock-chart-data-grouping\index.css" />
+    <Content Include="APPJS\amcharts5\examples\stock-chart-data-grouping\index.html" />
+    <Content Include="APPJS\amcharts5\examples\stock-chart-data-grouping\index.js" />
+    <Content Include="APPJS\amcharts5\examples\stock-chart-intraday\index.css" />
+    <Content Include="APPJS\amcharts5\examples\stock-chart-intraday\index.html" />
+    <Content Include="APPJS\amcharts5\examples\stock-chart-intraday\index.js" />
+    <Content Include="APPJS\amcharts5\examples\stock-chart-live\index.css" />
+    <Content Include="APPJS\amcharts5\examples\stock-chart-live\index.html" />
+    <Content Include="APPJS\amcharts5\examples\stock-chart-live\index.js" />
+    <Content Include="APPJS\amcharts5\examples\stock-chart-volume-separate-panel\index.css" />
+    <Content Include="APPJS\amcharts5\examples\stock-chart-volume-separate-panel\index.html" />
+    <Content Include="APPJS\amcharts5\examples\stock-chart-volume-separate-panel\index.js" />
+    <Content Include="APPJS\amcharts5\examples\stock-chart\index.css" />
+    <Content Include="APPJS\amcharts5\examples\stock-chart\index.html" />
+    <Content Include="APPJS\amcharts5\examples\stock-chart\index.js" />
+    <Content Include="APPJS\amcharts5\examples\venn-diagram\index.css" />
+    <Content Include="APPJS\amcharts5\examples\venn-diagram\index.html" />
+    <Content Include="APPJS\amcharts5\examples\venn-diagram\index.js" />
+    <Content Include="APPJS\amcharts5\examples\wordcloud-with-data\index.css" />
+    <Content Include="APPJS\amcharts5\examples\wordcloud-with-data\index.html" />
+    <Content Include="APPJS\amcharts5\examples\wordcloud-with-data\index.js" />
+    <Content Include="APPJS\amcharts5\examples\wordcloud-with-text\index.css" />
+    <Content Include="APPJS\amcharts5\examples\wordcloud-with-text\index.html" />
+    <Content Include="APPJS\amcharts5\examples\wordcloud-with-text\index.js" />
+    <Content Include="APPJS\amcharts5\examples\xy-100-percent-stacked-column\index.css" />
+    <Content Include="APPJS\amcharts5\examples\xy-100-percent-stacked-column\index.html" />
+    <Content Include="APPJS\amcharts5\examples\xy-100-percent-stacked-column\index.js" />
+    <Content Include="APPJS\amcharts5\examples\xy-animated-bullet-at-the-end-of-the-series\index.css" />
+    <Content Include="APPJS\amcharts5\examples\xy-animated-bullet-at-the-end-of-the-series\index.html" />
+    <Content Include="APPJS\amcharts5\examples\xy-animated-bullet-at-the-end-of-the-series\index.js" />
+    <Content Include="APPJS\amcharts5\examples\xy-bubble\index.css" />
+    <Content Include="APPJS\amcharts5\examples\xy-bubble\index.html" />
+    <Content Include="APPJS\amcharts5\examples\xy-bubble\index.js" />
+    <Content Include="APPJS\amcharts5\examples\xy-candlestick\index.css" />
+    <Content Include="APPJS\amcharts5\examples\xy-candlestick\index.html" />
+    <Content Include="APPJS\amcharts5\examples\xy-candlestick\index.js" />
+    <Content Include="APPJS\amcharts5\examples\xy-clustered-column\index.css" />
+    <Content Include="APPJS\amcharts5\examples\xy-clustered-column\index.html" />
+    <Content Include="APPJS\amcharts5\examples\xy-clustered-column\index.js" />
+    <Content Include="APPJS\amcharts5\examples\xy-column\index.css" />
+    <Content Include="APPJS\amcharts5\examples\xy-column\index.html" />
+    <Content Include="APPJS\amcharts5\examples\xy-column\index.js" />
+    <Content Include="APPJS\amcharts5\examples\xy-comparing-series-google-analytics-style\index.css" />
+    <Content Include="APPJS\amcharts5\examples\xy-comparing-series-google-analytics-style\index.html" />
+    <Content Include="APPJS\amcharts5\examples\xy-comparing-series-google-analytics-style\index.js" />
+    <Content Include="APPJS\amcharts5\examples\xy-data-grouping\index.css" />
+    <Content Include="APPJS\amcharts5\examples\xy-data-grouping\index.html" />
+    <Content Include="APPJS\amcharts5\examples\xy-data-grouping\index.js" />
+    <Content Include="APPJS\amcharts5\examples\xy-draggable-range\index.css" />
+    <Content Include="APPJS\amcharts5\examples\xy-draggable-range\index.html" />
+    <Content Include="APPJS\amcharts5\examples\xy-draggable-range\index.js" />
+    <Content Include="APPJS\amcharts5\examples\xy-drawing-series-with-mouse-or-touch\index.css" />
+    <Content Include="APPJS\amcharts5\examples\xy-drawing-series-with-mouse-or-touch\index.html" />
+    <Content Include="APPJS\amcharts5\examples\xy-drawing-series-with-mouse-or-touch\index.js" />
+    <Content Include="APPJS\amcharts5\examples\xy-dumbbell plot\index.css" />
+    <Content Include="APPJS\amcharts5\examples\xy-dumbbell plot\index.html" />
+    <Content Include="APPJS\amcharts5\examples\xy-dumbbell plot\index.js" />
+    <Content Include="APPJS\amcharts5\examples\xy-evenly-spaced-date-axis\index.css" />
+    <Content Include="APPJS\amcharts5\examples\xy-evenly-spaced-date-axis\index.html" />
+    <Content Include="APPJS\amcharts5\examples\xy-evenly-spaced-date-axis\index.js" />
+    <Content Include="APPJS\amcharts5\examples\xy-line-highlight-on-legend-hover\index.css" />
+    <Content Include="APPJS\amcharts5\examples\xy-line-highlight-on-legend-hover\index.html" />
+    <Content Include="APPJS\amcharts5\examples\xy-line-highlight-on-legend-hover\index.js" />
+    <Content Include="APPJS\amcharts5\examples\xy-line\index.css" />
+    <Content Include="APPJS\amcharts5\examples\xy-line\index.html" />
+    <Content Include="APPJS\amcharts5\examples\xy-line\index.js" />
+    <Content Include="APPJS\amcharts5\examples\xy-live-data\index.css" />
+    <Content Include="APPJS\amcharts5\examples\xy-live-data\index.html" />
+    <Content Include="APPJS\amcharts5\examples\xy-live-data\index.js" />
+    <Content Include="APPJS\amcharts5\examples\xy-multiple-synced-value-axes\index.css" />
+    <Content Include="APPJS\amcharts5\examples\xy-multiple-synced-value-axes\index.html" />
+    <Content Include="APPJS\amcharts5\examples\xy-multiple-synced-value-axes\index.js" />
+    <Content Include="APPJS\amcharts5\examples\xy-ohlc\index.css" />
+    <Content Include="APPJS\amcharts5\examples\xy-ohlc\index.html" />
+    <Content Include="APPJS\amcharts5\examples\xy-ohlc\index.js" />
+    <Content Include="APPJS\amcharts5\examples\xy-real-time-data-sorting\index.css" />
+    <Content Include="APPJS\amcharts5\examples\xy-real-time-data-sorting\index.html" />
+    <Content Include="APPJS\amcharts5\examples\xy-real-time-data-sorting\index.js" />
+    <Content Include="APPJS\amcharts5\examples\xy-smoothed-line\index.css" />
+    <Content Include="APPJS\amcharts5\examples\xy-smoothed-line\index.html" />
+    <Content Include="APPJS\amcharts5\examples\xy-smoothed-line\index.js" />
+    <Content Include="APPJS\amcharts5\examples\xy-stacked-and-clustered-column\index.css" />
+    <Content Include="APPJS\amcharts5\examples\xy-stacked-and-clustered-column\index.html" />
+    <Content Include="APPJS\amcharts5\examples\xy-stacked-and-clustered-column\index.js" />
+    <Content Include="APPJS\amcharts5\examples\xy-stacked-column\index.css" />
+    <Content Include="APPJS\amcharts5\examples\xy-stacked-column\index.html" />
+    <Content Include="APPJS\amcharts5\examples\xy-stacked-column\index.js" />
+    <Content Include="APPJS\amcharts5\examples\xy-stacked-step\index.css" />
+    <Content Include="APPJS\amcharts5\examples\xy-stacked-step\index.html" />
+    <Content Include="APPJS\amcharts5\examples\xy-stacked-step\index.js" />
+    <Content Include="APPJS\amcharts5\examples\xy-stock-comparing\index.css" />
+    <Content Include="APPJS\amcharts5\examples\xy-stock-comparing\index.html" />
+    <Content Include="APPJS\amcharts5\examples\xy-stock-comparing\index.js" />
+    <Content Include="APPJS\amcharts5\examples\xy-stock\index.css" />
+    <Content Include="APPJS\amcharts5\examples\xy-stock\index.html" />
+    <Content Include="APPJS\amcharts5\examples\xy-stock\index.js" />
+    <Content Include="APPJS\amcharts5\flow.js" />
+    <Content Include="APPJS\amcharts5\geodata\worldLow.js" />
+    <Content Include="APPJS\amcharts5\hierarchy.js" />
+    <Content Include="APPJS\amcharts5\index.js" />
+    <Content Include="APPJS\amcharts5\locales\ar.js" />
+    <Content Include="APPJS\amcharts5\locales\bg_BG.js" />
+    <Content Include="APPJS\amcharts5\locales\bs_BA.js" />
+    <Content Include="APPJS\amcharts5\locales\ca_ES.js" />
+    <Content Include="APPJS\amcharts5\locales\cs_CZ.js" />
+    <Content Include="APPJS\amcharts5\locales\da_DK.js" />
+    <Content Include="APPJS\amcharts5\locales\de_CH.js" />
+    <Content Include="APPJS\amcharts5\locales\de_DE.js" />
+    <Content Include="APPJS\amcharts5\locales\el_GR.js" />
+    <Content Include="APPJS\amcharts5\locales\en.js" />
+    <Content Include="APPJS\amcharts5\locales\en_CA.js" />
+    <Content Include="APPJS\amcharts5\locales\en_US.js" />
+    <Content Include="APPJS\amcharts5\locales\es_ES.js" />
+    <Content Include="APPJS\amcharts5\locales\et_EE.js" />
+    <Content Include="APPJS\amcharts5\locales\fi_FI.js" />
+    <Content Include="APPJS\amcharts5\locales\fo_FO.js" />
+    <Content Include="APPJS\amcharts5\locales\fr_FR.js" />
+    <Content Include="APPJS\amcharts5\locales\he_IL.js" />
+    <Content Include="APPJS\amcharts5\locales\hi_IN.js" />
+    <Content Include="APPJS\amcharts5\locales\hr_HR.js" />
+    <Content Include="APPJS\amcharts5\locales\hu_HU.js" />
+    <Content Include="APPJS\amcharts5\locales\id_ID.js" />
+    <Content Include="APPJS\amcharts5\locales\it_IT.js" />
+    <Content Include="APPJS\amcharts5\locales\ja_JP.js" />
+    <Content Include="APPJS\amcharts5\locales\ko_KR.js" />
+    <Content Include="APPJS\amcharts5\locales\lt_LT.js" />
+    <Content Include="APPJS\amcharts5\locales\lv_LV.js" />
+    <Content Include="APPJS\amcharts5\locales\nb_NO.js" />
+    <Content Include="APPJS\amcharts5\locales\nl_NL.js" />
+    <Content Include="APPJS\amcharts5\locales\pl_PL.js" />
+    <Content Include="APPJS\amcharts5\locales\pt_BR.js" />
+    <Content Include="APPJS\amcharts5\locales\pt_PT.js" />
+    <Content Include="APPJS\amcharts5\locales\ro_RO.js" />
+    <Content Include="APPJS\amcharts5\locales\ru_RU.js" />
+    <Content Include="APPJS\amcharts5\locales\sk_SK.js" />
+    <Content Include="APPJS\amcharts5\locales\sl_SL.js" />
+    <Content Include="APPJS\amcharts5\locales\sr_RS.js" />
+    <Content Include="APPJS\amcharts5\locales\sv_SE.js" />
+    <Content Include="APPJS\amcharts5\locales\th_TH.js" />
+    <Content Include="APPJS\amcharts5\locales\tr_TR.js" />
+    <Content Include="APPJS\amcharts5\locales\uk_UA.js" />
+    <Content Include="APPJS\amcharts5\locales\vi_VN.js" />
+    <Content Include="APPJS\amcharts5\locales\zh_Hans.js" />
+    <Content Include="APPJS\amcharts5\locales\zh_Hant.js" />
+    <Content Include="APPJS\amcharts5\map.js" />
+    <Content Include="APPJS\amcharts5\percent.js" />
+    <Content Include="APPJS\amcharts5\plugins\exporting.js" />
+    <Content Include="APPJS\amcharts5\plugins\json.js" />
+    <Content Include="APPJS\amcharts5\plugins\sliceGrouper.js" />
+    <Content Include="APPJS\amcharts5\radar.js" />
+    <Content Include="APPJS\amcharts5\stock.js" />
+    <Content Include="APPJS\amcharts5\themes\Animated.js" />
+    <Content Include="APPJS\amcharts5\themes\Dark.js" />
+    <Content Include="APPJS\amcharts5\themes\Dataviz.js" />
+    <Content Include="APPJS\amcharts5\themes\Frozen.js" />
+    <Content Include="APPJS\amcharts5\themes\Kelly.js" />
+    <Content Include="APPJS\amcharts5\themes\Material.js" />
+    <Content Include="APPJS\amcharts5\themes\Micro.js" />
+    <Content Include="APPJS\amcharts5\themes\Moonrise.js" />
+    <Content Include="APPJS\amcharts5\themes\Responsive.js" />
+    <Content Include="APPJS\amcharts5\themes\Spirited.js" />
+    <Content Include="APPJS\amcharts5\venn.js" />
+    <Content Include="APPJS\amcharts5\wc.js" />
+    <Content Include="APPJS\amcharts5\xy.js" />
+    <Content Include="APPJS\Validate.js" />
+    <Content Include="assets\Advance-datatable\css\buttons.dataTables.css" />
+    <Content Include="assets\Advance-datatable\css\dataTables.dataTables.css" />
+    <Content Include="assets\Advance-datatable\css\plugins.min.css" />
+    <Content Include="assets\Advance-datatable\js\buttons.colVis.min.js" />
+    <Content Include="assets\Advance-datatable\js\buttons.dataTables.js" />
+    <Content Include="assets\Advance-datatable\js\buttons.html5.min.js" />
+    <Content Include="assets\Advance-datatable\js\buttons.print.min.js" />
+    <Content Include="assets\Advance-datatable\js\dataTables.buttons.js" />
+    <Content Include="assets\Advance-datatable\js\dataTables.js" />
+    <Content Include="assets\Advance-datatable\js\jquery-3.7.1.js" />
+    <Content Include="assets\Advance-datatable\js\jszip.min.js" />
+    <Content Include="assets\Advance-datatable\js\pdfmake.min.js" />
+    <Content Include="assets\Advance-datatable\js\vfs_fonts.js" />
+    <Content Include="assets\css\Aarop.js" />
+    <Content Include="assets\css\lobibox.min.css" />
+    <Content Include="assets\css\lobibox.min.js" />
+    <Content Include="assets\css\main.d810cf0ae7f39f28f336.css" />
+    <Content Include="assets\css\notification-custom-script.js" />
+    <Content Include="assets\css\notifications.min.js" />
+    <Content Include="assets\css\textblink.css" />
+    <Content Include="assets\fonts\AD.svg" />
+    <Content Include="assets\fonts\AE.svg" />
+    <Content Include="assets\fonts\AF.svg" />
+    <Content Include="assets\fonts\AG.svg" />
+    <Content Include="assets\fonts\AI.svg" />
+    <Content Include="assets\fonts\AL.svg" />
+    <Content Include="assets\fonts\AM.svg" />
+    <Content Include="assets\fonts\AO.svg" />
+    <Content Include="assets\fonts\AR.svg" />
+    <Content Include="assets\fonts\AS.svg" />
+    <Content Include="assets\fonts\AT.svg" />
+    <Content Include="assets\fonts\AU.svg" />
+    <Content Include="assets\fonts\AW.svg" />
+    <Content Include="assets\fonts\AX.svg" />
+    <Content Include="assets\fonts\AZ.svg" />
+    <Content Include="assets\fonts\BA.svg" />
+    <Content Include="assets\fonts\BB.svg" />
+    <Content Include="assets\fonts\BD.svg" />
+    <Content Include="assets\fonts\BE.svg" />
+    <Content Include="assets\fonts\BF.svg" />
+    <Content Include="assets\fonts\BG.svg" />
+    <Content Include="assets\fonts\BH.svg" />
+    <Content Include="assets\fonts\BI.svg" />
+    <Content Include="assets\fonts\BJ.svg" />
+    <Content Include="assets\fonts\BL.svg" />
+    <Content Include="assets\fonts\BM.svg" />
+    <Content Include="assets\fonts\BN.svg" />
+    <Content Include="assets\fonts\BO.svg" />
+    <Content Include="assets\fonts\BR.svg" />
+    <Content Include="assets\fonts\BS.svg" />
+    <Content Include="assets\fonts\BT.svg" />
+    <Content Include="assets\fonts\BV.svg" />
+    <Content Include="assets\fonts\BW.svg" />
+    <Content Include="assets\fonts\BY.svg" />
+    <Content Include="assets\fonts\BZ.svg" />
+    <Content Include="assets\fonts\CA.svg" />
+    <Content Include="assets\fonts\CC.svg" />
+    <Content Include="assets\fonts\CD.svg" />
+    <Content Include="assets\fonts\CF.svg" />
+    <Content Include="assets\fonts\CG.svg" />
+    <Content Include="assets\fonts\CH.svg" />
+    <Content Include="assets\fonts\CI.svg" />
+    <Content Include="assets\fonts\CK.svg" />
+    <Content Include="assets\fonts\CL.svg" />
+    <Content Include="assets\fonts\CM.svg" />
+    <Content Include="assets\fonts\CN.svg" />
+    <Content Include="assets\fonts\CO.svg" />
+    <Content Include="assets\fonts\CR.svg" />
+    <Content Include="assets\fonts\CU.svg" />
+    <Content Include="assets\fonts\CV.svg" />
+    <Content Include="assets\fonts\CW.svg" />
+    <Content Include="assets\fonts\CX.svg" />
+    <Content Include="assets\fonts\CY.svg" />
+    <Content Include="assets\fonts\CZ.svg" />
+    <Content Include="assets\fonts\DE.svg" />
+    <Content Include="assets\fonts\DJ.svg" />
+    <Content Include="assets\fonts\DK.svg" />
+    <Content Include="assets\fonts\DM.svg" />
+    <Content Include="assets\fonts\DO.svg" />
+    <Content Include="assets\fonts\DZ.svg" />
+    <Content Include="assets\fonts\EC.svg" />
+    <Content Include="assets\fonts\EE.svg" />
+    <Content Include="assets\fonts\EG.svg" />
+    <Content Include="assets\fonts\ER.svg" />
+    <Content Include="assets\fonts\ES.svg" />
+    <Content Include="assets\fonts\ET.svg" />
+    <Content Include="assets\fonts\EU.svg" />
+    <Content Include="assets\fonts\fa-solid-900.svg" />
+    <Content Include="assets\fonts\FI.svg" />
+    <Content Include="assets\fonts\FJ.svg" />
+    <Content Include="assets\fonts\FK.svg" />
+    <Content Include="assets\fonts\FM.svg" />
+    <Content Include="assets\fonts\FO.svg" />
+    <Content Include="assets\fonts\FR.svg" />
+    <Content Include="assets\fonts\GA.svg" />
+    <Content Include="assets\fonts\GB-ENG.svg" />
+    <Content Include="assets\fonts\GB-NIR.svg" />
+    <Content Include="assets\fonts\GB-SCT.svg" />
+    <Content Include="assets\fonts\GB-WLS.svg" />
+    <Content Include="assets\fonts\GB-ZET.svg" />
+    <Content Include="assets\fonts\GB.svg" />
+    <Content Include="assets\fonts\GD.svg" />
+    <Content Include="assets\fonts\GE.svg" />
+    <Content Include="assets\fonts\GF.svg" />
+    <Content Include="assets\fonts\GG.svg" />
+    <Content Include="assets\fonts\GH.svg" />
+    <Content Include="assets\fonts\GI.svg" />
+    <Content Include="assets\fonts\GL.svg" />
+    <Content Include="assets\fonts\GM.svg" />
+    <Content Include="assets\fonts\GN.svg" />
+    <Content Include="assets\fonts\GP.svg" />
+    <Content Include="assets\fonts\GQ.svg" />
+    <Content Include="assets\fonts\GR.svg" />
+    <Content Include="assets\fonts\GS.svg" />
+    <Content Include="assets\fonts\GT.svg" />
+    <Content Include="assets\fonts\GU.svg" />
+    <Content Include="assets\fonts\GW.svg" />
+    <Content Include="assets\fonts\GY.svg" />
+    <Content Include="assets\fonts\HK.svg" />
+    <Content Include="assets\fonts\HM.svg" />
+    <Content Include="assets\fonts\HN.svg" />
+    <Content Include="assets\fonts\HR.svg" />
+    <Content Include="assets\fonts\HT.svg" />
+    <Content Include="assets\fonts\HU.svg" />
+    <Content Include="assets\fonts\ID.svg" />
+    <Content Include="assets\fonts\IE.svg" />
+    <Content Include="assets\fonts\IL.svg" />
+    <Content Include="assets\fonts\IM.svg" />
+    <Content Include="assets\fonts\IN.svg" />
+    <Content Include="assets\fonts\IO.svg" />
+    <Content Include="assets\fonts\ionicons.svg" />
+    <Content Include="assets\fonts\IQ.svg" />
+    <Content Include="assets\fonts\IR.svg" />
+    <Content Include="assets\fonts\IS.svg" />
+    <Content Include="assets\fonts\IT.svg" />
+    <Content Include="assets\fonts\JE.svg" />
+    <Content Include="assets\fonts\JM.svg" />
+    <Content Include="assets\fonts\JO.svg" />
+    <Content Include="assets\fonts\JP.svg" />
+    <Content Include="assets\fonts\KE.svg" />
+    <Content Include="assets\fonts\KG.svg" />
+    <Content Include="assets\fonts\KH.svg" />
+    <Content Include="assets\fonts\KI.svg" />
+    <Content Include="assets\fonts\KM.svg" />
+    <Content Include="assets\fonts\KN.svg" />
+    <Content Include="assets\fonts\KP.svg" />
+    <Content Include="assets\fonts\KR.svg" />
+    <Content Include="assets\fonts\KW.svg" />
+    <Content Include="assets\fonts\KY.svg" />
+    <Content Include="assets\fonts\KZ.svg" />
+    <Content Include="assets\fonts\LA.svg" />
+    <Content Include="assets\fonts\LB.svg" />
+    <Content Include="assets\fonts\LC.svg" />
+    <Content Include="assets\fonts\LGBT.svg" />
+    <Content Include="assets\fonts\LI.svg" />
+    <Content Include="assets\fonts\LK.svg" />
+    <Content Include="assets\fonts\LR.svg" />
+    <Content Include="assets\fonts\LS.svg" />
+    <Content Include="assets\fonts\LT.svg" />
+    <Content Include="assets\fonts\LU.svg" />
+    <Content Include="assets\fonts\LV.svg" />
+    <Content Include="assets\fonts\LY.svg" />
+    <Content Include="assets\fonts\MA.svg" />
+    <Content Include="assets\fonts\MC.svg" />
+    <Content Include="assets\fonts\MD.svg" />
+    <Content Include="assets\fonts\ME.svg" />
+    <Content Include="assets\fonts\MF.svg" />
+    <Content Include="assets\fonts\MG.svg" />
+    <Content Include="assets\fonts\MH.svg" />
+    <Content Include="assets\fonts\MK.svg" />
+    <Content Include="assets\fonts\ML.svg" />
+    <Content Include="assets\fonts\MM.svg" />
+    <Content Include="assets\fonts\MN.svg" />
+    <Content Include="assets\fonts\MO.svg" />
+    <Content Include="assets\fonts\MP.svg" />
+    <Content Include="assets\fonts\MQ.svg" />
+    <Content Include="assets\fonts\MR.svg" />
+    <Content Include="assets\fonts\MS.svg" />
+    <Content Include="assets\fonts\MT.svg" />
+    <Content Include="assets\fonts\MU.svg" />
+    <Content Include="assets\fonts\MV.svg" />
+    <Content Include="assets\fonts\MW.svg" />
+    <Content Include="assets\fonts\MX.svg" />
+    <Content Include="assets\fonts\MY.svg" />
+    <Content Include="assets\fonts\MZ.svg" />
+    <Content Include="assets\fonts\NA.svg" />
+    <Content Include="assets\fonts\NC.svg" />
+    <Content Include="assets\fonts\NE.svg" />
+    <Content Include="assets\fonts\NF.svg" />
+    <Content Include="assets\fonts\NG.svg" />
+    <Content Include="assets\fonts\NI.svg" />
+    <Content Include="assets\fonts\NL.svg" />
+    <Content Include="assets\fonts\NO.svg" />
+    <Content Include="assets\fonts\NP.svg" />
+    <Content Include="assets\fonts\NR.svg" />
+    <Content Include="assets\fonts\NU.svg" />
+    <Content Include="assets\fonts\NZ.svg" />
+    <Content Include="assets\fonts\OM.svg" />
+    <Content Include="assets\fonts\PA.svg" />
+    <Content Include="assets\fonts\PE.svg" />
+    <Content Include="assets\fonts\PF.svg" />
+    <Content Include="assets\fonts\PG.svg" />
+    <Content Include="assets\fonts\PH.svg" />
+    <Content Include="assets\fonts\PK.svg" />
+    <Content Include="assets\fonts\PL.svg" />
+    <Content Include="assets\fonts\PM.svg" />
+    <Content Include="assets\fonts\PN.svg" />
+    <Content Include="assets\fonts\PR.svg" />
+    <Content Include="assets\fonts\PS.svg" />
+    <Content Include="assets\fonts\PT.svg" />
+    <Content Include="assets\fonts\PW.svg" />
+    <Content Include="assets\fonts\PY.svg" />
+    <Content Include="assets\fonts\QA.svg" />
+    <Content Include="assets\fonts\RE.svg" />
+    <Content Include="assets\fonts\RO.svg" />
+    <Content Include="assets\fonts\RS.svg" />
+    <Content Include="assets\fonts\RU.svg" />
+    <Content Include="assets\fonts\RW.svg" />
+    <Content Include="assets\fonts\SA.svg" />
+    <Content Include="assets\fonts\SB.svg" />
+    <Content Include="assets\fonts\SC.svg" />
+    <Content Include="assets\fonts\SD.svg" />
+    <Content Include="assets\fonts\SE.svg" />
+    <Content Include="assets\fonts\SG.svg" />
+    <Content Include="assets\fonts\SH.svg" />
+    <Content Include="assets\fonts\SI.svg" />
+    <Content Include="assets\fonts\SJ.svg" />
+    <Content Include="assets\fonts\SK.svg" />
+    <Content Include="assets\fonts\SL.svg" />
+    <Content Include="assets\fonts\SM.svg" />
+    <Content Include="assets\fonts\SN.svg" />
+    <Content Include="assets\fonts\SO.svg" />
+    <Content Include="assets\fonts\SR.svg" />
+    <Content Include="assets\fonts\SS.svg" />
+    <Content Include="assets\fonts\ST.svg" />
+    <Content Include="assets\fonts\SV.svg" />
+    <Content Include="assets\fonts\SX.svg" />
+    <Content Include="assets\fonts\SY.svg" />
+    <Content Include="assets\fonts\SZ.svg" />
+    <Content Include="assets\fonts\TC.svg" />
+    <Content Include="assets\fonts\TD.svg" />
+    <Content Include="assets\fonts\TF.svg" />
+    <Content Include="assets\fonts\TG.svg" />
+    <Content Include="assets\fonts\TH.svg" />
+    <Content Include="assets\fonts\TJ.svg" />
+    <Content Include="assets\fonts\TK.svg" />
+    <Content Include="assets\fonts\TL.svg" />
+    <Content Include="assets\fonts\TM.svg" />
+    <Content Include="assets\fonts\TN.svg" />
+    <Content Include="assets\fonts\TO.svg" />
+    <Content Include="assets\fonts\TR.svg" />
+    <Content Include="assets\fonts\TT.svg" />
+    <Content Include="assets\fonts\TV.svg" />
+    <Content Include="assets\fonts\TW.svg" />
+    <Content Include="assets\fonts\TZ.svg" />
+    <Content Include="assets\fonts\UA.svg" />
+    <Content Include="assets\fonts\UG.svg" />
+    <Content Include="assets\fonts\UM.svg" />
+    <Content Include="assets\fonts\US-CA.svg" />
+    <Content Include="assets\fonts\US.svg" />
+    <Content Include="assets\fonts\UY.svg" />
+    <Content Include="assets\fonts\UZ.svg" />
+    <Content Include="assets\fonts\VA.svg" />
+    <Content Include="assets\fonts\VC.svg" />
+    <Content Include="assets\fonts\VE.svg" />
+    <Content Include="assets\fonts\VG.svg" />
+    <Content Include="assets\fonts\VI.svg" />
+    <Content Include="assets\fonts\VN.svg" />
+    <Content Include="assets\fonts\VU.svg" />
+    <Content Include="assets\fonts\WF.svg" />
+    <Content Include="assets\fonts\WS.svg" />
+    <Content Include="assets\fonts\XK.svg" />
+    <Content Include="assets\fonts\YE.svg" />
+    <Content Include="assets\fonts\YT.svg" />
+    <Content Include="assets\fonts\ZA.svg" />
+    <Content Include="assets\fonts\ZM.svg" />
+    <Content Include="assets\fonts\ZW.svg" />
+    <Content Include="assets\images\ajax-loader.gif" />
+    <Content Include="assets\images\avatars\1.jpg" />
+    <Content Include="assets\images\avatars\10.jpg" />
+    <Content Include="assets\images\avatars\12.jpg" />
+    <Content Include="assets\images\avatars\2.jpg" />
+    <Content Include="assets\images\avatars\3.jpg" />
+    <Content Include="assets\images\avatars\4.jpg" />
+    <Content Include="assets\images\avatars\5.jpg" />
+    <Content Include="assets\images\avatars\6.jpg" />
+    <Content Include="assets\images\avatars\7.jpg" />
+    <Content Include="assets\images\avatars\8.jpg" />
+    <Content Include="assets\images\avatars\9.jpg" />
+    <Content Include="assets\images\case1.png" />
+    <Content Include="assets\images\case2.png" />
+    <Content Include="assets\images\casecomp.jpg" />
+    <Content Include="assets\images\caseorder.jpg" />
+    <Content Include="assets\images\CM.jpg" />
+    <Content Include="assets\images\dropdown-header\abstract1.jpg" />
+    <Content Include="assets\images\dropdown-header\abstract10.jpg" />
+    <Content Include="assets\images\dropdown-header\abstract2.jpg" />
+    <Content Include="assets\images\dropdown-header\abstract3.jpg" />
+    <Content Include="assets\images\dropdown-header\abstract4.jpg" />
+    <Content Include="assets\images\dropdown-header\abstract5.jpg" />
+    <Content Include="assets\images\dropdown-header\abstract6.jpg" />
+    <Content Include="assets\images\dropdown-header\city1.jpg" />
+    <Content Include="assets\images\dropdown-header\city2.jpg" />
+    <Content Include="assets\images\dropdown-header\city3.jpg" />
+    <Content Include="assets\images\dropdown-header\city4.jpg" />
+    <Content Include="assets\images\dropdown-header\city5.jpg" />
+    <Content Include="assets\images\icons-rtl.gif" />
+    <Content Include="assets\images\icons.gif" />
+    <Content Include="assets\images\Jal_Nigam_Rural_Logo.png" />
+    <Content Include="assets\images\Jal_Nigam_Rural_Logo1.png" />
+    <Content Include="assets\images\loading.gif" />
+    <Content Include="assets\images\loder.gif" />
+    <Content Include="assets\images\logo-inverse.png" />
+    <Content Include="assets\images\logo.png" />
+    <Content Include="assets\images\op.png" />
+    <Content Include="assets\images\originals\city.jpg" />
+    <Content Include="assets\images\originals\citydark.jpg" />
+    <Content Include="assets\images\originals\citynights.jpg" />
+    <Content Include="assets\images\originals\fence-small.jpg" />
+    <Content Include="assets\images\refresh.png" />
+    <Content Include="assets\images\sidebar\abstract1.jpg" />
+    <Content Include="assets\images\sidebar\abstract10.jpg" />
+    <Content Include="assets\images\sidebar\abstract2.jpg" />
+    <Content Include="assets\images\sidebar\abstract3.jpg" />
+    <Content Include="assets\images\sidebar\abstract4.jpg" />
+    <Content Include="assets\images\sidebar\abstract5.jpg" />
+    <Content Include="assets\images\sidebar\abstract6.jpg" />
+    <Content Include="assets\images\sidebar\abstract7.jpg" />
+    <Content Include="assets\images\sidebar\abstract8.jpg" />
+    <Content Include="assets\images\sidebar\abstract9.jpg" />
+    <Content Include="assets\images\sidebar\city1.jpg" />
+    <Content Include="assets\images\sidebar\city2.jpg" />
+    <Content Include="assets\images\sidebar\city3.jpg" />
+    <Content Include="assets\images\sidebar\city4.jpg" />
+    <Content Include="assets\images\sidebar\city5.jpg" />
+    <Content Include="assets\images\vline-rtl.gif" />
+    <Content Include="assets\images\vline.gif" />
+    <Content Include="assets\pdf\pdf.png" />
+    <Content Include="assets\pdf\pdf1.png" />
+    <Content Include="assets\pdf\pdf2.png" />
+    <Content Include="assets\pdf\pdf3.png" />
+    <Content Include="assets\pdf\pdf4.png" />
+    <Content Include="assets\pdf\pdf5.png" />
+    <Content Include="assets\scripts\apexcharts.js" />
+    <Content Include="assets\scripts\apexcharts.min.js" />
+    <Content Include="assets\scripts\ChartLibrary\animated.js" />
+    <Content Include="assets\scripts\ChartLibrary\charts.js" />
+    <Content Include="assets\scripts\ChartLibrary\core.js" />
+    <Content Include="assets\scripts\ChartLibrary\testing.js" />
+    <Content Include="assets\scripts\ckeditor.js" />
+    <Content Include="assets\scripts\main.d810cf0ae7f39f28f336.js" />
+    <Content Include="assets\scripts\main1.js" />
+    <Content Include="assets\scripts\toastr.css" />
+    <Content Include="assets\scripts\toastr.js" />
+    <Content Include="Content\assets\css\bootstrap.min.css" />
+    <Content Include="Content\assets\css\jquery-ui.css" />
+    <Content Include="Content\assets\css\jquery-ui.js" />
+    <Content Include="Content\assets\css\Loader.css" />
+    <Content Include="Content\assets\css\skins\default.css" />
+    <Content Include="Content\assets\css\style.css" />
+    <Content Include="Content\assets\fonts\flaticon\font\flaticon.css" />
+    <Content Include="Content\assets\fonts\flaticon\font\Flaticon.svg" />
+    <Content Include="Content\assets\fonts\font-awesome\css\font-awesome.min.css" />
+    <Content Include="Content\assets\fonts\font-awesome\fonts\fontawesome-webfont3e6e.svg" />
+    <Content Include="Content\assets\img\animated-text-2.png" />
+    <Content Include="Content\assets\img\animated-text.png" />
+    <Content Include="Content\assets\img\backimg2.png" />
+    <Content Include="Content\assets\img\border.png" />
+    <Content Include="Content\assets\img\img-1.png" />
+    <Content Include="Content\assets\img\img-15.jpg" />
+    <Content Include="Content\assets\img\img-16.jpg" />
+    <Content Include="Content\assets\img\img-2.png" />
+    <Content Include="Content\assets\img\img-6.png" />
+    <Content Include="Content\assets\img\img.jpg" />
+    <Content Include="Content\assets\img\loader.gif" />
+    <Content Include="Content\assets\img\logos\images.jpg" />
+    <Content Include="Content\assets\img\logos\logo-2.png" />
+    <Content Include="Content\assets\img\weather.png" />
+    <Content Include="Content\assets\img\whats-new-bg.png" />
+    <Content Include="Content\assets\js\app.js" />
+    <Content Include="Content\assets\js\bootstrap.bundle.min.js" />
+    <Content Include="Content\assets\js\jquery.min.js" />
+    <Content Include="Content\assets\js\popper.min.js" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\mobileOtp.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
+    <Content Include="HomeChartJS\animated.js" />
+    <Content Include="HomeChartJS\charts.js" />
+    <Content Include="HomeChartJS\core.js" />
+    <Content Include="Jal_Nigam_Home_Page\img\Division_Checking_System_Logo.png" />
+    <Content Include="Jal_Nigam_Home_Page\img\jal-shakti-logo-icon.png" />
+    <Content Include="Jal_Nigam_Home_Page\img\nmcg-logo.png" />
+    <Content Include="Jal_Nigam_Home_Page\img\smcg-up.png" />
+    <Content Include="Jal_Nigam_Home_Page\img\up_logo-Copy.png" />
+    <Content Include="Jal_Nigam_Home_Page\img\Uttar_Pradesh_Jal_Nigam_Rural_Logo_Final.png" />
+    <Content Include="main.d810cf0ae7f39f28f336.css" />
+    <Content Include="main.d810cf0ae7f39f28f336.js" />
+    <Content Include="Scripts\apexcharts.js" />
+    <Content Include="Scripts\apexcharts.min.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="assets\fonts\fa-solid-900.eot" />
+    <Content Include="assets\fonts\fa-solid-900.ttf" />
+    <Content Include="assets\fonts\fa-solid-900.woff" />
+    <Content Include="assets\fonts\fa-solid-900.woff2" />
+    <Content Include="assets\fonts\fa-solid-900d41d.eot" />
+    <Content Include="assets\fonts\ionicons.eot" />
+    <Content Include="assets\fonts\ionicons.ttf" />
+    <Content Include="assets\fonts\ionicons.woff" />
+    <Content Include="assets\fonts\Linearicons-Free.eot" />
+    <Content Include="assets\fonts\Linearicons-Free.ttf" />
+    <Content Include="assets\fonts\Linearicons-Free.woff" />
+    <Content Include="assets\fonts\Linearicons-Free.woff2" />
+    <Content Include="assets\fonts\Pe-icon-7-stroke.ttf" />
+    <Content Include="assets\fonts\Pe-icon-7-stroke.woff" />
+    <Content Include="APPJS\amcharts5\CHANGELOG.md" />
+    <Content Include="APPJS\amcharts5\deps\markerjs2.js.map" />
+    <Content Include="APPJS\amcharts5\deps\pdfmake.js.map" />
+    <Content Include="APPJS\amcharts5\deps\xlsx.js.map" />
+    <Content Include="APPJS\amcharts5\examples\flow-arc-horizontal\README.md" />
+    <Content Include="APPJS\amcharts5\examples\flow-arc-vertical\README.md" />
+    <Content Include="APPJS\amcharts5\examples\flow-chord-directed\README.md" />
+    <Content Include="APPJS\amcharts5\examples\flow-chord-non-ribbon\README.md" />
+    <Content Include="APPJS\amcharts5\examples\flow-chord\README.md" />
+    <Content Include="APPJS\amcharts5\examples\flow-sankey\README.md" />
+    <Content Include="APPJS\amcharts5\examples\gauge-bands\README.md" />
+    <Content Include="APPJS\amcharts5\examples\gauge\README.md" />
+    <Content Include="APPJS\amcharts5\examples\hierarchy-force-directed\README.md" />
+    <Content Include="APPJS\amcharts5\examples\hierarchy-pack\README.md" />
+    <Content Include="APPJS\amcharts5\examples\hierarchy-partition\README.md" />
+    <Content Include="APPJS\amcharts5\examples\hierarchy-sunburst\README.md" />
+    <Content Include="APPJS\amcharts5\examples\hierarchy-treemap\README.md" />
+    <Content Include="APPJS\amcharts5\examples\hierarchy-tree\README.md" />
+    <Content Include="APPJS\amcharts5\examples\hierarchy-voronoi-treemap\README.md" />
+    <Content Include="APPJS\amcharts5\examples\json-pie\README.md" />
+    <Content Include="APPJS\amcharts5\examples\json-xy\README.md" />
+    <Content Include="APPJS\amcharts5\examples\map-animating-along-lines\README.md" />
+    <Content Include="APPJS\amcharts5\examples\map-clustered-points\README.md" />
+    <Content Include="APPJS\amcharts5\examples\map-day-and-night\README.md" />
+    <Content Include="APPJS\amcharts5\examples\map-globe-rotate-to-country\README.md" />
+    <Content Include="APPJS\amcharts5\examples\map-globe-with-projected-circles\README.md" />
+    <Content Include="APPJS\amcharts5\examples\map-with-bubbles\README.md" />
+    <Content Include="APPJS\amcharts5\examples\map-zoom-to-country\README.md" />
+    <Content Include="APPJS\amcharts5\examples\misc-40-charts\README.md" />
+    <Content Include="APPJS\amcharts5\examples\misc-microchart-grid\README.md" />
+    <Content Include="APPJS\amcharts5\examples\pie-chart\README.md" />
+    <Content Include="APPJS\amcharts5\examples\pie-donut-chart\README.md" />
+    <Content Include="APPJS\amcharts5\examples\pie-variable-radius\README.md" />
+    <Content Include="APPJS\amcharts5\examples\radar-column-iwatch-style\README.md" />
+    <Content Include="APPJS\amcharts5\examples\radar-heat-map\README.md" />
+    <Content Include="APPJS\amcharts5\examples\radar-line\README.md" />
+    <Content Include="APPJS\amcharts5\examples\radar-time-line\README.md" />
+    <Content Include="APPJS\amcharts5\examples\sliced-funnel\README.md" />
+    <Content Include="APPJS\amcharts5\examples\sliced-pictorial-stacked\README.md" />
+    <Content Include="APPJS\amcharts5\examples\sliced-pyramid\README.md" />
+    <Content Include="APPJS\amcharts5\examples\stock-chart-comparing-stocks\README.md" />
+    <Content Include="APPJS\amcharts5\examples\stock-chart-data-granularity\README.md" />
+    <Content Include="APPJS\amcharts5\examples\stock-chart-data-grouping\README.md" />
+    <Content Include="APPJS\amcharts5\examples\stock-chart-intraday\README.md" />
+    <Content Include="APPJS\amcharts5\examples\stock-chart-live\README.md" />
+    <Content Include="APPJS\amcharts5\examples\stock-chart-volume-separate-panel\README.md" />
+    <Content Include="APPJS\amcharts5\examples\stock-chart\README.md" />
+    <Content Include="APPJS\amcharts5\examples\venn-diagram\README.md" />
+    <Content Include="APPJS\amcharts5\examples\wordcloud-with-data\README.md" />
+    <Content Include="APPJS\amcharts5\examples\wordcloud-with-text\README.md" />
+    <Content Include="APPJS\amcharts5\examples\xy-100-percent-stacked-column\README.md" />
+    <Content Include="APPJS\amcharts5\examples\xy-animated-bullet-at-the-end-of-the-series\README.md" />
+    <Content Include="APPJS\amcharts5\examples\xy-bubble\README.md" />
+    <Content Include="APPJS\amcharts5\examples\xy-candlestick\README.md" />
+    <Content Include="APPJS\amcharts5\examples\xy-clustered-column\README.md" />
+    <Content Include="APPJS\amcharts5\examples\xy-column\README.md" />
+    <Content Include="APPJS\amcharts5\examples\xy-comparing-series-google-analytics-style\README.md" />
+    <Content Include="APPJS\amcharts5\examples\xy-data-grouping\README.md" />
+    <Content Include="APPJS\amcharts5\examples\xy-draggable-range\README.md" />
+    <Content Include="APPJS\amcharts5\examples\xy-drawing-series-with-mouse-or-touch\README.md" />
+    <Content Include="APPJS\amcharts5\examples\xy-dumbbell plot\README.md" />
+    <Content Include="APPJS\amcharts5\examples\xy-evenly-spaced-date-axis\README.md" />
+    <Content Include="APPJS\amcharts5\examples\xy-line-highlight-on-legend-hover\README.md" />
+    <Content Include="APPJS\amcharts5\examples\xy-line\README.md" />
+    <Content Include="APPJS\amcharts5\examples\xy-live-data\README.md" />
+    <Content Include="APPJS\amcharts5\examples\xy-multiple-synced-value-axes\README.md" />
+    <Content Include="APPJS\amcharts5\examples\xy-ohlc\README.md" />
+    <Content Include="APPJS\amcharts5\examples\xy-real-time-data-sorting\README.md" />
+    <Content Include="APPJS\amcharts5\examples\xy-smoothed-line\README.md" />
+    <Content Include="APPJS\amcharts5\examples\xy-stacked-and-clustered-column\README.md" />
+    <Content Include="APPJS\amcharts5\examples\xy-stacked-column\README.md" />
+    <Content Include="APPJS\amcharts5\examples\xy-stacked-step\README.md" />
+    <Content Include="APPJS\amcharts5\examples\xy-stock-comparing\README.md" />
+    <Content Include="APPJS\amcharts5\examples\xy-stock\README.md" />
+    <Content Include="APPJS\amcharts5\flow.js.map" />
+    <Content Include="APPJS\amcharts5\hierarchy.js.map" />
+    <Content Include="APPJS\amcharts5\index.js.map" />
+    <Content Include="APPJS\amcharts5\LICENSE" />
+    <Content Include="APPJS\amcharts5\LICENSE-3RD-PARTY.md" />
+    <Content Include="APPJS\amcharts5\locales\ar.js.map" />
+    <Content Include="APPJS\amcharts5\locales\bg_BG.js.map" />
+    <Content Include="APPJS\amcharts5\locales\bs_BA.js.map" />
+    <Content Include="APPJS\amcharts5\locales\ca_ES.js.map" />
+    <Content Include="APPJS\amcharts5\locales\cs_CZ.js.map" />
+    <Content Include="APPJS\amcharts5\locales\da_DK.js.map" />
+    <Content Include="APPJS\amcharts5\locales\de_CH.js.map" />
+    <Content Include="APPJS\amcharts5\locales\de_DE.js.map" />
+    <Content Include="APPJS\amcharts5\locales\el_GR.js.map" />
+    <Content Include="APPJS\amcharts5\locales\en.js.map" />
+    <Content Include="APPJS\amcharts5\locales\en_CA.js.map" />
+    <Content Include="APPJS\amcharts5\locales\en_US.js.map" />
+    <Content Include="APPJS\amcharts5\locales\es_ES.js.map" />
+    <Content Include="APPJS\amcharts5\locales\et_EE.js.map" />
+    <Content Include="APPJS\amcharts5\locales\fi_FI.js.map" />
+    <Content Include="APPJS\amcharts5\locales\fo_FO.js.map" />
+    <Content Include="APPJS\amcharts5\locales\fr_FR.js.map" />
+    <Content Include="APPJS\amcharts5\locales\he_IL.js.map" />
+    <Content Include="APPJS\amcharts5\locales\hi_IN.js.map" />
+    <Content Include="APPJS\amcharts5\locales\hr_HR.js.map" />
+    <Content Include="APPJS\amcharts5\locales\hu_HU.js.map" />
+    <Content Include="APPJS\amcharts5\locales\id_ID.js.map" />
+    <Content Include="APPJS\amcharts5\locales\it_IT.js.map" />
+    <Content Include="APPJS\amcharts5\locales\ja_JP.js.map" />
+    <Content Include="APPJS\amcharts5\locales\ko_KR.js.map" />
+    <Content Include="APPJS\amcharts5\locales\lt_LT.js.map" />
+    <Content Include="APPJS\amcharts5\locales\lv_LV.js.map" />
+    <Content Include="APPJS\amcharts5\locales\nb_NO.js.map" />
+    <Content Include="APPJS\amcharts5\locales\nl_NL.js.map" />
+    <Content Include="APPJS\amcharts5\locales\pl_PL.js.map" />
+    <Content Include="APPJS\amcharts5\locales\pt_BR.js.map" />
+    <Content Include="APPJS\amcharts5\locales\pt_PT.js.map" />
+    <Content Include="APPJS\amcharts5\locales\ro_RO.js.map" />
+    <Content Include="APPJS\amcharts5\locales\ru_RU.js.map" />
+    <Content Include="APPJS\amcharts5\locales\sk_SK.js.map" />
+    <Content Include="APPJS\amcharts5\locales\sl_SL.js.map" />
+    <Content Include="APPJS\amcharts5\locales\sr_RS.js.map" />
+    <Content Include="APPJS\amcharts5\locales\sv_SE.js.map" />
+    <Content Include="APPJS\amcharts5\locales\th_TH.js.map" />
+    <Content Include="APPJS\amcharts5\locales\tr_TR.js.map" />
+    <Content Include="APPJS\amcharts5\locales\uk_UA.js.map" />
+    <Content Include="APPJS\amcharts5\locales\vi_VN.js.map" />
+    <Content Include="APPJS\amcharts5\locales\zh_Hans.js.map" />
+    <Content Include="APPJS\amcharts5\locales\zh_Hant.js.map" />
+    <Content Include="APPJS\amcharts5\map.js.map" />
+    <Content Include="APPJS\amcharts5\percent.js.map" />
+    <Content Include="APPJS\amcharts5\plugins\exporting.js.map" />
+    <Content Include="APPJS\amcharts5\plugins\json.js.map" />
+    <Content Include="APPJS\amcharts5\plugins\sliceGrouper.js.map" />
+    <Content Include="APPJS\amcharts5\radar.js.map" />
+    <Content Include="APPJS\amcharts5\README.md" />
+    <Content Include="APPJS\amcharts5\stock.js.map" />
+    <Content Include="APPJS\amcharts5\themes\Animated.js.map" />
+    <Content Include="APPJS\amcharts5\themes\Dark.js.map" />
+    <Content Include="APPJS\amcharts5\themes\Dataviz.js.map" />
+    <Content Include="APPJS\amcharts5\themes\Frozen.js.map" />
+    <Content Include="APPJS\amcharts5\themes\Kelly.js.map" />
+    <Content Include="APPJS\amcharts5\themes\Material.js.map" />
+    <Content Include="APPJS\amcharts5\themes\Micro.js.map" />
+    <Content Include="APPJS\amcharts5\themes\Moonrise.js.map" />
+    <Content Include="APPJS\amcharts5\themes\Responsive.js.map" />
+    <Content Include="APPJS\amcharts5\themes\Spirited.js.map" />
+    <Content Include="APPJS\amcharts5\venn.js.map" />
+    <Content Include="APPJS\amcharts5\wc.js.map" />
+    <Content Include="APPJS\amcharts5\xy.js.map" />
+    <Content Include="Content\assets\fonts\flaticon\font\Flaticon.eot" />
+    <Content Include="Content\assets\fonts\flaticon\font\Flaticon.ttf" />
+    <Content Include="Content\assets\fonts\flaticon\font\Flaticon.woff" />
+    <Content Include="Content\assets\fonts\flaticon\font\Flaticon.woff2" />
+    <Content Include="Content\assets\fonts\flaticon\font\Flaticond41d.eot" />
+    <Content Include="Content\assets\fonts\font-awesome\fonts\fontawesome-webfont3e6e.eot" />
+    <Content Include="Content\assets\fonts\font-awesome\fonts\fontawesome-webfont3e6e.ttf" />
+    <Content Include="Content\assets\fonts\font-awesome\fonts\fontawesome-webfont3e6e.woff" />
+    <Content Include="Content\assets\fonts\font-awesome\fonts\fontawesome-webfont3e6e.woff2" />
+    <Content Include="Content\assets\fonts\font-awesome\fonts\fontawesome-webfontd41d.eot" />
+    <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\jquery-3.3.1.js" />
+    <Content Include="Scripts\jquery-3.3.1.min.js" />
+    <Content Include="Scripts\jquery-3.3.1.slim.js" />
+    <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Home\Error.cshtml" />
+    <Content Include="Views\Admin\CreateCircle.cshtml" />
+    <Content Include="Views\Admin\CreateDesignation.cshtml" />
+    <Content Include="Views\Admin\CreateDivision.cshtml" />
+    <Content Include="Views\Admin\CreateSubjectMatter.cshtml" />
+    <Content Include="Views\Admin\CreateUserTypeRole.cshtml" />
+    <Content Include="Views\Admin\CreateZone.cshtml" />
+    <Content Include="Views\ComplaintAuthorized\ComplaintList.cshtml" />
+    <Content Include="Views\ComplaintAuthorized\ComplaintDetails.cshtml" />
+    <Content Include="Views\ComplaintInspection\ReceivedComplaints.cshtml" />
+    <Content Include="Views\ComplaintSE\ComplaintDetails.cshtml" />
+    <Content Include="Views\ComplaintInspection\ComplaintDetails.cshtml" />
+    <Content Include="Views\Admin\CompUserLoginList.cshtml" />
+    <Content Include="Views\Admin\CreateCompUser.cshtml" />
+    <Content Include="Views\Home\CompUserLogin.cshtml" />
+    <Content Include="Views\ComplaintSE\ComplaintRemarkList.cshtml" />
+    <Content Include="Views\ComplaintSE\Index.cshtml" />
+    <Content Include="Views\ComplaintSE\ViewComplaintList.cshtml" />
+    <Content Include="Views\ComplaintInspection\Index.cshtml" />
+    <Content Include="Views\ComplaintAuthorized\Index.cshtml" />
+    <Content Include="Views\Home\pagenotfound.cshtml" />
+    <Content Include="Views\Home\SessionExpired.cshtml" />
+    <Content Include="Views\ComplaintSE\DepartmentalComplaint.cshtml" />
+    <Content Include="Views\ComplaintSE\DepartmentalComplaintsList.cshtml" />
+    <Content Include="Views\ComplaintSE\DepartmentalComplaintDetails.cshtml" />
+    <Content Include="Views\ComplaintSE\CourtCaseDashboard.cshtml" />
+    <Content Include="Views\ComplaintInspection\_Notification.cshtml" />
+    <Content Include="Views\ComplaintSE\PendingDepartmentalComplaints.cshtml" />
+    <Content Include="Views\ComplaintSE\PendingPreliminaryComplaints.cshtml" />
+    <Content Include="Views\ComplaintSE\DepartmentalTypeComplaints.cshtml" />
+    <Content Include="Views\ComplaintSE\DisciplinaryAuthority.cshtml" />
+    <Content Include="Views\ComplaintSE\DepartmentalEnquiryConcludedUpload.cshtml" />
+    <Content Include="Views\ComplaintSE\PendencyEnquiryOfficers.cshtml" />
+    <Content Include="Views\ComplaintAuthorized\_Notification.cshtml" />
+    <Content Include="Views\CHMD\Index.cshtml" />
+    <Content Include="Views\Shared\Partial\_LeftMenu.cshtml" />
+    <Content Include="Views\CHMD\DeptInvestigationComplaints.cshtml" />
+    <Content Include="Views\CHMD\DeptComplaintList.cshtml" />
+    <Content Include="Views\CHMD\DeptViewInvestigationComplaintDetails.cshtml" />
+    <Content Include="Views\CHMD\DeptViewComplaintDetails.cshtml" />
+    <Content Include="Views\Admin\mainMenu.cshtml" />
+    <Content Include="Views\Admin\subMenu.cshtml" />
+    <Content Include="Views\Admin\Permissions.cshtml" />
+    <Content Include="Views\Shared\Partial\_DataSetPartial.cshtml" />
+    <Content Include="Views\ComplaintSE\PendingComplaintAtEnquiryOfficer.cshtml" />
+    <Content Include="Views\ComplaintSE\PendingComplaintAtEnquiryOfficerById.cshtml" />
+    <Content Include="Views\ComplaintSE\ChargeSheetWiseComplaints.cshtml" />
+    <Content Include="Views\ComplaintSE\ChargeSheetWiseComplaintsList.cshtml" />
+    <Content Include="Views\ComplaintSE\Financial_NonfinancialWiseComplaintList.cshtml" />
+    <Content Include="Views\ComplaintSE\PendingRemarkatHigherOfficer.cshtml" />
+    <Content Include="Views\ComplaintSE\EmployeeWiseComplaint.cshtml" />
+    <Content Include="Views\ComplaintSE\EmployeeWiseComplaintList.cshtml" />
+    <Content Include="Views\ComplaintSE\PendingRemarkatHigherOfficerById.cshtml" />
+    <Content Include="Views\ComplaintSE\ClosedEnquiryList.cshtml" />
+    <Content Include="Views\Shared\Partial\_CommonDashboard.cshtml" />
+    <Content Include="Views\Reports\DepartmentalDashboard.cshtml" />
+    <Content Include="Views\Shared\Partial\_HigherOfficerActionbutton.cshtml" />
+    <Content Include="Views\Reports\DepartmentalComplaintDetails.cshtml" />
+    <Content Include="Views\Reports\DepartmentalTypeComplaints.cshtml" />
+    <Content Include="Views\Reports\EmployeeWiseComplaint.cshtml" />
+    <Content Include="Views\Reports\EmployeeWiseComplaintList.cshtml" />
+    <Content Include="Views\Reports\Financial_NonfinancialWiseComplaintList.cshtml" />
+    <Content Include="Views\Reports\PendingComplaintAtEnquiryOfficer.cshtml" />
+    <Content Include="Views\Reports\PendingComplaintAtEnquiryOfficerById.cshtml" />
+    <Content Include="Views\Reports\PendingRemarkatHigherOfficer.cshtml" />
+    <Content Include="Views\Reports\PendingRemarkatHigherOfficerById.cshtml" />
+    <Content Include="Views\Reports\ChargeSheetWiseComplaints.cshtml" />
+    <Content Include="Views\Reports\ChargeSheetWiseComplaintsList.cshtml" />
+    <Content Include="Views\Reports\ClosedEnquiryList.cshtml" />
+    <Content Include="Views\ComplaintSE\DesignationWiseComplaint.cshtml" />
+    <Content Include="Views\ComplaintSE\DesignationWiseComplaintList.cshtml" />
+    <Content Include="Views\Reports\DesignationWiseComplaint.cshtml" />
+    <Content Include="Views\Reports\DesignationWiseComplaintList.cshtml" />
+    <Content Include="Views\ComplaintSE\SuspensionDashboard.cshtml" />
+    <Content Include="Views\ComplaintSE\SuspensionLevelWiseComplaint.cshtml" />
+    <Content Include="Views\ComplaintSE\SuspensionDesignationWiseComplaint.cshtml" />
+    <Content Include="Views\ComplaintSE\SuspensionLevelWiseComplaintList.cshtml" />
+    <Content Include="Views\ComplaintSE\SuspensionDesignationWiseComplaintList.cshtml" />
+    <Content Include="Views\ComplaintSE\SuspensionAttachedOfficeWiseComplaint.cshtml" />
+    <Content Include="Views\ComplaintSE\SuspensionAttachedOfficeWiseComplaintList.cshtml" />
+    <Content Include="Views\Reports\SuspensionAttachedOfficeWiseComplaint.cshtml" />
+    <Content Include="Views\Reports\SuspensionAttachedOfficeWiseComplaintList.cshtml" />
+    <Content Include="Views\Reports\SuspensionDashboard.cshtml" />
+    <Content Include="Views\Reports\SuspensionDesignationWiseComplaint.cshtml" />
+    <Content Include="Views\Reports\SuspensionDesignationWiseComplaintList.cshtml" />
+    <Content Include="Views\Reports\SuspensionLevelWiseComplaint.cshtml" />
+    <Content Include="Views\Reports\SuspensionLevelWiseComplaintList.cshtml" />
+    <Content Include="Views\ComplaintSE\PendingComplaintsBasedontheDuration.cshtml" />
+    <Content Include="Views\ComplaintSE\PendingMonthlyWiseComplaintsBasedontheDuration.cshtml" />
+    <Content Include="Views\Reports\PendingComplaintsBasedontheDuration.cshtml" />
+    <Content Include="Views\Reports\PendingMonthlyWiseComplaintsBasedontheDuration.cshtml" />
+    <Content Include="Views\Shared\Partial\_ChangePassword.cshtml" />
+    <Content Include="Views\ComplaintSE\RevisionEnquiryList.cshtml" />
+    <Content Include="Views\ComplaintSE\AppealEnquiryList.cshtml" />
+    <Content Include="Views\CHMD\RevisionEnquiryList.cshtml" />
+    <Content Include="Views\ComplaintAuthorized\RevisionEnquiryList.cshtml" />
+    <Content Include="Views\CHMD\AppealEnquiryList.cshtml" />
+    <Content Include="Views\ComplaintAuthorized\AppealEnquiryList.cshtml" />
+    <Content Include="Views\ComplaintSE\CourtCaseLucknow.cshtml" />
+    <Content Include="Views\ComplaintSE\DepartmentalDashboard.cshtml" />
+    <Content Include="Views\ComplaintSE\InvestigationDashboard.cshtml" />
+    <Content Include="Views\ComplaintSE\InvestigationDetails.cshtml" />
+    <Content Include="Views\ComplaintSE\ClosedRevisionEnquiryList.cshtml" />
+    <Content Include="Views\ComplaintSE\ClosedAppealEnquiryList.cshtml" />
+    <Content Include="Views\ComplaintSE\PendingRevisionEnquiryList.cshtml" />
+    <Content Include="Views\ComplaintSE\DepecdencyRevisionEnquiryList.cshtml" />
+    <Content Include="Views\ComplaintSE\PendingAppealEnquiryList.cshtml" />
+    <Content Include="Views\ComplaintSE\PendencyAppealEnquiryList.cshtml" />
+    <Content Include="Views\Reports\PendingRevisionEnquiryList.cshtml" />
+    <Content Include="Views\Reports\DepecdencyRevisionEnquiryList.cshtml" />
+    <Content Include="Views\Reports\PendencyAppealEnquiryList.cshtml" />
+    <Content Include="Views\Reports\PendingAppealEnquiryList.cshtml" />
+    <Content Include="Views\Reports\ClosedAppealEnquiryList.cshtml" />
+    <Content Include="Views\Reports\ClosedRevisionEnquiryList.cshtml" />
+    <Content Include="Views\Reports\AppealEnquiryList.cshtml" />
+    <Content Include="Views\Reports\RevisionEnquiryList.cshtml" />
+    <Content Include="Views\ComplaintSE\PendingComplaintAtEnquiryOfficer2.cshtml" />
+    <Content Include="Views\ComplaintSE\PendingComplaintAtEnquiryOfficer2ById.cshtml" />
+    <Content Include="Views\ComplaintSE\NumberOfSampleFilesPostWise.cshtml" />
+    <Content Include="Views\ComplaintSE\DesignationWiseEnquiry.cshtml" />
+    <Content Include="Views\ComplaintSE\DesignationWiseEnquiryList.cshtml" />
+    <Content Include="Views\Reports\PendingComplaintAtEnquiryOfficer2.cshtml" />
+    <Content Include="Views\Reports\PendingComplaintAtEnquiryOfficer2ById.cshtml" />
+    <Content Include="Views\Reports\NumberOfSampleFilesPostWise.cshtml" />
+    <Content Include="Views\Reports\DesignationWiseEnquiry.cshtml" />
+    <Content Include="Views\Reports\DesignationWiseEnquiryList.cshtml" />
+    <Content Include="Views\ComplaintSE\DepartmentalRuralEnquiryList.cshtml" />
+    <Content Include="Views\ComplaintSE\DepartmentalUrbanEnquiryList.cshtml" />
+    <Content Include="Views\ComplaintSE\TotalEnquiry.cshtml" />
+    <Content Include="Views\Reports\TotalEnquiry.cshtml" />
+    <Content Include="Views\ComplaintSE\PendingSummaryComplaintAtEnquiryOfficerById.cshtml" />
+    <Content Include="Views\Shared\Partial\_Top10Oldest.cshtml" />
+    <Content Include="Views\Shared\Partial\_Top10Newly.cshtml" />
+    <Content Include="Views\Shared\Partial\_MobileInputPartial.cshtml" />
+    <Content Include="Views\Shared\Partial\_OtpInputPartial.cshtml" />
+    <Content Include="Views\Shared\Partial\_UserIDPassword.cshtml" />
+    <Content Include="Views\ComplaintSE\GetClosedShowList.cshtml" />
+    <Content Include="Views\ComplaintSE\GetHearingOfficer.cshtml" />
+    <Content Include="Views\ComplaintSE\NumberofDecisionn.cshtml" />
+    <Content Include="Views\ComplaintSE\CauseNoticeListData.cshtml" />
+    <Content Include="Views\ComplaintSE\ShowCauseNotice.cshtml" />
+    <Content Include="Views\ComplaintSE\ShowCauseNoticeList.cshtml" />
+    <Content Include="Views\Reports\GetClosedShowList.cshtml" />
+    <Content Include="Views\Reports\GetHearingOfficer.cshtml" />
+    <Content Include="Views\Reports\NumberofDecisionn.cshtml" />
+    <Content Include="Views\Reports\PendingSummaryComplaintAtEnquiryOfficerById.cshtml" />
+    <Content Include="Views\Reports\CourtCaseDashboard.cshtml" />
+    <Content Include="Views\Reports\CourtCaseLucknow.cshtml" />
+    <Content Include="Views\Reports\InvestigationDashboard.cshtml" />
+    <Content Include="Views\Reports\InvestigationDetails.cshtml" />
+    <Content Include="Views\ComplaintAuthorized\CauseNoticeListData.cshtml" />
+    <Content Include="Views\ComplaintAuthorized\ShowCauseNoticeList.cshtml" />
+    <Content Include="Views\CHMD\CauseNoticeListData.cshtml" />
+    <Content Include="Views\CHMD\ShowCauseNoticeList.cshtml" />
+    <Content Include="Views\Shared\Partial\_ShowCauseForwordbtn.cshtml" />
+    <Content Include="Views\Shared\Partial\_ChartDashboard.cshtml" />
+    <Content Include="Views\ComplaintSE\ClosedShowCauseNoticeList.cshtml" />
+    <Content Include="Views\ComplaintSE\PendencyHigherOfficerShowCauseNoticeList.cshtml" />
+    <Content Include="Views\ComplaintSE\PendingShowCauseNoticeList.cshtml" />
+    <Content Include="Views\CHMD\PendingShowCauseNoticeList.cshtml" />
+    <Content Include="Views\ComplaintAuthorized\PendingShowCauseNoticeList.cshtml" />
+    <Content Include="Views\Reports\CauseNoticeListData.cshtml" />
+    <Content Include="Views\Reports\ClosedShowCauseNoticeList.cshtml" />
+    <Content Include="Views\Reports\PendencyHigherOfficerShowCauseNoticeList.cshtml" />
+    <Content Include="Views\Reports\PendingShowCauseNoticeList.cshtml" />
+    <Content Include="Views\Reports\ShowCauseNoticeList.cshtml" />
+    <Content Include="Views\User\ViewEnquiry.cshtml" />
+    <Content Include="Views\Shared\Partial\_TopFinancialEnquiry.cshtml" />
+    <Content Include="Views\Shared\Partial\_TopNonFinancialEnquiry.cshtml" />
+    <Content Include="Views\Shared\Partial\_writCaseDetails.cshtml" />
+    <Content Include="Views\Shared\Partial\_ContemtCaseDetails.cshtml" />
+    <Content Include="Views\Reports\DepartmentalRuralEnquiryList.cshtml" />
+    <Content Include="Views\Reports\DepartmentalUrbanEnquiryList.cshtml" />
+    <Content Include="Views\ComplaintInspection\ClosedComplaints.cshtml" />
+    <Content Include="Views\ComplaintSE\ShowcauseNoticeallReports.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\" />
+    <Folder Include="Uploads\Files\" />
+    <Folder Include="Uploads\QR\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Scripts\jquery-3.3.1.slim.min.map.js" />
+    <Content Include="Scripts\jquery-3.3.1.min.map.js" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>56828</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:56829/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

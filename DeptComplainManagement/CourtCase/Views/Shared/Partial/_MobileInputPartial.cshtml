@@ -1,0 +1,50 @@
+﻿
+@{
+    Layout = null;
+}
+<style>
+    #mobileForm a {
+        font-size: var(--font-size-16);
+        font-weight: var(--font-weight-400);
+        letter-spacing: var(--letter-spacing-half);
+        line-height: var(--line-height-150);
+        text-decoration-line: underline;
+        cursor: pointer
+    }
+
+    i.flaticon-user-1 {
+        margin-top: 8px;
+    }
+</style>
+<div id="mobileForm" class="mobile-form-container" style="display:none;">
+    <div class="form-row">
+        <div class="position-relative form-group">
+            <select class="form-control" id="MobileUserRelatedTo" name="UserRelatedTo"></select>
+        </div>
+        <div class="position-relative form-group" id="MobileMarkedZonediv">
+            <select class="form-control" id="MobileZoneId" name="ZoneId"></select>
+        </div>
+        <div class="position-relative form-group" id="MobileMarkedcirclediv">
+            <select class="form-control" id="MobileCircleId" name="CircleId"></select>
+        </div>
+        <div class="position-relative form-group" id="MobileMarkeddivisiondiv">
+            <select class="form-control" id="MobileDivisionId" name="DivisionId"></select>
+        </div>
+        <div class="form-group form-box">
+            <input type="text" id="txtMobileNo" name="MobileNo" class="form-control" placeholder="Mobile (Log In With OTP)" autocomplete="off" maxlength="10" />
+        </div>
+        <div class="form-group mb-0">
+            <input type="button" class="btn-md w-100 send-otp-btn" onclick="ValidateNumber();" id="btnSendOTP" value="Generate OTP">
+        </div>
+    </div>
+    <div class="form-group text-center mt-3">
+        <a href="javascript:void(0);" onclick="showPasswordInput()">Log In With Password</a>
+    </div>
+
+</div>
+<script> 
+    function UserRelatedTo(e, i = "-1") { ["-1", "0", "", null, void 0].includes(i) && (i = "-1"); const o = e.split(","); $.ajax({ type: "POST", url: "/DropdownBinder/fillDropdownLoginData", data: { Action: "bindUserRelatedTo" }, success: function (e) { o.forEach((o => { const n = $("#" + o.trim()); n.empty(), n.append($("<option/>", { value: "-1", text: "User Related To" })), e.forEach((e => { n.append($("<option/>", { value: e.id, text: e.value })) })), "-1" !== i && n.val(i) })) }, error: function (e) { console.error("Error occurred while binding dropdown:", e) } }) } function bindZone(e, i) { -1 != (i = void 0 !== i ? i : "") && 0 != i && "-1" != i && "" != i || (i = "-1"); var o = new Object; o.Action = "bindZone", $.ajax({ type: "POST", url: "/DropdownBinder/fillDropdownLoginData", data: { Action: o.Action }, success: function (o) { var n = $("#" + e); n.empty(), n.append($("<option/>", { value: "-1", text: "Select Zone" })), $.each(o, (function (e, i) { n.append($("<option/>", { value: i.id, text: i.value })) })), n.val(i) }, error: function (e) { console.log(e) } }) } function bindCircle(e, i, o) { -1 != (i = void 0 !== i ? i : "") && 0 != i && "-1" != i && "" != i || (i = "-1"); var n = new Object; n.Action = "bindCircle", n.ZoneId = o, $.ajax({ type: "POST", url: "/DropdownBinder/fillDropdownLoginData", data: { Action: n.Action, ZoneId: n.ZoneId }, success: function (o) { var n = $("#" + e); n.empty(), n.append($("<option/>", { value: "-1", text: "Select Circle" })), $.each(o, (function (e, i) { n.append($("<option/>", { value: i.id, text: i.value })) })), n.val(i) }, error: function (e) { console.log(e) } }) } function bindDivision(e, i, o, n) { -1 != (i = void 0 !== i ? i : "") && 0 != i && "-1" != i && "" != i || (i = "-1"); var l = new Object; l.Action = "bindDivision", l.ZoneId = o, l.CircleId = n, $.ajax({ type: "POST", url: "/DropdownBinder/fillDropdownLoginData", data: { Action: l.Action, ZoneId: l.ZoneId, CircleId: l.CircleId }, success: function (o) { var n = $("#" + e); n.empty(), n.append($("<option/>", { value: "-1", text: "Select Division" })), $.each(o, (function (e, i) { n.append($("<option/>", { value: i.id, text: i.value })) })), n.val(i) }, error: function (e) { console.log(e) } }) } UserRelatedTo("MobileUserRelatedTo", -1), $("#MobileMarkedZonediv,#MobileMarkedcirclediv,#MobileMarkeddivisiondiv").hide(), $("#MobileUserRelatedTo").change((function () { var e = $(this).val().trim(); "HQ" == e ? ($("#MobileZoneId").val("-1").trigger("change"), $("#MobileCircleId").val("-1").trigger("change"), $("#MobileDivisionId").val("-1").trigger("change"), $("#MobileMarkedZonediv,#MobileMarkedcirclediv,#MobileMarkeddivisiondiv").hide()) : "Z" == e ? ($("#MobileMarkedcirclediv,#MobileMarkeddivisiondiv").hide(), $("#MobileMarkedZonediv").show(), bindZone("MobileZoneId", -1), $("#MobileCircleId").val("-1").trigger("change"), $("#MobileDivisionId").val("-1").trigger("change")) : "C" == e ? ($("#MobileMarkeddivisiondiv").hide(), $("#MobileMarkedZonediv,#MobileMarkedcirclediv").show(), bindZone("MobileZoneId", -1), bindCircle("MobileCircleId", -1, -1), $("#MobileDivisionId").val("-1").trigger("change")) : "D" == e ? ($("#MobileMarkedZonediv,#MobileMarkedcirclediv,#MobileMarkeddivisiondiv").show(), $("#MobileZoneId").val("-1").trigger("change"), $("#MobileCircleId").val("-1").trigger("change"), $("#MobileDivisionId").val("-1").trigger("change"), bindZone("MobileZoneId", -1), bindCircle("MobileCircleId", -1, -1), bindDivision("MobileDivisionId", -1, -1, -1)) : $("#MobileMarkedZonediv,#MobileMarkedcirclediv,#MobileMarkeddivisiondiv").hide() })), $("#MobileZoneId").change((function () { var e = $(this).val(); $("#MobileUserRelatedTo").val(); bindCircle("MobileCircleId", -1, e) })), $("#MobileCircleId").change((function () { var e = $("#MobileCircleId").val(), i = $("#MobileZoneId").val(); $("#MobileUserRelatedTo").val(); bindDivision("MobileDivisionId", -1, i, e) })), $("#MobileDivisionId").change((function () { $("#MobileCircleId").val(), $("#MobileUserRelatedTo").val(), $("#MobileZoneId").val(), $(this).val() }));
+</script>
+
+
+

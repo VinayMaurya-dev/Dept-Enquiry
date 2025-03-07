@@ -1,0 +1,484 @@
+﻿@model CourtCase.Models.ComplaintDetails 
+@{
+    ViewBag.Title = "DepartmentalComplaintDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+} 
+@{
+    System.Data.DataSet ds = ((System.Data.DataSet)ViewBag.Replies);
+    System.Data.DataTable dt = new System.Data.DataTable();
+    System.Data.DataTable aarop = new System.Data.DataTable();
+    System.Data.DataTable it = new System.Data.DataTable();
+    System.Data.DataTable ft = new System.Data.DataTable();
+    System.Data.DataTable statement = new System.Data.DataTable();
+
+    if (ds != null && ds.Tables.Count > 0)
+    {
+        dt = ds.Tables[0];
+        ft = ds.Tables[1];
+        it = ds.Tables[2];
+        aarop = ds.Tables[3];
+        statement = ds.Tables[4];
+    }
+}
+<style>
+    bold {
+        font-weight: bold;
+    }
+
+    .pe-7s-angle-down {
+        font-weight: 800;
+        font-size: 25px;
+    }
+
+
+    .accordion-wrapper {
+        border: none !important;
+    }
+
+    .toast-top-right {
+        top: 12px;
+    }
+</style>
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+<div class="app-main__inner">
+    <div class="app-page-title app-page-title-simple">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div>
+                    <div class="page-title-head center-elem">
+                        <span class="d-inline-block pr-2">
+                            <i class="lnr-apartment opacity-6"></i>
+                        </span>
+                        <span class="d-inline-block">Departmental Enquiry Details</span>
+                    </div>
+                    <div class="page-title-subheading opacity-10">
+                        <nav class="" aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <button type="button" onclick="history.back()" value="BACK" class="btn btn-primary mybackbutton"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <a href="javascript:void(0)" onclick="window.history.back();">
+                                        विभागीय जांच सूची
+                                    </a>
+                                </li>
+
+                                <li class="active breadcrumb-item" aria-current="page">
+                                    विभागीय जांच विवरण
+                                </li>
+                            </ol>
+                        </nav>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="main-card mb-3 card"> 
+        <div class="card-body">
+            <div class="vertical-without-time vertical-timeline--animate vertical-timeline--one-column">
+                <div class="vertical-timeline-item vertical-timeline-element">
+                    <div>
+                        <span class="vertical-timeline-element-icon bounce-in">
+                            <i class="badge badge-dot badge-dot-xl badge-success"> </i>
+                        </span>
+                        <div class="vertical-timeline-element-content bounce-in">
+                            <h4 class="timeline-title">अपचारी का विवरण</h4>
+                            <div class="form-row">
+                                <div class="col-md-4 mb-3">
+                                    <div class="position-relative form-group">
+                                        <label for="exampleAddress" class="">
+                                            कंप्यूटर संख्या
+                                        </label><br />
+                                        @Html.TextBoxFor(m => m.ComplaintNo, new { @class = "form-control", @readonly = "true", @id = "ComplaintNo", @style = "font-size:14px" })
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="position-relative form-group">
+                                        <label for="exampleAddress" class="">
+                                            ग्रामीण / नगरीय
+                                        </label><br />
+
+                                        @Html.TextBoxFor(m => m.R_U, new { @class = "form-control", @readonly = "true", @id = "R_U", @style = "font-size:14px" })
+                                    </div>
+                                </div>
+                                @Html.HiddenFor(m => m.GuiltyEmployeeDesignation, new { @class = "form-control", @readonly = "true", @id = "hiddenGuiltyEmployeeDesignation" })
+                                <div class="col-md-4 mb-3">
+                                    <div class="position-relative form-group">
+                                        <label for="exampleAddress" class=""> विभागीय जांच किनके द्वारा आरंभ की गई</label><br />
+                                        @Html.TextBoxFor(m => m.ComplaintEnquiryType, new { @class = "form-control", @readonly = "true", @id = "EnquiryType", @style = "font-size:14px" })
+                                    </div>
+
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="position-relative form-group">
+                                        <label for="exampleAddress" class="">
+                                            कार्मिक का विभागीय कोड
+                                        </label><br />
+                                        @Html.TextBoxFor(m => m.EmployeeId, new { @class = "form-control", @readonly = "true", @id = "EmployeeId" })  
+                                    </div>
+
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="position-relative form-group">
+                                        <label for="exampleAddress" class="">कार्मिक का नाम</label><br />
+                                        @Html.TextBoxFor(m => m.ComplainantName, new { @class = "form-control", @readonly = "true", @id = "WorkingName" })
+
+
+                                    </div>
+
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="position-relative form-group">
+                                        <label for="exampleAddress" class="">कार्मिक का मोबाइल नंबर</label><br />
+                                        @Html.TextBoxFor(m => m.MobileNo, new { @class = "form-control", @readonly = "true" })
+                                    </div>
+
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="position-relative form-group">
+                                        <label for="exampleAddress" class="">कार्मिक का ईमेल आईडी</label><br />
+                                        @Html.TextBoxFor(m => m.EmailId, new { @class = "form-control", @readonly = "true" })
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-4 mb-3" id="divComplainantName">
+                                    <div class="position-relative form-group">
+                                        <label for="exampleAddress" class="">वर्तमान कार्यरत कार्यालय</label><br />
+                                        @Html.TextBoxFor(m => m.ComplaintRelatedTo, new { @class = "form-control", @readonly = "true", @id = "RoleTypeName" })
+
+
+                                    </div>
+
+                                </div>
+
+                                @if (Model.ComplaintRelatedTo == "Zone")
+                                {
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">वर्तमान  ज़ोन </label>
+                                            @Html.TextBoxFor(m => m.ComplaintRelatedZoneName, new { @class = "form-control", @readonly = "true" })
+
+                                        </div>
+
+                                    </div>
+                                }
+                                else if (Model.ComplaintRelatedTo == "Circle")
+                                {
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">वर्तमान  ज़ोन </label>
+                                            @Html.TextBoxFor(m => m.ComplaintRelatedZoneName, new { @class = "form-control", @readonly = "true" })
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">वर्तमान  सर्किल </label>
+                                            @Html.TextBoxFor(m => m.ComplaintRelatedCircleName, new { @class = "form-control", @readonly = "true" })
+
+                                        </div>
+
+                                    </div>
+                                }
+                                else if (Model.ComplaintRelatedTo == "Division")
+                                {
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">वर्तमान  ज़ोन</label>
+                                            @Html.TextBoxFor(m => m.ComplaintRelatedZoneName, new { @class = "form-control", @readonly = "true" })
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">वर्तमान  सर्किल </label>
+                                            @Html.TextBoxFor(m => m.ComplaintRelatedCircleName, new { @class = "form-control", @readonly = "true" })
+
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">वर्तमान  डिवीज़न </label>
+                                            @Html.TextBoxFor(m => m.ComplaintRelatedDivisionName, new { @class = "form-control", @readonly = "true" })
+
+                                        </div>
+
+                                    </div>
+                                }
+                                <div class="col-md-4 mb-3">
+                                    <div class="position-relative form-group">
+                                        <label for="exampleAddress" class="">वर्तमान पदनाम</label><br />
+                                        @Html.TextBoxFor(m => m.ComplainRelatedDesignationName, new { @class = "form-control", @readonly = "true", @id = "ComplaintDesignation" })
+
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="position-relative form-group">
+                                        <label>जांच संस्थित किये जाने का पत्रावली संख्या</label>
+                                        @Html.TextBoxFor(m => m.OfficeMemorandumNumber, new { @class = "form-control", @readonly = "true" })
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4 mb-3">
+                                    <div class="position-relative form-group">
+                                        <label>जांच संस्थित किये जाने का पत्रांक दिनांक</label>
+                                        @Html.TextBoxFor(m => m.OfficeMemorandumDate, new { @class = "form-control", @readonly = "true" })
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="position-relative form-group">
+                                        <label for="validationCustom05">अपलोड किया गया डॉक्यूमेंट (नियुक्ति अधिकारी का पत्र) &nbsp; </label>
+                                        @if (Model.Attachment != null && Model.Attachment != "")
+                                        {
+                                            <a href="@Model.Attachment.Replace("~","")" target="_blank" class="mb-2 mr-2">  <img src="~/assets/pdf/pdf3.png" style="height:50px;" /></a>
+                                        }
+                                        else
+                                        {
+                                            <a href="javascript:void(0);" target="_blank" class="mb-2 mr-2  disabled">  <img src="~/assets/pdf/pdf3.png" style="height:50px;" /></a>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="vertical-without-time vertical-timeline--animate vertical-timeline--one-column">
+                <div class="vertical-timeline-item vertical-timeline-element">
+                    <div>
+                        <span class="vertical-timeline-element-icon bounce-in">
+                            <i class="badge badge-dot badge-dot-xl badge-success"> </i>
+                        </span>
+
+                        <div class="vertical-timeline-element-content bounce-in">
+                            <h3 class="timeline-title">संस्थित जाँच के समय अपचारी के कार्यालय का विवरण</h3>
+                            <br />
+                            <div class="form-row">
+                                <div class="col-md-4 mb-3">
+                                    <div class="position-relative form-group">
+                                        <label for="exampleAddress" class="">संस्थित जांच कार्यालय </label>
+                                        @Html.TextBoxFor(m => m.PreviousComplaintRelatedTo, new { @class = "form-control", @readonly = "true" })
+                                    </div>
+                                </div>
+                                @if (Model.PreviousComplaintRelatedTo == "HQ")
+                                {
+                                   
+                                }
+                                else if (Model.PreviousComplaintRelatedTo == "Zone")
+                                {
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">संस्थित जांच का ज़ोन </label>
+                                            @Html.TextBoxFor(m => m.PreviousComplaintRelatedZoneName, new { @class = "form-control", @readonly = "true" })
+                                        </div>
+
+                                    </div>
+                                }
+                                else if (Model.PreviousComplaintRelatedTo == "Circle")
+                                {
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">संस्थित जांच का  ज़ोन </label>
+                                            @Html.TextBoxFor(m => m.PreviousComplaintRelatedZoneName, new { @class = "form-control", @readonly = "true" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">संस्थित जांच का सर्किल </label>
+                                            @Html.TextBoxFor(m => m.PreviousComplaintRelatedCircleName, new { @class = "form-control", @readonly = "true" })
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">संस्थित जांच का ज़ोन </label>
+                                            @Html.TextBoxFor(m => m.PreviousComplaintRelatedZoneName, new { @class = "form-control", @readonly = "true" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">संस्थित जांच का सर्किल </label>
+                                            @Html.TextBoxFor(m => m.PreviousComplaintRelatedCircleName, new { @class = "form-control", @readonly = "true" })
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">संस्थित जांच का डिवीज़न </label>
+                                            @Html.TextBoxFor(m => m.PreviousComplaintRelatedDivisionName, new { @class = "form-control", @readonly = "true" })
+                                        </div>
+                                    </div>
+                                }
+
+                                <div class="col-md-4 mb-3">
+                                    <div class="position-relative form-group">
+                                        <label for="exampleAddress" class="">संस्थित जांच का पदनाम</label><br />
+                                        @Html.TextBoxFor(m => m.PreviousComplaintDesignationName, new { @class = "form-control", @readonly = "true" })
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="position-relative form-group">
+                                        <label for="exampleAddress" class="">कार्य अवधि(कब से) </label><br />
+                                        @Html.TextBoxFor(m => m.WorkDurationFrom, new { @class = "form-control", @lang = "hii", @readonly = "true" })
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="position-relative form-group">
+                                        <label for="exampleAddress" class="">कार्य अवधि(कब तक) </label><br />
+                                        @Html.TextBoxFor(m => m.WorkDurationTo, new { @class = "form-control", @lang = "hii", @readonly = "true" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="position-relative form-group">
+                                        <br />
+                                        <input type="checkbox" name="IsFinancial" value="वित्तीय"
+                                               onclick="onlyOne1(this)"
+                                               @(Model.IsFinancial == "वित्तीय" ? "checked" : "") disabled />&emsp;वित्तीय &emsp;
+                                        <input type="checkbox" name="IsFinancial" value="गैर वित्तीय"
+                                               onclick="onlyOne1(this)"
+                                               @(Model.IsFinancial == "गैर वित्तीय" ? "checked" : "") disabled />&emsp;गैर वित्तीय
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <div class="position-relative form-group">
+                                        <label for="validationCustom05">राशि</label>
+                                        @Html.TextBoxFor(m => m.FinancialAmount, new { @class = "form-control", @readonly = "true" })
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <div class="position-relative form-group">
+                                        <label for="validationCustom05">निलंबन की स्तिथि</label> <br />
+                                        <input type="checkbox" name="IsSuspension" value="हाँ"
+                                               onclick="onlyOne2(this)"
+                                               @(Model.IsSuspension == "हाँ" ? "checked" : "") disabled />&emsp;हाँ &emsp;
+                                        <input type="checkbox" name="IsSuspension" value="नहीं"
+                                               onclick="onlyOne2(this)"
+                                               @(Model.IsSuspension == "नहीं" ? "checked" : "") disabled />&emsp;नहीं
+                                    </div>
+                                </div>
+                                @{
+                                    var isSuspension = Model.IsSuspension == "हाँ";
+                                }
+
+                                @if (!isSuspension)
+                                {
+                                    <div class="col-md-6 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustom05">संबद्ध कार्यालय का नाम</label>
+                                            @Html.TextBoxFor(m => m.AssociatedOfficeName, new { @class = "form-control", @readonly = "true" })
+                                        </div>
+                                    </div>
+                                }
+
+                            </div>
+                            @if (isSuspension)
+                            {
+                            <div class="form-row">
+                                <div class="col-md-4 mb-3">
+                                    <div class="position-relative form-group">
+                                        <label for="exampleAddress" class="">संबद्ध कार्यालय </label>
+                                        @Html.TextBoxFor(m => m.AffiliatedOfficesRelatedTo, new { @class = "form-control", @readonly = "true" })
+                                    </div>
+                                </div>
+                                @if (Model.AffiliatedOfficesRelatedTo == "HQ")
+                                {
+                                    if (!string.IsNullOrWhiteSpace(Model.AffiliatedOfficesName))
+                                    {
+                                        <div class="col-md-4 mb-3">
+                                            <div class="position-relative form-group">
+                                                <label for="exampleAddress" class="">संबद्ध कार्यालय का नाम</label><br />
+                                                @Html.TextBoxFor(m => m.AffiliatedOfficesName, new { @class = "form-control", @readonly = "true" })
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                                else if (Model.AffiliatedOfficesRelatedTo == "Zone")
+                                {
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">संबद्ध ज़ोन </label>
+                                            @Html.TextBoxFor(m => m.AffiliatedOfficesZoneName, new { @class = "form-control", @readonly = "true" })
+                                        </div>
+
+                                    </div>
+                                }
+                                else if (Model.AffiliatedOfficesRelatedTo == "Circle")
+                                {
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">संबद्ध ज़ोन </label>
+                                            @Html.TextBoxFor(m => m.AffiliatedOfficesZoneName, new { @class = "form-control", @readonly = "true" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">संबद्ध सर्किल </label>
+                                            @Html.TextBoxFor(m => m.AffiliatedOfficesCircleName, new { @class = "form-control", @readonly = "true" })
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">संबद्ध ज़ोन </label>
+                                            @Html.TextBoxFor(m => m.AffiliatedOfficesZoneName, new { @class = "form-control", @readonly = "true" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">संबद्ध सर्किल </label>
+                                            @Html.TextBoxFor(m => m.AffiliatedOfficesCircleName, new { @class = "form-control", @readonly = "true" })
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="position-relative form-group">
+                                            <label for="validationCustomUsername">संबद्ध डिवीज़न </label>
+                                            @Html.TextBoxFor(m => m.AffiliatedOfficesDivisionName, new { @class = "form-control", @readonly = "true" })
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                            }
+
+                            <div class="form-row">
+                                <div class="col-md-12 mb-3">
+                                    <div class="position-relative form-group">
+                                        <label for="validationCustomUsername">
+                                            विवरण
+                                        </label>
+                                        @Html.TextAreaFor(m => m.ComplaintDescription, new { @class = "form-control", @onkeypress = "return /[a-z0-9, ]/i.test(event.key)", @style = "resize:none;", @rows = "5", @readonly = "true" })
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>  
+   @Html.Partial("Partial/_DataSetPartial")
+ </div>
+

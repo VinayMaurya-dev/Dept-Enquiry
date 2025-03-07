@@ -1,0 +1,283 @@
+﻿@model CourtCase.Models.Circle
+@{
+    ViewBag.Title = "CreateCircle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+
+<div class="app-main__inner">
+    <div class="app-page-title app-page-title-simple">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div>
+                    <div class="page-title-head center-elem">
+                        <span class="d-inline-block pr-2">
+                            <i class="lnr-apartment opacity-6"></i>
+                        </span>
+                        <span class="d-inline-block">    Create Circle </span>
+                    </div>
+                    <div class="page-title-subheading opacity-10">
+                        <nav class="" aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <button type="button" onclick="history.back()" value="BACK" class="btn btn-primary mybackbutton"><i class="fa fa-arrow-left" aria-hidden="true"> Back</i></button>
+                                </li>
+
+                                <li class="active breadcrumb-item" aria-current="page">
+                                    Create Circle
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="tab-content">
+
+        <div class="main-card mb-3 card">
+            <div class="card-body">
+                @*<h5 class="card-title">Add Circle</h5><br />*@
+                <input type="hidden" value="@Model.CircleId" id="hiddenCircleId" />
+
+                <div class="form-row" id="caseTypeDiv">
+                    <div class="col-md-12">
+                        <div class="form-row">
+                            <div class="col-md-4 mb-3">
+                                <label for="validationCustomUsername">Zone Name</label>
+                                <div class="input-group">
+                                    @*@Html.DropDownListFor(model => model.ZoneId, ViewBag.ZoneName as SelectList,"Select Zone",
+                                        new { @class = "form-control",@id= "txtZoneName" })
+                                          <span id="ZoneIdError"></span>*@
+                                    <select class="form-control" id="ZoneId" name="ZoneId" value="@Model.ZoneId"></select>
+
+                                </div>
+                                <span id="ZoneIdError"></span>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="exampleAddress" class="">Circle Name</label>
+                                <div class="input-group">
+                                    <input type="text" value="@Model.CircleName" id="txtCircleName" class="form-control" placeholder="Enter Circle" />
+
+
+                                </div>
+                                <span id="CircleNameError"></span>
+                                <div class="col-md-4 col-sm-3">
+
+                                    <div class=" form-group" style="margin-top:22px!important">
+                                        <input type="submit" id="btnSubmit" value="@ViewBag.BtnName" class="btn-pill btn-shadow btn-success btn" onclick="return SaveUpdateCircleRecord()">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
+            <div class="card order-card" style="margin:-18px;padding:10px;">
+                @*<input type="hidden" value="@Model.ZoneId" id="hiddenZoneId" />*@
+                <div class="card-block">
+                    <table class="table table-bordered" style="margin-top:0px !important;text-align:center;" id="caseTypeDiv">
+                        <tr>
+                            <th>
+                                Sr No
+                            </th>
+                            <th>Zone Name</th>
+                            <th>
+                                Circle Name
+                            </th> 
+                            <th>
+                                Action
+                            </th>
+
+
+
+                        </tr>
+
+                        @if (Model.Table != null)
+
+                        {
+                            int i = 0;
+                            foreach (System.Data.DataRow data in Model.Table.Rows)
+                            {
+                                i++;
+                        <tr>
+                            <td>
+                                @i
+                            </td>
+                            <td>@data["ZoneName"]</td>
+                            <td>
+                                @data["CircleName"]
+                            </td>  
+
+                            <td> 
+                                <a href="/Admin/CreateCircle?CircleId=@data["CircleId"]" class="btn-pill btn-shadow btn-primary btn"> Edit</a>
+
+                            </td>
+
+
+                        </tr>
+
+                            }
+                        }
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+<script>
+
+
+    $(document).ready(function () {
+
+        var msg = '@TempData["msg"]';
+
+$('#ReportLI').addClass("mm-active");
+$('#ReportUL').addClass("mm-show");
+    $('#CircleMaster').addClass("mm-active");
+$('#AdminDashboard').removeClass("mm-active");
+
+            var val1 = ('@TempData["ZoneId"]');
+            bindZone('ZoneId', val1);
+
+
+            $("#ZoneId")(function () {
+                bindZone('ZoneId', -1);
+            });
+
+        });
+
+
+
+        function bindZone(id, defaultSelectionValues) {
+            defaultSelectionValues = typeof defaultSelectionValues !== 'undefined' ? defaultSelectionValues : '';
+            if (defaultSelectionValues == -1 || defaultSelectionValues == 0 || defaultSelectionValues == '-1' || defaultSelectionValues == '') {
+                defaultSelectionValues = '-1';
+            }
+            var obj = new Object();
+            obj.Action = "bindZone";
+
+            $.ajax({
+                type: 'POST',
+                url: '/DropdownBinder/fillDropdown',
+                data: { Action: obj.Action },
+                success: function (Data) {
+                    var ddl = $('#' + id);
+                    ddl.empty();
+                    ddl.append($('<option/>', {
+                        value: "-1",
+                        text: "Choose option "
+                    }));
+
+                    $.each(Data, function (index, rowData) {
+                        ddl.append($('<option/>', {
+                            value: rowData.id,
+                            text: rowData.value
+                        }));
+                    });
+                    ddl.val(defaultSelectionValues);
+                },
+                error: function (errorData) {
+                    console.log(errorData);
+                }
+            });
+
+        }
+
+
+
+        function Validate() {
+
+
+            var ZoneId = document.getElementById("ZoneId").selectedIndex;
+            if (ZoneId == 0) {
+                $("#ZoneIdError").text("Please Select The Zone Name");
+                $("#ZoneIdError").css("color", "red");
+                $("#ZoneId").focus();
+                return false;
+            }
+            else {
+                $("#ZoneIdError").text("");
+            }
+            var CircleName = $("#txtCircleName").val();
+            if (CircleName == "") {
+                $("#CircleNameError").text("Please Enter The Circle Name");
+                $("#CircleNameError").css("color", "red");
+                $("#txtCircleName").focus();
+                return false;
+            }
+            else {
+                $("#CircleNameError").text("");
+            }
+
+            return true;
+        }
+
+        function SaveUpdateCircleRecord() {
+            debugger;
+            if (!Validate()) {
+
+                return false;
+            }
+            var obj = {
+
+                CircleId: $("#hiddenCircleId").val(),
+                CircleName: $("#txtCircleName").val(),
+                ZoneId: $("#ZoneId").val(),
+
+            }
+            $.post("/Admin/SaveUpdateCircleRecord", obj, function (Res) {
+                if (Res != "") {
+                    alert(Res);
+                    window.location.href = "/Admin/CreateCircle";
+                }
+                else {
+                    alert("Something Went wrong.");
+                    window.location.href = "/Admin/CreateCircle";
+                    window.location.href = "/Admin/CreateCircle";
+                }
+            });
+        }
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

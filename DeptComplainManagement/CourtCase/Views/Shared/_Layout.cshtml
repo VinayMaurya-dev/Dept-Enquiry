@@ -1,0 +1,454 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Language" content="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="~/assets/images/Jal_Nigam_Rural_Logo1.png" type="image/x-icon" rel="icon" />
+    <title>JalNigam-Enquiry |@ViewBag.Title</title>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
+    <meta name="description" content="This is an example dashboard created using build-in elements and components.">
+    <link href="~/main.d810cf0ae7f39f28f336.css?v=12345" rel="stylesheet" />
+
+    <!-- Disable tap highlight on IE -->
+    <meta name="msapplication-tap-highlight" content="no">
+
+    <link href="~/assets/scripts/toastr.css" rel="stylesheet" />
+    <link href="~/assets/css/lobibox.min.css" rel="stylesheet" />
+    <link href="~/assets/Advance-datatable/css/plugins.min.css" rel="stylesheet" />
+    <link href="~/assets/Advance-datatable/css/buttons.dataTables.css" rel="stylesheet" />
+    <link href="~/assets/Advance-datatable/css/dataTables.dataTables.css" rel="stylesheet" />
+    <link href="~/assets/Advance-datatable/css/buttons.dataTables.css" rel="stylesheet" />
+    @*--End DataTable ----------*@
+
+    <link href="~/assets/css/textblink.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <link href="~/Content/assets/css/Loader.css" rel="stylesheet" />
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const preloader = document.querySelector(".loader-spinner");
+
+            if (!preloader) {
+                console.error("Preloader element not found.");
+                return;
+            }
+
+            // Always show the loader for 2 seconds, then hide it
+            setTimeout(() => {
+                showLoader();
+                preloader.classList.add("loader-spinner-deactivate");
+            }, 2000);
+        });
+
+        function showLoader() {
+            // Append a custom loader animation (image or other elements)
+            $('.spinner').fadeTo('slow', .8);
+            $('.spinner').append('<div style="background-color:black;position: fixed;top:0;left:0;width: 100%;height:100%;z-index:1000000001;-moz-opacity: 0.8;opacity:.80;filter: alpha(opacity=80);"><img src="/Content/assets/img/loader.gif" style="background-color:black;position:fixed; top:33%; left:41%;"/></div>');
+        }
+
+        function hideLoader() { 
+            $('.spinner').fadeOut('slow');
+        } 
+         
+    </script>
+    <style>
+        .buttons-colvis {
+            background: teal !important;
+            color: white !important;
+            border-radius: 16px !important;
+        }
+
+        .toast-success {
+            background-color: #357e45 !important;
+        }
+
+        .toast-error {
+            background-color: #E74C3C !important;
+        }
+
+        a {
+            text-decoration: none !important;
+        }
+
+        .icon-wrapper {
+            width: 54px !important;
+            height: 54px !important;
+            margin: 0 auto !important;
+            position: relative !important;
+            overflow: visible !important;
+        }
+
+        .btn .badge-dot.badge-dot-sm {
+            width: 10px !important;
+            height: 10px !important;
+            border-width: 1px !important;
+        }
+
+        .btn .badge-dot {
+            position: absolute !important;
+            border: #fff solid 2px !important;
+            top: -2px !important;
+            right: 7px !important;
+        }
+
+        .app-main__inner {
+            background-color: #f4f9ff;
+            padding: 55px 0 40px;
+            background: url('../../Content/assets/img/img.jpg')fixed;
+        }
+
+
+        .mybackbutton, .backbutton {
+            padding: 2.2px 21px;
+            border-radius: 4px;
+            background: #406ace;
+            margin-right: 7px;
+        }
+
+        #scr-vtr-dynamic thead {
+            background: #3a4baf;
+            color: white;
+        }
+
+        .mm-active {
+            max-height: 300px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            width: 255px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        ul.mm-collapse::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ul.mm-collapse::-webkit-scrollbar-thumb {
+            background-color: #888;
+            border-radius: 3px;
+        }
+
+        ul.mm-collapse::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ul.mm-collapse {
+            max-height: 300px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            white-space: nowrap;
+        }
+
+        .scrollbar-sidebar {
+            overflow-x: hidden;
+        }
+
+        .vertical-nav-menu li {
+            position: relative;
+        }
+
+            .vertical-nav-menu li ul {
+                overflow-x: hidden;
+            }
+
+        #scr-vtr-dynamic table thead {
+            position: sticky;
+            top: 0;
+        }
+
+        table.dataTable th,
+        table.dataTable td {
+            width: 150px;
+            max-width: 150px;
+            word-wrap: break-word;
+        }
+
+        div.dataTables_wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+    </style>
+ </head>   
+<body>
+    <div class="loader-spinner">
+        <div class="spinner"></div>
+    </div>
+    <!-- End Preloader Area -->
+    <div id="content" class="app-container app-theme-white body-tabs-shadow fixed-header fixed-sidebar">
+        <div class="app-header header-shadow">
+            <div class="app-header__logo">
+                <div class="logo-src1">
+                    <img src="~/assets/images/Jal_Nigam_Rural_Logo1.png" style="height: 60px;
+    width: 65px;" />
+                </div>
+            </div>
+            <div class="app-header__mobile-menu">
+                <div>
+                    <button type="button" class="hamburger hamburger--elastic mobile-toggle-nav">
+                        <span class="hamburger-box">
+                            <span class="hamburger-inner"></span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+            <div class="app-header__menu">
+                <span>
+                    <button type="button" class="btn-icon btn-icon-only btn btn-primary btn-sm mobile-toggle-header-nav">
+                        <span class="btn-icon-wrapper">
+                            <i class="fa fa-ellipsis-v fa-w-6"></i>
+                        </span>
+                    </button>
+                </span>
+            </div>
+            <div class="app-header__content">
+                <div class="app-header-left">
+                    <div class=" pr-0">
+                        <div class="widget-content p-0">
+                            <div class="widget-content-wrapper">
+
+                                <div class="widget-content-left  ml-3 ">
+                                    <div class="widget-heading">Last Login:&nbsp;@Session["LastLogin"].ToString()</div>
+                                    <div class="widget-subheading">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="app-header-right">
+                    <div class="dropdown">
+                        @*@{ string roleId = Session["RoleId"]?.ToString(); }
+                            @if (roleId == "SE")
+                            {
+                                @Html.Action("_Notification", "ComplaintSE")
+                            }
+                            else if (roleId == "IO")
+                            {
+                                @Html.Action("_Notification", "ComplaintInspection")
+                            }
+                            else if (roleId == "AO")
+                            {
+                                @Html.Action("_Notification", "ComplaintAuthorized")
+                            }*@
+
+                    </div>
+                    <div class="header-btn-lg pr-0">
+                        <div class="widget-content p-0">
+                            <div class="widget-content-wrapper">
+                                <div class="widget-content-left">
+                                    <div class="btn-group">
+                                        <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="p-0 btn">
+                                            <i class="fa fa-user" style="font-size:24px"></i>
+                                            <i class="fa fa-angle-down ml-2 opacity-8"></i>
+                                        </a>
+                                        <div tabindex="-1" role="menu" aria-hidden="true" class="rm-pointers dropdown-menu-lg dropdown-menu dropdown-menu-right">
+                                            <div class="dropdown-menu-header">
+                                                <div class="dropdown-menu-header-inner bg-info">
+                                                    <div class="menu-header-image opacity-2"></div>
+                                                    <div class="menu-header-content text-left">
+                                                        <div class="widget-content p-0">
+                                                            <div class="widget-content-wrapper">
+                                                                <div class="widget-content-left mr-3">
+
+                                                                </div>
+                                                                <div class="widget-content-left">
+                                                                    <div class="widget-heading">
+                                                                        (@Session["UserId"])
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="widget-content-right mr-2">
+                                                                    <a href="/Home/LogOut">
+                                                                        <span class="btn-pill btn-shadow btn-shine btn btn-focus">Logout</span>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="scroll-area-xs" style="height:auto;">
+                                                <div class="scrollbar-container ps">
+                                                    <ul class="nav flex-column">
+                                                        <li class="nav-item ml-2">
+                                                            <a href="/home/ChangePassword" class="mb-2 mr-2 border-0 btn-transition btn btn-outline-primary">Change Password</a>
+                                                        </li>
+
+
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="widget-content-left  ml-3 header-user-info">
+                                    <div class="widget-heading">
+                                        @*<span><b> @Session["RoleName"]</b></span>*@
+                                    </div>
+                                    <div class="widget-subheading"><span><b>@Session["Name"]</b></span></div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="app-main">
+            <div class="app-sidebar sidebar-shadow">
+                <div class="app-header__logo">
+                    <div class="logo-src"></div>
+                    <div class="header__pane ml-auto">
+                        <div>
+                            <button type="button" class="hamburger close-sidebar-btn hamburger--elastic" data-class="closed-sidebar">
+                                <span class="hamburger-box">
+                                    <span class="hamburger-inner"></span>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="app-header__mobile-menu">
+                    <div>
+                        <button type="button" class="hamburger hamburger--elastic mobile-toggle-nav">
+                            <span class="hamburger-box">
+                                <span class="hamburger-inner"></span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+                <div class="app-header__menu">
+                    <span>
+                        <button type="button" class="btn-icon btn-icon-only btn btn-primary btn-sm mobile-toggle-header-nav">
+                            <span class="btn-icon-wrapper">
+                                <i class="fa fa-ellipsis-v fa-w-6"></i>
+                            </span>
+                        </button>
+                    </span>
+                </div>
+                @Html.Action("GetMenuForRole", "Menu")
+            </div>
+            <div class="app-main__outer quicklink-bg">
+                @RenderBody()
+                <div class="app-wrapper-footer pt-4">
+                    <div class="app-footer">
+                        <div class="app-footer__inner">
+
+                            <div class="app-footer-right">
+                                <p>© Designed and Developed by Think Computers @DateTime.Now.Year</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div> 
+    <script src="~/assets/scripts/toastr.js"></script>
+
+    <!-- Advance datatable-->
+    <script src="~/assets/Advance-datatable/js/jquery-3.7.1.js"></script>
+    <script src="~/assets/Advance-datatable/js/dataTables.js"></script>
+    <script src="~/assets/Advance-datatable/js/dataTables.buttons.js"></script>
+    <script src="~/assets/Advance-datatable/js/buttons.dataTables.js"></script>
+    <script src="~/assets/Advance-datatable/js/jszip.min.js"></script>
+    <script src="~/assets/Advance-datatable/js/vfs_fonts.js"></script>
+    <script src="~/assets/Advance-datatable/js/buttons.html5.min.js"></script>
+    <script src="~/assets/Advance-datatable/js/buttons.print.min.js"></script>
+    <script src="~/assets/Advance-datatable/js/buttons.colVis.min.js"></script>
+    <script src="~/assets/css/Aarop.js"></script>
+    <!-- Advance datatable-->
+    <!--notification js -->
+    <script src="~/assets/css/lobibox.min.js"></script>
+    <script src="~/assets/css/notifications.min.js"></script>
+    <script src="~/assets/css/notification-custom-script.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let dateInput = document.querySelector("[data-toggle='datepicker-month']");
+            if (dateInput) {
+                dateInput.addEventListener("input", function (e) {
+                    this.value = this.value.replace(/[^0-9\/]/g, ""); // Allows only numbers and "/"
+                });
+            }
+        });
+    </script>
+
+    <script>
+        var btnloader = {
+            load: function (button) {
+                $(button).append('<span class="loadSpan spinner-border spinner-border-sm" role="status" aria-hidden="true" style="height:20px;width:20px; line-height:20px;margin-left:10px;"></span>');
+                $(button).prop("disabled", true);
+            },
+            remove: function (button) {
+                $(button).find('.loadSpan').remove();
+                $(button).prop("disabled", false);
+            }
+        };
+
+        function reloadCSS() {
+            var links = document.querySelectorAll("link[rel='stylesheet']");
+            links.forEach(link => {
+                var href = link.href.split("?")[0];
+                link.href = href + "?v=" + (Math.floor(Math.random() * 90000) + 10000);
+            });
+        }
+        reloadCSS();
+
+        $(document).ready(function () {
+            window.setInterval(function () {
+                $('.app-container').addClass('closed-sidebar');
+                $('.hamburger').addClass('is-active');
+            }, 100);
+
+
+        });
+        new DataTable('.example', {
+            layout: {
+                topStart: {
+                    buttons: [
+                        'print',
+                        {
+                            extend: 'excel',
+                            exportOptions: {
+                                columns: ':visible'
+                            }
+                        },
+                        'colvis'
+                    ]
+                }
+            }
+        });
+        function GetSuccessMsg(Id) {
+            Lobibox.notify("success", {
+                position: "top right",
+                icon: "bx bx-check-circle",
+                msg: Id
+            });
+        }
+        function GetMsg(Id) {
+            Lobibox.notify("warning", {
+                pauseDelayOnHover: true,
+                size: "mini",
+                rounded: true,
+                delayIndicator: false,
+                icon: "bx bx-check-warning",
+                continueDelayOnInactiveTab: false,
+                position: "top right",
+                msg: Id
+            });
+        }
+    </script>
+    <div class="app-drawer-overlay d-none animated fadeIn"></div>
+    <script type="text/javascript" defer src="~/main.d810cf0ae7f39f28f336.js?v=2.5"></script>
+    <script>
+            $(document).on({ contextmenu: function (e) { e.preventDefault() } }); $(document).on("keydown", function (e) { if (e.ctrlKey) { } }); document.addEventListener("keydown", function (e) { if (e.key === "F12") { e.preventDefault() } }); $(document).keydown(function (event) { if (event.key === "I" || event.ctrlKey && event.shiftKey && event.key === "I") { event.preventDefault() } }); $(document).keydown(function (e) { if (e.key === "F12" || e.ctrlKey && e.shiftKey && e.key === "I") { e.preventDefault() } });
+    </script>  
+</body>
+</html>

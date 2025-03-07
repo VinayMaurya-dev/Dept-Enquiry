@@ -1,0 +1,305 @@
+﻿@using System.Data
+@{
+    ViewBag.Title = "Permissions";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .multiselect {
+        width: 200px;
+    }
+
+    .selectBox {
+        position: relative;
+    }
+
+    .overSelect {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+    }
+
+    #checkboxes {
+        display: none;
+        border: 1px #dadada solid;
+    }
+
+        #checkboxes label {
+            display: block;
+        }
+
+            #checkboxes label:hover {
+                background-color: #1e90ff;
+            }
+</style>
+<div class="app-main__inner">
+    <div class="app-page-title app-page-title-simple">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div>
+                    <div class="page-title-head center-elem">
+                        <span class="d-inline-block pr-2">
+                            <i class="lnr-apartment opacity-6"></i>
+                        </span>
+                        <span class="d-inline-block">User Permissions </span>
+                    </div>
+                    <div class="page-title-subheading opacity-10">
+                        <nav class="" aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <button type="button" onclick="history.back()" value="BACK" class="btn btn-primary mybackbutton"><i class="fa fa-arrow-left" aria-hidden="true"> Back</i></button>
+                                </li>
+
+                                <li class="active breadcrumb-item" aria-current="page">
+                                    Permissions Menu
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tab-content">
+        <div class="main-card mb-3 card">
+            <div class="card-body">
+                <div class="form-row">
+                    <div class="col-md-4 mb-3">
+                        <div class="position-relative form-group">
+                            <label>Role Type </label>
+                            <div class="multiselect">
+                                <div class="selectBox" onclick="showCheckboxes()">
+                                    <select class="form-select form-select-sm" id="RoleId"></select>
+                                    <input type="hidden" id="SelectedRoleType" value="" name="SelectedRoleType" />
+                                    <select class="overSelect   form-select form-select-sm  "></select>
+                                </div>
+                                <div id="checkboxes">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div id="treeMenu">
+                    <ul id="ft-id-1" class="ui-fancytree fancytree-container fancytree-plain" tabindex="0" role="tree" aria-multiselectable="true">
+                        @if (ViewBag.MenuData != null)
+                        {
+                            var mainMenuTable = ((DataSet)ViewBag.MenuData).Tables[0];
+                            var subMenuTable = ((DataSet)ViewBag.MenuData).Tables[1];
+                            foreach (DataRow row in mainMenuTable.Rows)
+                            {
+                                bool isChecked = row["CanAccess"] != DBNull.Value && Convert.ToBoolean(row["CanAccess"]);
+                                string mainMenuChecked = isChecked ? "checked" : "";
+
+                                <li role="treeitem" aria-expanded="true" aria-selected="false">
+                                    <span class="fancytree-node fancytree-expanded fancytree-folder fancytree-has-children fancytree-exp-e fancytree-ico-ef">
+                                        <span role="button" class="fancytree-expander"></span>
+                                        <input type="checkbox" class="main-menu-checkbox" @mainMenuChecked data-main-id="@row["MainMenuId"]" value="@row["MainMenuId"]" />
+                                        <span role="presentation" class="fancytree-icon"></span>
+                                        <span class="fancytree-title">@row["MenuName"]</span>
+                                    </span>
+                                    @{
+                                        var subMenuRows = subMenuTable.Select($"MainMenuId = {row["MainMenuId"]}");
+                                    }
+                                    @if (subMenuRows.Length > 0)
+                                    {
+                                        <ul role="group">
+                                            @foreach (var subRow in subMenuRows)
+                                            {
+                                                bool isSubMenuChecked = subRow["CanAccess"] != DBNull.Value && Convert.ToBoolean(subRow["CanAccess"]);
+                                                string subMenuChecked = isSubMenuChecked ? "checked" : "";
+                                                <li role="treeitem" aria-selected="false">
+                                                    <span class="fancytree-node fancytree-exp-n fancytree-ico-c">
+                                                        <span class="fancytree-expander"></span>
+                                                        <input type="checkbox" class="sub-menu-checkbox" @subMenuChecked data-main-id="@subRow["MainMenuId"]" data-sub-id="@subRow["SubMenuId"]" />
+                                                        <span role="presentation" class="fancytree-icon"></span>
+                                                        <span class="fancytree-title">@subRow["SubMenuName"]</span>
+                                                    </span>
+                                                </li>
+                                            }
+                                        </ul>
+                                    }
+                                </li>
+                            }
+                        }
+                    </ul>
+                </div>
+
+                <div class="col-md-4 col-sm-3 mt-2">
+                    <div class=" form-group" style="margin-top:22px!important">
+                        <input type="button" id="submitSelection" value="Assign" class="btn btn-warning">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var btnloader = {
+        load: function () {
+            $('#submitSelection').append('<span id="loadSpan" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>');
+            $('#submitSelection').attr("disabled", "disabled")
+        },
+        remove: function () {
+            $('#loadSpan').remove();
+            $('#submitSelection').removeAttr('disabled');
+        }
+    };
+</script>
+<script>
+    $(document).ready(function () {
+        BindRoleType('RoleId', -1);
+        $(document).on('click', "input[type='checkbox'][name='RoleType']", function () {
+            var RoleId = $("#SelectedRoleType").val().trim();
+            if (RoleId == "") {
+                GetMsg("Select Role !");
+                return false;
+            }
+            $("#showSpinner").show();
+            $.post("/Admin/Permissions",
+                {
+                    RoleId: RoleId,
+                },
+                function (response) {
+                    $("#showSpinner").hide();
+                    var htmlNew = response;
+                    $("#treeMenu").html($(htmlNew).find("#treeMenu"));
+                }
+            );
+
+        });
+
+        $('#submitSelection').click(function () {
+            var RoleId = $("#SelectedRoleType").val().trim();
+            if (RoleId == "-1") {
+                GetMsg("Select Role !");
+                return false;
+            }
+
+            var selectedItems = [];
+            $('.main-menu-checkbox:checked').each(function () {
+                var mainMenuId = $(this).data('main-id');
+
+                var subMenuItems = [];
+                $('.sub-menu-checkbox[data-main-id="' + mainMenuId + '"]:checked').each(function () {
+                    var subMenuId = $(this).data('sub-id');
+
+                    subMenuItems.push({
+                        SubMenuId: subMenuId,
+                        IsChecked: true
+                    });
+                });
+
+                // Add main menu and its sub-menu items to selectedItems
+                selectedItems.push({
+                    MainMenuId: mainMenuId,
+                    IsChecked: true,
+                    SubMenuItems: subMenuItems,
+                    RoleId: RoleId
+                });
+            });
+
+            // Send selectedItems to the controller via AJAX
+            btnloader.load();
+                 $.ajax({
+    url: '@Url.Action("SaveMenuSelection", "Menu")',
+    type: 'POST',
+    contentType: 'application/json',
+    data: JSON.stringify(selectedItems),
+    success: function (response) {
+        if (response.success == true) { 
+            GetMsg(response.message);
+            setTimeout(function () {
+                window.location.href = window.location.href;
+            }, 4000); // 4 seconds
+        } else {
+            GetMsg(response.message);
+        }
+    },
+    error: function (error) {
+        console.error('Error:', error);
+        GetMsg('An error occurred while processing your request.');
+    },
+    complete: function () {
+        btnloader.remove();
+    }
+});
+
+            });
+        });
+    function BindRoleType(id, defaultSelectionValues) {
+
+        defaultSelectionValues = typeof defaultSelectionValues !== 'undefined' ? defaultSelectionValues : '';
+        if (defaultSelectionValues == -1 || defaultSelectionValues == 0 || defaultSelectionValues == '-1' || defaultSelectionValues == '') {
+            defaultSelectionValues = '-1';
+        }
+        var obj = new Object();
+        obj.Action = "bindRolesForPermissions";
+        $.ajax({
+            type: 'POST',
+            url: '/DropdownBinder/fillDropdown',
+            data: { Action: obj.Action },
+            success: function (Data) {
+                // Bind dropdown
+                var ddl = $('#' + id);
+                ddl.empty();
+                ddl.append($('<option/>', {
+                    value: "-1",
+                    text: "Choose option",
+                    class: "form-control"
+                }));
+                // Bind checkboxes
+                var checkboxesContainer = $("#checkboxes");
+                checkboxesContainer.empty();
+
+                $.each(Data, function (i, item) {
+                    checkboxesContainer.append(
+                        '<label for="checkbox_' + i + '">' +
+                        '<input type="checkbox" id="checkbox_' + i + '" value="' + item.id + '" name="RoleType" /> ' +
+                        item.value +
+                        '</label>'
+                    );
+                });
+            },
+            error: function (errorData) {
+                console.error("Error while binding role types:", errorData);
+            }
+        });
+    }
+
+</script>
+<script>
+    var expanded = false;
+    function showCheckboxes() {
+        var checkboxes = document.getElementById("checkboxes");
+        if (!expanded) {
+            checkboxes.style.display = "block";
+            expanded = true;
+        } else {
+            checkboxes.style.display = "none";
+            expanded = false;
+        }
+    }
+
+    $(document).on('click', "input[type='checkbox'][name='RoleType']", function () {
+        var selected = [];
+        var roleValue = $(this).val();
+
+        if ((roleValue === "AD" || roleValue === "SE") && $(this).prop("checked")) {
+            $("input[type='checkbox'][name='RoleType']").not(this).prop("disabled", true).prop("checked", false);
+        } else if ((roleValue === "AD" || roleValue === "SE") && !$(this).prop("checked")) {
+
+            $("input[type='checkbox'][name='RoleType']").prop("disabled", false);
+        }
+
+        $("input[type='checkbox'][name='RoleType']:checked").each(function () {
+            selected.push($(this).val());
+        });
+        $("#SelectedRoleType").val(selected.join(","));
+
+        // Reset the 'UserRelatedTo' field
+        $("#UserRelatedTo").val('-1').trigger('change');
+    });
+
+</script>

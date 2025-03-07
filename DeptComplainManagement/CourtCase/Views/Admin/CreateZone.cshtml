@@ -1,0 +1,201 @@
+﻿@model CourtCase.Models.Admin
+@{
+    ViewBag.Title = "CreateZone";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="app-main__inner">
+
+    <div class="app-page-title app-page-title-simple">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div>
+                    <div class="page-title-head center-elem">
+                        <span class="d-inline-block pr-2">
+                            <i class="lnr-apartment opacity-6"></i>
+                        </span>
+                        <span class="d-inline-block">
+                            Create Zone
+                        </span>
+                    </div>
+                    <div class="page-title-subheading opacity-10">
+                        <nav class="" aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <button type="button" onclick="history.back()" value="BACK" class="btn btn-primary mybackbutton"><i class="fa fa-arrow-left" aria-hidden="true"> Back</i></button>
+                                </li>
+
+                                <li class="active breadcrumb-item" aria-current="page">
+                                    Create Zone
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <div class="tab-content">
+
+        <div class="main-card mb-3 card">
+            <div class="card-body">
+                @*<h5 class="card-title">Add Zone</h5><br />*@
+                <input type="hidden" value="@Model.ZoneId" id="hiddenZoneId" />
+
+                <div class="form-row" id="caseTypeDiv">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-4 col-sm-4">
+                                <label for="exampleAddress" class="">Zone Name</label><br />
+
+                                <input type="text" value="@Model.ZoneName" id="txtZoneName" class="form-control" placeholder="Enter Zone" />
+                                <span id="ZoneNameError"></span>
+
+                            </div>
+
+                            <div class="col-md-4 col-sm-4">
+
+                                <div class="row float-left" style="margin-top:32px!important">
+                                    <input type="submit" id="btnSubmit" value="@ViewBag.BtnName" class="btn-pill btn-shadow btn-success btn" onclick="return SaveUpdateZoneRecord()">
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12">
+            <div class="card order-card" style="margin:-18px;padding:10px;"> 
+                <div class="card-block">
+                    <table class="table table-bordered" style="margin-top:0px !important;text-align:center;" id="caseTypeDiv">
+                        <tr>
+                            <th>
+                                    Sr No
+                                </th> 
+                            <th>
+                                Zone Name
+                            </th>
+                            <th>
+                                Action
+                            </th>
+
+
+
+                        </tr>
+
+                        @if (Model.Table != null)
+
+                        {
+                            int i = 0;
+                            foreach (System.Data.DataRow data in Model.Table.Rows)
+                            {
+                                i++;
+                                <tr>
+                                    <td>
+                                            @i
+                                        </td> 
+                                    <td>
+                                        @data["ZoneName"]
+                                    </td>
+                                    <td>
+
+                                        <a href="/Admin/CreateZone?ZoneId=@data["ZoneId"]" class="btn-pill btn-shadow btn-primary btn">Edit</a>
+
+                                    </td>
+
+
+                                </tr>
+
+                            }
+                        }
+
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+
+
+
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+<script>
+
+    $(document).ready(function () {
+    var msg = '@TempData["msg"]';
+
+    $('#ReportLI').addClass("mm-active");
+    $('#ReportUL').addClass("mm-show");
+        $('#ZoneMaster').addClass("mm-active");
+    $('#AdminDashboard').removeClass("mm-active");
+
+
+
+});
+
+    if (typeof jQuery == 'undefined') {
+        console.error('jQuery is not loaded');
+    }
+    else {
+        $(document).ready(function () {
+            addValidationAlpha("txtZoneName");
+        });
+    }
+
+    function Validate() {
+        var ZoneName = $("#txtZoneName").val();
+        if (ZoneName == "") {
+            $("#ZoneNameError").text("Please Enter The Zone Name");
+            $("#ZoneNameError").css("color", "red");
+            $("#txtZoneName").focus();
+            return false;
+        }
+        else {
+            $("#ZoneNameError").text("");
+        }
+
+        return true;
+    }
+
+    function SaveUpdateZoneRecord() {
+        debugger;
+        if (!Validate()) {
+
+            return false;
+        }
+        var obj = {
+
+            ZoneId: $("#hiddenZoneId").val(),
+            ZoneName: $("#txtZoneName").val(),
+
+        }
+        $.post("/Admin/SaveUpdateZoneRecord", obj, function (Res) {
+            if (Res != "") {
+                alert(Res);
+                window.location.href = "/Admin/CreateZone";
+            }
+            else {
+                alert("Something Went wrong.");
+                window.location.href = "/Admin/CreateZone";
+                window.location.href = "/Admin/CreateZone";
+            }
+        });
+    }
+</script>
+

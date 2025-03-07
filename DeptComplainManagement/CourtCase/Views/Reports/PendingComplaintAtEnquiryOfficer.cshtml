@@ -1,0 +1,156 @@
+﻿@using CourtCase.Filters
+@{
+    ViewBag.Title = "PendingComplaintAtEnquiryOfficer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+<div class="app-main__inner">
+    <div class="app-page-title app-page-title-simple">
+        <div class="page-title-wrapper">
+            <div class="page-title-heading">
+                <div>
+                    <div class="page-title-head center-elem">
+                        <span class="d-inline-block pr-2">
+                            <i class="lnr-apartment opacity-6"></i>
+                        </span>
+                        <span class="d-inline-block">शिकायत अनुभाग में प्रचलित पत्रावलियों पर जांच अधिकारी के स्तर पर लंबित शिकायतों की संख्या</span>
+                    </div>
+                    <div class="page-title-subheading opacity-10">
+                        <nav class="" aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <button type="button" onclick="history.back()" value="BACK" class="btn btn-primary mybackbutton"><i class="fa fa-arrow-left" aria-hidden="true"> Back</i></button>
+                                </li>
+
+                                <li class="active breadcrumb-item" aria-current="page">
+                                    लंबित शिकायतों की संख्या
+                                </li>
+                            </ol>
+                        </nav>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <center>
+
+        <div class="main-card mb-3 card">
+            <div class="card-body">
+                <div id="step-1">
+                    <div class="form-row" id="divDetails">
+                        <div class="table-responsive" style="margin-top:15px;">
+                            @if (Model != null)
+                            {
+                                System.Data.DataSet ds = ((System.Data.DataSet)Model);
+                                if (ds != null && ds.Tables.Count > 0)
+                                {
+                                    System.Data.DataTable dt = ds.Tables[0];
+                                    var excludedColumns = new List<string>
+                            {
+                                "InvestigatingOfficerRelatedTo",
+                                "InvestigatingOfficerZoneId",
+                                "InvestigatingOfficerCircleId",
+                                "InvestigatingOfficerDivisionId",
+                                "DesignationId"
+                            };
+
+                                <table id="scr-vtr-dynamic" class="example table table-hover table-striped table-bordered mb-0" style="width:100%;">
+                                    <thead>
+                                        <tr>
+                                            @foreach (System.Data.DataColumn col in dt.Columns)
+                                            {
+                                                if (!excludedColumns.Contains(col.ColumnName))
+                                                {
+                                                    <th style="text-align:center;">@Html.Raw(col.ColumnName)</th>
+                                                }
+                                            }
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (System.Data.DataRow row in dt.Rows)
+                                        {
+                                            <tr id="lblRowColor">
+                                                @foreach (System.Data.DataColumn column in dt.Columns)
+                                                {
+                                                    var columnName = column.ColumnName;
+                                                    var cellValue = row[column]?.ToString();
+
+                                                    if (excludedColumns.Contains(columnName))
+                                                    {
+                                                        continue;
+                                                    }
+
+                                                    var InvestigatingOfficerRelatedTo = row["InvestigatingOfficerRelatedTo"]?.ToString();
+                                                    var InvestigatingOfficerZoneId = row["InvestigatingOfficerZoneId"]?.ToString();
+                                                    var InvestigatingOfficerCircleId = row["InvestigatingOfficerCircleId"]?.ToString();
+                                                    var InvestigatingOfficerDivisionId = row["InvestigatingOfficerDivisionId"]?.ToString();
+                                                    var DesignationId = row["DesignationId"]?.ToString();
+                                                    string duration = "";
+
+                                                    switch (columnName)
+                                                    {
+                                                        case "जांच अधिकारी के स्तर पर 3 माह के भीतर लंबित पत्रावलियों की संख्या":
+                                                            duration = "0-3";
+                                                            break;
+                                                        case "जांच अधिकारी के स्तर पर 3-6 माह के भीतर लंबित पत्रावलियों की संख्या":
+                                                            duration = "3-6";
+                                                            break;
+                                                        case "जांच अधिकारी के स्तर पर 6-9 माह के भीतर लंबित पत्रावलियों की संख्या":
+                                                            duration = "6-9";
+                                                            break;
+                                                        case "जांच अधिकारी के स्तर पर 9-12 माह के भीतर लंबित पत्रावलियों की संख्या":
+                                                            duration = "9-12";
+                                                            break;
+                                                        case "जांच अधिकारी के स्तर पर 12-24 माह के भीतर लंबित पत्रावलियों की संख्या":
+                                                            duration = "12-24";
+                                                            break;
+                                                        case "जांच अधिकारी के स्तर पर 24 माह से अधिक लंबित पत्रावलियों की संख्या":
+                                                            duration = "24-Above";
+                                                            break;
+                                                        case "जांच अधिकारी के स्तर पर कुल लंबित पत्रावलियों की संख्या":
+                                                            duration = "Total";
+                                                            break;
+                                                    }
+
+                                                    if (!string.IsNullOrEmpty(duration))
+                                                    {
+                                                        <td style="text-align:center;">
+                                                            @Html.EncodedActionLinkWithFiveParams(
+                                                                cellValue,
+                                                                "PendingComplaintAtEnquiryOfficerById",
+                                                                "Reports",
+                                                                new { Id = DesignationId },
+                                                                new { @class = "btn-transition btn btn-outline-info" },
+                                                                "",
+                                                                duration, InvestigatingOfficerRelatedTo, InvestigatingOfficerZoneId, InvestigatingOfficerCircleId, InvestigatingOfficerDivisionId)
+                                                        </td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td style="text-align:center;">@Html.Raw(cellValue)</td>
+                                                    }
+                                                }
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            }
+                        }
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </center>
+</div>
+
+
